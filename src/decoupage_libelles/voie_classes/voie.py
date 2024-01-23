@@ -3,7 +3,7 @@ from typing import Optional
 from voie_classes.informations_on_libelle import InfoLib
 
 
-class Voie():
+class Voie:
     """ """
 
     def __init__(
@@ -28,14 +28,15 @@ class Voie():
         self.num_assigned = None
 
     def __eq__(
-            self,
-            resultat,
-            ):
-
+        self,
+        resultat,
+    ):
         # Tester s'il y a égalité avec l'objet resultat.
-        return (self.label_raw == resultat.label_raw and
-                self.infolib == self.infolib and
-                self.type_assigned == resultat.type_assigned and
-                self.label_assigned == resultat.label_assigned and
-                self.compl_assigned == resultat.compl_assigned and
-                self.num_assigned == resultat.num_assigned)
+        return (
+            self.label_raw == resultat.label_raw
+            and self.infolib == self.infolib
+            and self.type_assigned == resultat.type_assigned
+            and self.label_assigned == resultat.label_assigned
+            and self.compl_assigned == resultat.compl_assigned
+            and self.num_assigned == resultat.num_assigned
+        )
