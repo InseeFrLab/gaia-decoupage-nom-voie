@@ -1,0 +1,15 @@
+pandas
+spacy-transformers
+pyarrow
+tqdm
+requests
+psycopg2-binary
+sqlalchemy
+transformers
+fastparquet
+numba
+GPUtil
+swifter
+scikit-learn
+matplotlib
+ruamel-yaml>=0.11.14,<0.18

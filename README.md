@@ -1,4 +1,4 @@
-# gaia-decoupage-libelles-voies
+# Detect street type MAJIC
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.insee.fr/geographie/gaia/gaia-decoupage-libelles-voies.git
+git remote add origin https://git.lab.sspcloud.fr/scrum-team-gaia/detect-street-type-majic.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.insee.fr/geographie/gaia/gaia-decoupage-libelles-voies/-/settings/integrations)
+- [ ] [Set up project integrations](https://git.lab.sspcloud.fr/scrum-team-gaia/detect-street-type-majic/-/settings/integrations)
 
 ## Collaborate with your team
 
