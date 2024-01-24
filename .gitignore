@@ -1,5 +1,10 @@
-core
 *.parquet.gz
 *.ipynb_checkpoints
+dist
 __pycache__
+.secrets.*
 poetry.lock
+.coverage
+coverage.xml
+requirements.txt
+requirements-dev.txt
