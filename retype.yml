@@ -1,0 +1,22 @@
+input: ./docs/
+output: .retype
+url: localhost
+
+branding:
+  title: Gaia - découpage des libellés de voies
+  label: Docs
+
+meta:
+  title: " - Generate, publish, and share documentation"
+
+edit:
+  repo: https://gitlab.insee.fr/documents-archivage-et-action-regionale/figaro2/fig2archivagefichiers/-/tree/main/docs/
+
+links:
+  - text: Home
+    link: /index.md
+    icon: home
+  - text: Getting Started
+    link: https://retype.com/guides/getting-started/
+footer:
+  copyright: "&copy; Copyright {{ year }}. All rights reserved."

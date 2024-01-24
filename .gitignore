@@ -2,3 +2,4 @@ core
 *.parquet.gz
 *.ipynb_checkpoints
 __pycache__
+poetry.lock
