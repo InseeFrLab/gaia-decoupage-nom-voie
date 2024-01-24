@@ -38,6 +38,14 @@ build:
     - poetry export --output requirements-dev.txt --without-hashes --with dev
       # Création du livrable sous dist
     - poetry build
+  artifacts:
+    paths:
+      - dist
+      - requirements.txt
+      - requirements-dev.txt
+      - pyproject.toml
+    expire_in: 1 week
+
 
 pages:
   stage: build
