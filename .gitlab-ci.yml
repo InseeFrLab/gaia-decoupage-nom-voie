@@ -1,0 +1,57 @@
+variables:
+  PYTHON_VERSION: "3.11"
+  HTTP_PROXY: http://proxy-app.insee.fr:3128
+  HTTPS_PROXY: http://proxy-app.insee.fr:3128
+  NO_PROXY: ".insee.fr,.insee.eu,.insee.intra,localhost,insee.test"
+  NEXUS_URL: "https://nexus.insee.fr"
+  DEPOT_DEPENDANCES: "https://nexus.insee.fr/repository/pypi-proxy/pypi"
+  DEPOT_DEPENDANCES_INDEX: "https://nexus.insee.fr/repository/pypi-proxy/simple/"
+  DEPOT_LIVRAISON: "https://nexus.insee.fr/repository/pypi-internal/"
+
+default:
+  tags:
+    - docker
+
+stages:
+  - build
+  #- test
+  - analyse
+
+
+pages:
+  stage: build
+  image: gitlab-registry.insee.fr:443/kubernetes/images/build/node:18
+  before_script:
+    - npm install --global retypeapp
+  script:
+    - 'retype build --override "{ \"url\": \"$CI_PAGES_URL\" }" --output $CI_PROJECT_DIR/public'
+  artifacts:
+    paths:
+      - public
+
+sonar:
+  stage: analyse
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  variables:
+    SOURCE_FOLDER: "src/decoupage_libelles"
+    EXCLUSIONS: "**/tests/**"
+    PROJECT_KEY: "geographie_gaia_gaia-decoupage-libelles-voies_AY069E_6dRGMg48-JnXI"
+    PROJECT_NAME: "Gaia - découpage libellés de voies"
+    COVERAGE_REPORT: "coverage.xml"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  dependencies:
+    # - build
+    # - coverage
+  script:
+    - curl -k https://nexus.insee.fr/repository/certs/insee/insee.ts -o /tmp/insee.ts
+    - export SONAR_SCANNER_OPTS="-Djavax.net.ssl.trustStore=/tmp/insee.ts"
+    - sonar-scanner -X -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.login="${SONAR_TOKEN}" -Dsonar.projectName="${PROJECT_NAME}" -Dsonar.qualitygate.wait=true -Dsonar.language="py" -Dsonar.python.version="3.11" -Dsonar.sources="${SOURCE_FOLDER}" -Dsonar.exclusions="${EXCLUSIONS}" -Dsonar.python.coverage.reportPaths="${COVERAGE_REPORT}" -Dsonar.projectKey="${PROJECT_KEY}" -Djavax.net.ssl.trustStore="/tmp/insee.ts"
+
+
+
+
