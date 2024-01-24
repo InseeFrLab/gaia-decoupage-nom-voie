@@ -1,0 +1,27 @@
+variables:
+  PYTHON_VERSION: "3.11"
+  HTTP_PROXY: http://proxy-app.insee.fr:3128
+  HTTPS_PROXY: http://proxy-app.insee.fr:3128
+  NO_PROXY: ".insee.fr,.insee.eu,.insee.intra,localhost,insee.test"
+  NEXUS_URL: "https://nexus.insee.fr"
+  DEPOT_DEPENDANCES: "https://nexus.insee.fr/repository/pypi-proxy/pypi"
+  DEPOT_DEPENDANCES_INDEX: "https://nexus.insee.fr/repository/pypi-proxy/simple/"
+  DEPOT_LIVRAISON: "https://nexus.insee.fr/repository/pypi-internal/"
+
+default:
+  tags:
+    - docker
+
+stages:
+  - build
+
+pages:
+  stage: build
+  image: gitlab-registry.insee.fr:443/kubernetes/images/build/node:18
+  before_script:
+    - npm install --global retypeapp
+  script:
+    - 'retype build --override "{ \"url\": \"$CI_PAGES_URL\" }" --output $CI_PROJECT_DIR/public'
+  artifacts:
+    paths:
+      - public
