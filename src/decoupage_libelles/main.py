@@ -1,14 +1,23 @@
 # -*- coding: utf-8 -*-
 import logging
-from injector import Injector
+from injector import Injector, inject
 
 from config.logger_configuration import LoggerConfiguration
 from config.settings_configuration import settings
 
 
-class LancementTest:
+class Classe2:
     def executer(self):
         logging.info("injection ok")
+
+
+class LancementTest:
+    @inject
+    def __init__(self, classe2: Classe2):
+        self.classe2: Classe2 = classe2
+
+    def executer(self):
+        self.classe2.executer()
 
 
 def print_settings():
