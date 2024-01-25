@@ -25,6 +25,12 @@ def run():
     lancementTest: LancementTest = injector.get(LancementTest)
     lancementTest.executer()
 
+    # Lecture du fichier contenant du référentiel des types de voies
+    # Nettoyage et enrichissement des types de voies
+    # Lecture du fichier Majic
+    # Transformation des données
+    # Ecriture du fichier majic
+
 
 if __name__ == "__main__":
     run()
