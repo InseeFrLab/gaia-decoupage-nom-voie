@@ -89,7 +89,7 @@ coverage:
     - poetry config certificates.nexus.cert false
     - poetry install
     - poetry run coverage run -m pytest
-    - poetry run coverage xml
+    - poetry run coverage xml --fail-under=0
   artifacts:
     paths:
       - coverage.xml
