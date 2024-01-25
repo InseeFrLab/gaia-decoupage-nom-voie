@@ -1,0 +1,2 @@
+class TypeVoie:
+    pass
