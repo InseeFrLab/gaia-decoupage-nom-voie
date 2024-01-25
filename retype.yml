@@ -10,7 +10,7 @@ meta:
   title: " - Generate, publish, and share documentation"
 
 edit:
-  repo: https://gitlab.insee.fr/documents-archivage-et-action-regionale/figaro2/fig2archivagefichiers/-/tree/main/docs/
+  repo: https://gitlab.insee.fr/geographie/gaia/gaia-decoupage-libelles-voies/-/tree/main/docs/
 
 links:
   - text: Home

@@ -15,6 +15,7 @@ default:
 stages:
   - build
   - test
+  - analyse
 
 build:
   image: python:$PYTHON_VERSION
@@ -28,6 +29,10 @@ build:
   script:
       # Définition du dépôt contenant les dépendances
     - poetry source add nexus ${DEPOT_DEPENDANCES_INDEX} --priority=primary
+      # Modification de la priorité du dépôt par défaut
+    - poetry source add --priority=supplemental PyPI
+      # Vérification de la configuration (les commandes poetry source écrivent dans pyproject.toml)
+    - cat pyproject.toml
       # Installation des dépendances
     - poetry install
     - poetry add poetry-plugin-export
@@ -45,7 +50,6 @@ build:
       - requirements-dev.txt
       - pyproject.toml
     expire_in: 1 week
-
 
 pages:
   stage: build
@@ -70,4 +74,50 @@ test:
     - poetry config certificates.nexus.cert false
     - poetry add pytest
     - poetry run pytest
+
+coverage:
+  image: python:$PYTHON_VERSION
+  stage: test
+  before_script:
+    - pip config set global.trusted-host nexus.insee.fr 
+    - pip config set global.index ${DEPOT_DEPENDANCES}
+    - pip config set global.index-url ${DEPOT_DEPENDANCES_INDEX}
+    - pip install poetry
+    - pip install coverage
+    - pip install pytest
+  script:
+    - poetry config certificates.nexus.cert false
+    - poetry install
+    - poetry run coverage run -m pytest
+    - poetry run coverage xml --fail-under=0
+  artifacts:
+    paths:
+      - coverage.xml
+    expire_in: 1 week
+
+sonar:
+  stage: analyse
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  variables:
+    SOURCE_FOLDER: "src/decoupage_libelles"
+    EXCLUSIONS: "**/tests/**"
+    PROJECT_KEY: "geographie_gaia_gaia-decoupage-libelles-voies_AY069E_6dRGMg48-JnXI"
+    PROJECT_NAME: "Gaia - découpage libellés de voies"
+    COVERAGE_REPORT: "coverage.xml"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  dependencies:
+    - build
+    - coverage
+  script:
+    - curl -k https://nexus.insee.fr/repository/certs/insee/insee.ts -o /tmp/insee.ts
+    - export SONAR_SCANNER_OPTS="-Djavax.net.ssl.trustStore=/tmp/insee.ts"
+    - sonar-scanner -X -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.login="${SONAR_TOKEN}" -Dsonar.projectName="${PROJECT_NAME}" -Dsonar.qualitygate.wait=true -Dsonar.language="py" -Dsonar.python.version="3.11" -Dsonar.sources="${SOURCE_FOLDER}" -Dsonar.exclusions="${EXCLUSIONS}" -Dsonar.python.coverage.reportPaths="${COVERAGE_REPORT}" -Dsonar.projectKey="${PROJECT_KEY}" -Djavax.net.ssl.trustStore="/tmp/insee.ts"
+
+
+
 
