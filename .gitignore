@@ -4,7 +4,7 @@ dist
 __pycache__
 .secrets.*
 poetry.lock
-#.coverage
-#coverage.xml
+.coverage
+coverage.xml
 requirements.txt
 requirements-dev.txt
