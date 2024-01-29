@@ -78,24 +78,6 @@ def min_and_max_count_espaces_in_strs(str1, str2):
     return str_min, str_max
 
 
-def search_pos_multi_words_type(voie, voie_sep, type_lib, type_detect, infolib):
-    nb_words_in_type = len(type_lib.split(' '))
-    # Dans le string du libellé de voie, on cherche le type de voie.
-    # S'il n'apparaît qu'une fois, on aura la position de sa première lettre dans le
-    # libellé.
-    # S'il apparaît plusieurs fois, il y aura alors plusieurs positions.
-    pos_debut = find_pos_str(voie, type_lib)
-    for pos in pos_debut:
-        # Position du premier mot du type dans le libellé découpé en mots.
-        pos_type = find_pos_words(voie_sep, pos)
-        if type_detect not in infolib.types_detected():
-            infolib.types_and_positions[(type_detect, 1)] = (pos_type,
-                                                             pos_type+nb_words_in_type-1)
-        else:
-            infolib.types_and_positions[(type_detect, 2)] = (pos_type,
-                                                             pos_type+nb_words_in_type-1)
-
-
 def remove_type_from_lib_and_types(infolib, position_start_min, position_end_min):
     # Supprimer de la liste preproc le type codifié
     before_type_min = infolib.label_preproc[:position_start_min]

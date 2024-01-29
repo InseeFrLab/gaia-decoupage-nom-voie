@@ -2,7 +2,7 @@ from typing import List
 from tqdm import tqdm
 
 from voie_classes.decoupage_voie import DecoupageVoie
-from finders.complement_finder import ComplementFinder
+from finders.find_complement.complement_finder import ComplementFinder
 from finders.voie_fictive_finder import VoieFictiveFinder
 
 from constants.constant_lists import (liste_types_complement_1,

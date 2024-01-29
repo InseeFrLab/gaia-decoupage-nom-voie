@@ -2,7 +2,7 @@ from typing import List
 from tqdm import tqdm
 
 from voie_classes.decoupage_voie import DecoupageVoie
-from finders.complement_finder import ComplementFinder
+from finders.find_complement.complement_finder import ComplementFinder
 from finders.voie_fictive_finder import VoieFictiveFinder
 from processors.one_type.one_type_assign_voies_complement import OneTypeAssignCompl
 from processors.one_type.one_type_assign_voies_type_not_first_pos import OneTypeAssignNotFirstPos
