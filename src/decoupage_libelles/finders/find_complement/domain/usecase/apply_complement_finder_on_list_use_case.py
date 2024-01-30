@@ -3,13 +3,13 @@ from typing import List
 from tqdm import tqdm
 
 from voie_classes.decoupage_voie import DecoupageVoie
-from finders.find_complement.complement_finder import ComplementFinder
+from finders.find_complement.domain.usecase.complement_finder_use_case import ComplementFinderUseCase
 
 
-class ApplyComplementFinderOnList:
+class ApplyComplementFinderOnListUseCase:
     @inject
-    def __init__(self, complement_finder: ComplementFinder):
-        self.complement_finder: ComplementFinder = complement_finder
+    def __init__(self, complement_finder_use_case: ComplementFinderUseCase):
+        self.complement_finder_use_case: ComplementFinderUseCase = complement_finder_use_case
 
     def execute(
             self,
@@ -20,7 +20,7 @@ class ApplyComplementFinderOnList:
         voies_obj_compl = []
         new_voies_obj = voies_obj[:]
         for voie in tqdm(voies_obj):
-            new_voie = self.complement_finder.execute(voie, types_to_detect)
+            new_voie = self.complement_finder_use_case.execute(voie, types_to_detect)
             if new_voie:
                 voies_obj_compl.append(new_voie)
                 new_voies_obj.remove(voie)

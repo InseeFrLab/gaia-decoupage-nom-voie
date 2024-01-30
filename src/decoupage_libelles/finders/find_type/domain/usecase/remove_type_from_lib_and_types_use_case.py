@@ -1,7 +1,7 @@
 from voie_classes.informations_on_libelle import InfoLib
 
 
-class RemoveTypeFromLibAndTypes:
+class RemoveTypeFromLibAndTypesUseCase:
 
     def execute(self,
                 infolib: InfoLib, 

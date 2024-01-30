@@ -2,7 +2,7 @@ from typing import List
 import re
 
 
-class SeparateWordsWithApostropheAndSupressPonctuation:
+class SeparateWordsWithApostropheAndSupressPonctuationUseCase:
     def execute(self, label_raw: str, ponctuations: List[str]) -> List[str]:
         voie = label_raw
         # séparer le libellé en liste de mots

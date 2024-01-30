@@ -1,0 +1,30 @@
+from injector import inject
+from finders.find_type.domain.model.type_finder_object import TypeFinderObject
+from finders.find_type.domain.usecase.find_positions_of_word_in_sentence_str_use_case import FindPositionsOfWordInSentenceStrUseCase
+from finders.find_type.domain.usecase.find_position_of_word_in_sentence_list_use_case import FindPositionOfWordInSentenceListUseCase
+
+
+class DetectMultiWordsCompleteFormTypesUseCase:
+    @inject
+    def __init__(self, 
+                 find_positions_of_word_in_sentence_str_use_case: FindPositionsOfWordInSentenceStrUseCase,
+                 find_position_of_word_in_sentence_list_use_case: FindPositionOfWordInSentenceListUseCase):
+         self.find_positions_of_word_in_sentence_str_use_case: FindPositionsOfWordInSentenceStrUseCase = find_positions_of_word_in_sentence_str_use_case
+         self.find_position_of_word_in_sentence_list_use_case: FindPositionOfWordInSentenceListUseCase = find_position_of_word_in_sentence_list_use_case
+
+    def execute(self,
+                type_detect: str,
+                type_lib: str,
+                type_finder_object: TypeFinderObject) -> TypeFinderObject:
+            nb_words_in_type = len(type_lib.split(' '))
+
+            pos_debut = self.find_positions_of_word_in_sentence_str_use_case.execute(type_finder_object.voie, type_lib)
+            for pos in pos_debut:
+                pos_type = self.find_position_of_word_in_sentence_list_use_case.execute(type_finder_object.voie_sep, pos)
+                if type_detect not in type_finder_object.infolib.types_detected():
+                    type_finder_object.infolib.types_and_positions[(type_detect, 1)] = (pos_type,
+                                                                    pos_type+nb_words_in_type-1)
+                else:
+                    type_finder_object.infolib.types_and_positions[(type_detect, 2)] = (pos_type,
+                                                                    pos_type+nb_words_in_type-1)
+            return type_finder_object

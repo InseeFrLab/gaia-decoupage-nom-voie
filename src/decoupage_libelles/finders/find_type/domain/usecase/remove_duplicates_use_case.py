@@ -1,14 +1,14 @@
 from injector import inject
 
 from finders.find_type.domain.model.type_finder_object import TypeFinderObject
-from finders.find_type.domain.use_case.remove_type_from_lib_and_types import RemoveTypeFromLibAndTypes
+from finders.find_type.domain.usecase.remove_type_from_lib_and_types_use_case import RemoveTypeFromLibAndTypesUseCase
 
 
 
-class RemoveDuplicates:
+class RemoveDuplicatesUseCase:
     @inject
-    def __init__(self, remove_type_from_lib_and_types: RemoveTypeFromLibAndTypes):
-        self.remove_type_from_lib_and_types: RemoveTypeFromLibAndTypes = remove_type_from_lib_and_types
+    def __init__(self, remove_type_from_lib_and_types_use_case: RemoveTypeFromLibAndTypesUseCase):
+        self.remove_type_from_lib_and_types_use_case: RemoveTypeFromLibAndTypesUseCase = remove_type_from_lib_and_types_use_case
     
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
         if type_finder_object.infolib.has_duplicates():
@@ -26,7 +26,7 @@ class RemoveDuplicates:
 
                     # Supprimer de la liste preproc le type codifié
                     # Supprimer du dictionnaire le type codifié et décaler les positions
-                    self.remove_type_from_lib_and_types.execute(type_finder_object.infolib,
+                    self.remove_type_from_lib_and_types_use_case.execute(type_finder_object.infolib,
                                                                 position_start_min,
                                                                 position_end_min)
 

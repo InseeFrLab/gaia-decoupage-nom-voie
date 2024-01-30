@@ -1,7 +1,7 @@
 from finders.find_type.domain.model.type_finder_object import TypeFinderObject
 
 
-class UpdateOccurencesByOrderOfApparition:
+class UpdateOccurencesByOrderOfApparitionUseCase:
 
     def execute(self,
                  type_finder_object: TypeFinderObject) -> TypeFinderObject:

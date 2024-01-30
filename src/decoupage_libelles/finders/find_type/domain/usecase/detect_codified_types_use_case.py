@@ -1,6 +1,6 @@
 from finders.find_type.domain.model.type_finder_object import TypeFinderObject
 
-class DetectCodifiedTypes():
+class DetectCodifiedTypesUseCase():
     def execute(self,
                  type_finder_object: TypeFinderObject) -> TypeFinderObject:
 

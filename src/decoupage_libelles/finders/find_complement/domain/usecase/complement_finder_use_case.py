@@ -3,7 +3,7 @@ from typing import List
 from voie_classes.decoupage_voie import DecoupageVoie
 
 
-class ComplementFinder():
+class ComplementFinderUseCase():
     def execute(self,
                  voie: DecoupageVoie,
                  types_complement: list) -> DecoupageVoie:

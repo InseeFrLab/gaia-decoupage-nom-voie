@@ -1,7 +1,7 @@
 from finders.find_type.domain.model.type_finder_object import TypeFinderObject
 
 
-class DetectOneWordCompleteFormTypes:
+class DetectOneWordCompleteFormTypesUseCase:
     def execute(self,
                 type_detect: str,
                 type_lib: str,

@@ -2,7 +2,7 @@ from typing import List
 import re
 
 
-class SuppressPonctuationInWords:
+class SuppressPonctuationInWordsUseCase:
     def execute(self, chaine_traitee: List[str], ponctuations: List[str]) -> List[str]:
         # retirer la ponctuation contenue dans un mot
         new_label_preproc = chaine_traitee[:]

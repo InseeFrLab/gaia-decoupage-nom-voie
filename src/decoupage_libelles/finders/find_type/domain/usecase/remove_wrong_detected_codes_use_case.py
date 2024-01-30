@@ -1,7 +1,13 @@
-from finders.find_type.domain.model.type_finder_object import TypeFinderObject
-from utils.type_finder_utils import min_and_max_count_espaces_in_strs
+from injector import inject
 
-class RemoveWrongDetectedCodes:
+from finders.find_type.domain.model.type_finder_object import TypeFinderObject
+from finders.find_type.domain.usecase.determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case import DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase
+
+class RemoveWrongDetectedCodesUseCase:
+    @inject
+    def __init__(self, determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case: DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase):
+        self.determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case: DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase = determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case
+
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
         # Supprime les types codifiés détectés à tord
         # (ex : ANC CHEM --> ANCIEN CHEMIN et CHEMINEMENT)
@@ -14,7 +20,7 @@ class RemoveWrongDetectedCodes:
             dict_two_types[type_i] = (position_start_i, position_end_i)
             dict_two_types[type_i1] = (position_start_i1, position_end_i1)
 
-            type_min, type_max = min_and_max_count_espaces_in_strs.execute(type_i, type_i1)
+            type_min, type_max = self.determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case.execute(type_i, type_i1)
 
             position_start_min, __ = dict_two_types[type_min]
             position_start_max, position_end_max = dict_two_types[type_max]

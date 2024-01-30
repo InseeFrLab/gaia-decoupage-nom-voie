@@ -1,7 +1,8 @@
 from dataclasses import dataclass
+from typing import List
 
 from voie_classes.voie import Voie
-from utils.type_finder_utils import TypeFinderUtils
+from finders.find_type.domain.usecase.generate_type_finder_utils_use_case import TypeFinderUtils
 from voie_classes.informations_on_libelle import InfoLib
 
 
@@ -9,6 +10,6 @@ from voie_classes.informations_on_libelle import InfoLib
 class TypeFinderObject:
     voie_big: Voie
     type_data: TypeFinderUtils
-    voie_sep = voie_big.infolib.label_preproc[:]
-    voie = (' ').join(voie_big.infolib.label_preproc[:])
-    infolib = InfoLib(voie_sep)
+    voie_sep: List[str] = voie_big.infolib.label_preproc[:]
+    voie: str = (' ').join(voie_big.infolib.label_preproc[:])
+    infolib: InfoLib = InfoLib(voie_sep)
