@@ -1,15 +1,4 @@
-pandas
-spacy-transformers
-pyarrow
-tqdm
-requests
-psycopg2-binary
-sqlalchemy
-transformers
-fastparquet
-numba
-GPUtil
-swifter
-scikit-learn
-matplotlib
-ruamel-yaml>=0.11.14,<0.18
+click==8.1.7 ; python_version >= "3.11" and python_version < "4.0"
+colorama==0.4.6 ; python_version >= "3.11" and python_version < "4.0" and platform_system == "Windows"
+dynaconf==3.2.4 ; python_version >= "3.11" and python_version < "4.0"
+injector==0.20.1 ; python_version >= "3.11" and python_version < "4.0"
