@@ -38,6 +38,18 @@ class TypeFinderUtils():
 # Functions
 
 
+def min_and_max_count_espaces_in_strs(str1, str2):
+    espaces_str1 = str1.count(' ')
+    espaces_str2 = str2.count(' ')
+
+    dict_two_strs = {str1: espaces_str1, str2: espaces_str2}
+
+    str_min = min(dict_two_strs, key=dict_two_strs.get)
+    str_max = max(dict_two_strs, key=dict_two_strs.get)
+
+    return str_min, str_max
+
+
 def find_pos_str(
         sentence_str: str,
         str_to_find: str
@@ -64,34 +76,3 @@ def find_pos_words(
         else:
             start += len(word) + 1
     return position_word
-
-
-def min_and_max_count_espaces_in_strs(str1, str2):
-    espaces_str1 = str1.count(' ')
-    espaces_str2 = str2.count(' ')
-
-    dict_two_strs = {str1: espaces_str1, str2: espaces_str2}
-
-    str_min = min(dict_two_strs, key=dict_two_strs.get)
-    str_max = max(dict_two_strs, key=dict_two_strs.get)
-
-    return str_min, str_max
-
-
-def remove_type_from_lib_and_types(infolib, position_start_min, position_end_min):
-    # Supprimer de la liste preproc le type codifié
-    before_type_min = infolib.label_preproc[:position_start_min]
-    after_type_min = infolib.label_preproc[position_end_min+1:]
-
-    infolib.label_preproc = before_type_min + after_type_min
-
-    # Supprimer du dictionnaire le type codifié et décaler les positions
-    nb_words_in_type_min = position_end_min - position_start_min + 1
-
-    for type_lib, positions in list(infolib.types_and_positions.items()):
-        position_start, position_end = positions
-        if position_start > position_end_min:
-            position_start -= nb_words_in_type_min
-            position_end -= nb_words_in_type_min
-            infolib.types_and_positions[type_lib] = (position_start,
-                                                     position_end)
