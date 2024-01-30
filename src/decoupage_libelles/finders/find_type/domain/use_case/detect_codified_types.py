@@ -1,23 +1,18 @@
-from voie_classes.voie import Voie
-from utils.type_finder_utils import TypeFinderUtils
-from voie_classes.informations_on_libelle import InfoLib
+from finders.find_type.domain.model.type_finder_object import TypeFinderObject
 
 class DetectCodifiedTypes():
     def execute(self,
-                 voie_big: Voie,
-                 type_data: TypeFinderUtils) -> InfoLib:
-        voie_sep = voie_big.infolib.label_preproc[:]
-        infolib = InfoLib(voie_sep)
+                 type_finder_object: TypeFinderObject) -> TypeFinderObject:
 
-        for code_type in type_data.codes:
-            lib_type = type_data.code2lib[code_type]
-            if code_type in voie_sep:
-                pos_type = [i for i, mot in enumerate(voie_sep) if mot == code_type]
+        for code_type in type_finder_object.type_data.codes:
+            lib_type = type_finder_object.type_data.code2lib[code_type]
+            if code_type in type_finder_object.voie_sep:
+                pos_type = [i for i, mot in enumerate(type_finder_object.voie_sep) if mot == code_type]
                 for position in pos_type:
                     positions = (position,
                                  position)
-                    if lib_type not in infolib.types_detected():
-                        infolib.types_and_positions[(lib_type, 1)] = positions
+                    if lib_type not in type_finder_object.infolib.types_detected():
+                        type_finder_object.infolib.types_and_positions[(lib_type, 1)] = positions
                     else:
-                        infolib.types_and_positions[(lib_type, 2)] = positions
-        return infolib
+                        type_finder_object.infolib.types_and_positions[(lib_type, 2)] = positions
+        return type_finder_object
