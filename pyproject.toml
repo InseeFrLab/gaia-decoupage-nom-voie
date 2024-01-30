@@ -4,18 +4,16 @@ version = "0.0.1"
 description = "Programme de découpage des libellés du fichier MAJIC"
 authors = ["Julien Gauchet <julien.gauchet@insee.fr>"]
 readme = "README.md"
-packages = [
-    { include = "decoupage_libelles", from = "src" },
-]
+packages = [{ include = "decoupage_libelles", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
 injector = "^0.20.1"
 dynaconf = "^3.2.0"
-poetry-plugin-export = "^1.6.0"
-click  = "^8.1.7" 
+click = "^8.1.7"
 
 [tool.poetry.dev-dependencies]
+poetry-plugin-export = "^1.6.0"
 pytest = "^7.4.4"
 coverage = "^7.4.0"
 black = "^23.3.0"

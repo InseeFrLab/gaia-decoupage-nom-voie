@@ -1,12 +1,15 @@
 variables:
   PYTHON_VERSION: "3.11"
+  POETRY_VERSION: "1.7.1"
   HTTP_PROXY: http://proxy-app.insee.fr:3128
   HTTPS_PROXY: http://proxy-app.insee.fr:3128
   NO_PROXY: ".insee.fr,.insee.eu,.insee.intra,localhost,insee.test"
   NEXUS_URL: "https://nexus.insee.fr"
+  NEXUS_HOST: "nexus.insee.fr"
   DEPOT_DEPENDANCES: "https://nexus.insee.fr/repository/pypi-proxy/pypi"
   DEPOT_DEPENDANCES_INDEX: "https://nexus.insee.fr/repository/pypi-proxy/simple/"
   DEPOT_LIVRAISON: "https://nexus.insee.fr/repository/pypi-internal/"
+
 
 default:
   tags:
@@ -17,15 +20,23 @@ stages:
   - test
   - analyse
 
+.default_configuration: &default_configuration
+    # Configure pip pour faire confiance au serveur d'hébergement 
+  - pip config set global.trusted-host ${NEXUS_HOST} 
+    # Configure pip pour rechercher les dépendances dans le dépot ${DEPOT_DEPENDANCES} (dépréciée)
+  - pip config set global.index ${DEPOT_DEPENDANCES}
+    # Configure pip pour rechercher les dépendances dans le dépot ${DEPOT_DEPENDANCES}
+  - pip config set global.index-url ${DEPOT_DEPENDANCES_INDEX}
+    # Installation de poetry
+  - pip install poetry==${POETRY_VERSION}
+    # Désactive la vérification des certificats SSL lors de l'accès au serveur nexus.insee.fr
+  - poetry config certificates.nexus.cert false
+
 build:
   image: python:$PYTHON_VERSION
   stage: build
   before_script:
-    - pip config set global.trusted-host nexus.insee.fr 
-    - pip config set global.index ${DEPOT_DEPENDANCES}
-    - pip config set global.index-url ${DEPOT_DEPENDANCES_INDEX}
-    - pip install poetry
-    - poetry config certificates.nexus.cert false
+    - *default_configuration
   script:
       # Définition du dépôt contenant les dépendances
     - poetry source add nexus ${DEPOT_DEPENDANCES_INDEX} --priority=primary
@@ -34,7 +45,7 @@ build:
       # Vérification de la configuration (les commandes poetry source écrivent dans pyproject.toml)
     - cat pyproject.toml
       # Installation des dépendances
-    - poetry install
+    - poetry install --no-interaction
     - poetry add poetry-plugin-export
     - poetry config warnings.export false
       # Génération de requirements.txt
@@ -66,30 +77,20 @@ test:
   image: python:$PYTHON_VERSION
   stage: test
   before_script:
-    - pip config set global.trusted-host nexus.insee.fr 
-    - pip config set global.index ${DEPOT_DEPENDANCES}
-    - pip config set global.index-url ${DEPOT_DEPENDANCES_INDEX}
-    - pip install poetry
+    - *default_configuration
   script:
-    - poetry config certificates.nexus.cert false
-    - poetry add pytest
+    - poetry install --no-interaction --with dev
     - poetry run pytest
 
 coverage:
   image: python:$PYTHON_VERSION
-  stage: test
+  stage: analyse
   before_script:
-    - pip config set global.trusted-host nexus.insee.fr 
-    - pip config set global.index ${DEPOT_DEPENDANCES}
-    - pip config set global.index-url ${DEPOT_DEPENDANCES_INDEX}
-    - pip install poetry
-    - pip install coverage
-    - pip install pytest
+    - *default_configuration
   script:
-    - poetry config certificates.nexus.cert false
-    - poetry install
+    - poetry install --no-interaction --with dev
     - poetry run coverage run -m pytest
-    - poetry run coverage xml --fail-under=0
+    - poetry run coverage xml
   artifacts:
     paths:
       - coverage.xml
