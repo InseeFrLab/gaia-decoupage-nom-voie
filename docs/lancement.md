@@ -34,9 +34,14 @@ poetry run python pytest
 
 Pour générer les dépendances et les installer dans l'environnement local, il est possible de jouer les commandes suivantes :
 
-```python
+```bash
 poetry export --output requirements.txt --without-hashes
 pip install -r requirements.txt
 ```
 
+La même chose avec les dépendances de dev :
 
+```bash
+poetry export --output requirements-dev.txt --without-hashes --with dev
+pip install -r requirements-dev.txt
+```
