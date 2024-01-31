@@ -2,8 +2,8 @@ from typing import List
 from tqdm import tqdm
 
 from voie_classes.decoupage_voie import DecoupageVoie
-from finders.complement_finder import ComplementFinder
-from finders.voie_fictive_finder import VoieFictiveFinder
+from finders.find_complement.domain.usecase.apply_complement_finder_on_list_use_case import ApplyComplementFinderOnListUseCase
+from finders.find_voie_fictive.domain.usecase.voie_fictive_finder_use_case import VoieFictiveFinder
 
 from constants.constant_lists import (liste_types_complement_1,
                                       liste_voie_fictive_2,

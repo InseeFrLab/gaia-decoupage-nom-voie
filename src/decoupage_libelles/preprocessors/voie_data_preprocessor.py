@@ -3,9 +3,9 @@ from typing import List
 from tqdm import tqdm
 
 from voie_classes.voie import Voie
-from preprocessors.ponctuation_preprocessor import PonctuationPreprocessor
+from preprocessors.ponctuation.domain.use_case.ponctuation_preprocessor_use_case import PonctuationPreprocessor
 from constants.constant_lists import ponctuations
-from utils.type_finder_utils import TypeFinderUtils
+from finders.find_type.domain.usecase.generate_type_finder_utils_use_case import TypeFinderUtils
 from finders.type_finder import TypeFinder
 
 
@@ -22,7 +22,7 @@ class VoieDataPreprocessor:
     def apply_ponctuation_preproc(self, ponctuations):
         voies_data_preproc_ponct = []
         for voie in tqdm(self.voies_data):
-            voie = PonctuationPreprocessor(voie, ponctuations).run()
+            voie = PonctuationPreprocessor().execute(voie, ponctuations)
             voies_data_preproc_ponct.append(voie)
 
         self.voies_data = voies_data_preproc_ponct
