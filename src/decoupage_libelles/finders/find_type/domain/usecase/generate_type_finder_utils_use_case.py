@@ -1,19 +1,23 @@
 import pandas as pd
+from injector import inject
 
 from voie_classes.voie import Voie
-from preprocessors.ponctuation.domain.use_case.ponctuation_preprocessor_use_case import PonctuationPreprocessor
-from constants.constant_lists import ponctuations
+from preprocessors.ponctuation.domain.usecase.ponctuation_preprocessor_use_case import PonctuationPreprocessorUseCase
 from finders.find_type.domain.model.type_finder_utils import TypeFinderUtils
 
 
 class GenerateTypeFinderUtilsUseCase:
+    @inject
+    def __init__(self, ponctuation_preprocessor_use_case: PonctuationPreprocessorUseCase):
+        self.ponctuation_preprocessor_use_case: PonctuationPreprocessorUseCase = ponctuation_preprocessor_use_case
+
     def execute(self,
-                type_finder_utils: TypeFinderUtils,):
+                type_finder_utils: TypeFinderUtils,) -> TypeFinderUtils:
 
         types_lib = type_finder_utils.type_voie_df['LIBELLE'].tolist()
         types_lib = [Voie(lib_raw) for lib_raw in types_lib]
         for i, lib in enumerate(types_lib):
-            lib = PonctuationPreprocessor(lib, ponctuations).run()
+            lib = self.ponctuation_preprocessor_use_case.execute(lib)
             types_lib[i] = lib
 
         types_lib_preproc_raw = [[(' ').join(elt.infolib.label_preproc),
