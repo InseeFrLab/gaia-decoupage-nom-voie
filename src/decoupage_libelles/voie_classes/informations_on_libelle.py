@@ -1,13 +1,27 @@
 from typing import Optional
+from dataclasses import dataclass
 
 
-class InfoLib():
+@dataclass
+class AnalysePositionType:
+    type_en_premiere_position: bool
+
+
+@dataclass
+class InfoLib2:
+    analyse_position: AnalysePositionType
+    label_preproc: list
+    types_and_positions: Optional[dict] = {}
+    label_postag: Optional[list] = None
+
+
+class InfoLib:
     def __init__(
-            self,
-            label_preproc: list,
-            types_and_positions: Optional[dict] = {},
-            label_postag: Optional[list] = None,
-            ):
+        self,
+        label_preproc: list,
+        types_and_positions: Optional[dict] = {},
+        label_postag: Optional[list] = None,
+    ):
         """
         label_preproc (list):
             Libellé de voie preprocessé.
@@ -24,9 +38,9 @@ class InfoLib():
         self.label_postag = label_postag
 
     def __eq__(
-            self,
-            resultat,
-            ):
+        self,
+        resultat,
+    ):
         """
         Teste s'il y a égalité avec l'objet resultat.
 
@@ -36,9 +50,7 @@ class InfoLib():
         Returns:
             (bool)
         """
-        return (self.label_preproc == resultat.label_preproc and
-                self.types_and_positions == resultat.types_and_positions and
-                self.label_postag == resultat.label_postag)
+        return self.label_preproc == resultat.label_preproc and self.types_and_positions == resultat.types_and_positions and self.label_postag == resultat.label_postag
 
     def nb_types_detected(self):
         return len(self.types_and_positions)
@@ -52,10 +64,7 @@ class InfoLib():
         return [type_lib for type_lib, __ in self.types_and_positions.keys()]
 
     def sort_types_by_position(self):
-        self.types_and_positions = dict(sorted(
-                        self.types_and_positions.items(),
-                        key=lambda x: x[1][0]
-                        ))
+        self.types_and_positions = dict(sorted(self.types_and_positions.items(), key=lambda x: x[1][0]))
 
     def get_word(self, position: int):
         if len(self.label_preproc) > position:
@@ -73,8 +82,8 @@ class InfoLib():
         self.sort_types_by_position()
         list_of_keys = list(self.types_and_positions.keys())
         index_type = list_of_keys.index((type_lib, occurence))
-        if index_type < len(list_of_keys)-1:
-            type_after = list_of_keys[index_type+1]
+        if index_type < len(list_of_keys) - 1:
+            type_after = list_of_keys[index_type + 1]
             return type_after
 
     def order_type_in_lib(self, type_order):
@@ -96,19 +105,16 @@ class InfoLib():
             type_position_in_lib_end (int) :
                 La position de fin du type dans la liste de mots du libellé preprocessé.
         """
-        if (not self.types_and_positions or
-                self.nb_types_detected() < type_order):
+        if not self.types_and_positions or self.nb_types_detected() < type_order:
             return None, None
 
         if type_order >= 1:  # 1er ou plus
-            position = type_order-1
+            position = type_order - 1
         elif type_order == -1:  # dernier
             position = type_order
 
-        types_sorted = sorted(self.types_and_positions.items(),
-                              key=lambda item: item[1])
-        types_sorted = [(type_voie,
-                         positions) for (type_voie, __), positions in types_sorted]
+        types_sorted = sorted(self.types_and_positions.items(), key=lambda item: item[1])
+        types_sorted = [(type_voie, positions) for (type_voie, __), positions in types_sorted]
 
         type_to_find, positions = types_sorted[position]
         type_position_in_lib_start, type_position_in_lib_end = positions

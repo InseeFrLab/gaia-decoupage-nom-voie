@@ -1,9 +1,5 @@
 from voie_classes.voie import Voie
-from constants.constant_lists import (liste_type_longitudinal,
-                                      liste_type_longitudinal2,
-                                      liste_type_agglo,
-                                      liste_types_complement_0,
-                                      liste_types_complement_1)
+from constants.constant_lists import liste_type_longitudinal, liste_type_longitudinal2, liste_type_agglo, liste_types_complement_0, liste_types_complement_1
 
 
 class AnalyseType(Voie):
