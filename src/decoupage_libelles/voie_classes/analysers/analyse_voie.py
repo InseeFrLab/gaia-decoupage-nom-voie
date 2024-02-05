@@ -19,4 +19,5 @@ class AnalyseVoie:
         # Si type en première position et agglomérant alors
         if infolib.type_en_premiere_position and infolib.type_agglomerant:
             # 
+            
         

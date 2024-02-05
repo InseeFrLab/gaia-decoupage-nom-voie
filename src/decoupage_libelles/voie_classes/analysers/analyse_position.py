@@ -1,11 +1,15 @@
 from voie_classes.voie import Voie
 from utils.utils_for_lists import is_last_position
+from voie_classes.informations_on_libelle import InfoLib
 
-
-class AnalysePosition(Voie):
-    """
-    Analyse les positions des types de voie dans le libellé de voie.
-    """
+class AnalysePosition:
+    
+    def __init__(self):
+        
+        
+    def execute(self, infolib: InfoLib):
+        
+    
     def has_type_in_first_pos(self):
         __, position_first_type_in_lib_start, __ = self.infolib.order_type_in_lib(1)
         return position_first_type_in_lib_start == 0
