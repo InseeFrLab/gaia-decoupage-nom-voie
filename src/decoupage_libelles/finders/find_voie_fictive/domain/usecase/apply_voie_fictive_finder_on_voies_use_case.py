@@ -3,19 +3,18 @@ from injector import inject
 from tqdm import tqdm
 
 from voie_classes.decoupage_voie import DecoupageVoie
-from constants.constant_lists import list_fictive
 from finders.find_voie_fictive.domain.usecase.voie_fictive_finder_use_case import VoieFictiveFinderUseCase
 
 
-class ApplyVoieFictiveFinderOnListUseCase:
+class ApplyVoieFictiveFinderOnVoiesUseCase:
     @inject
     def __init__(self, voie_fictive_finder_use_case: VoieFictiveFinderUseCase):
         self.voie_fictive_finder_use_case: VoieFictiveFinderUseCase = voie_fictive_finder_use_case
 
     def execute(self,
             list_object_voies: List[DecoupageVoie],
-            list_type_to_detect: list,
-            ):
+            list_type_to_detect: List[str],
+            ) -> (List[DecoupageVoie], List[DecoupageVoie]):
 
         list_object_voies_fictives = []
         new_list_object_voies = list_object_voies[:]

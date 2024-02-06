@@ -33,7 +33,7 @@ class NewSpellingForCodeUseCase:
 
     def execute(self,
                 type_voie_df: pd.DataFrame,
-                libs_for_code_df: pd.DataFrame):
+                libs_for_code_df: pd.DataFrame) -> pd.DataFrame:
             """
             Ajoute de nouvelles orthographes pour les codes de types de voie.
 
@@ -62,6 +62,6 @@ class NewSpellingForCodeUseCase:
                                         ).sort_values(by='CODE',
                                                         ascending=True
                                                         ).reset_index(drop=True)
-            type_voie_df['LIBELLE'] = type_voie_df['LIBELLE'].apply(self.apply_ponctuation_preprocessing_on_type_voie_use_case().execute)
+            type_voie_df['LIBELLE'] = type_voie_df['LIBELLE'].apply(self.apply_ponctuation_preprocessing_on_type_voie_use_case.execute)
 
             return type_voie_df

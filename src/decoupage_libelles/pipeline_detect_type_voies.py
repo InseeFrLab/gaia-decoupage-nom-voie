@@ -4,8 +4,8 @@ import sys
 from voie_classes.voie import Voie
 from voie_classes.decoupage_voie import DecoupageVoie
 
-from preprocessors.type_voie_majic_preprocessor import TypeVoieMajicPreprocessor
-from preprocessors.voie_data_preprocessor import VoieDataPreprocessor
+from preprocessors.clean_type_voie.domain.usecase.type_voie_majic_preprocessor_use_case import TypeVoieMajicPreprocessor
+from preprocessors.clean_voie_lib_and_find_types.domain.usecase.voie_data_preprocessor import VoieDataPreprocessor
 from utils.proc_utils import save_voies_processed
 from processors.no_type.no_type_voies_handler import NoTypeVoiesHandler
 from processors.one_type.one_type_voies_handler import OneTypeVoiesHandler

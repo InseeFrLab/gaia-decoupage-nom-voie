@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 class EnrichReducedLibUseCase:
     NEW_LIB_FOR_EXISTING_CODES = {'ZA': "ZONE D'ACTIVITES",
                                   'ZAC': "ZONE D'AMENAGEMENT CONCERTE",
@@ -5,7 +8,7 @@ class EnrichReducedLibUseCase:
                                   'ZI': 'ZONE INDUSTRIELLE',
                                   'ZUP': 'ZONE A URBANISER EN PRIORITE'}
         
-    def execute(self, type_voie_df):
+    def execute(self, type_voie_df: pd.DataFrame) -> pd.DataFrame:
             """
             Enrichit les codes qui ont aussi un code comme libellé dans
             le DataFrame.

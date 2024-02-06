@@ -4,7 +4,7 @@ import pandas as pd
 class ChooseUniqueLibUseCase:
     UNIQUE_LIBS_FOR_CODES = ['CALLE', 'DARSE', 'SENTIER', 'VALLEE']
 
-    def execute(self, type_voie_df):
+    def execute(self, type_voie_df: pd.DataFrame) -> pd.DataFrame:
             """
             Sélectionne un libellé unique pour les codes de type de voie qui en
             ont plusieurs.
@@ -33,7 +33,7 @@ class ChooseUniqueLibUseCase:
                                                                 ).reset_index(drop=True)
 
             unique_libs_for_codes_df = libs_for_code_df[libs_for_code_df['LIBELLE'].isin(ChooseUniqueLibUseCase.UNIQUE_LIBS_FOR_CODES)]
-            self.type_voie_df = pd.concat([type_voie_df,
+            type_voie_df = pd.concat([type_voie_df,
                                         unique_libs_for_codes_df],
                                         ignore_index=True)
             return libs_for_code_df

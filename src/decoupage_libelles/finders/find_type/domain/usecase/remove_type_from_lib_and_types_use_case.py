@@ -6,7 +6,7 @@ class RemoveTypeFromLibAndTypesUseCase:
     def execute(self,
                 infolib: InfoLib, 
                 position_start_min: int,
-                position_end_min: int):
+                position_end_min: int) -> InfoLib:
         # Supprimer de la liste preproc le type codifié
         before_type_min = infolib.label_preproc[:position_start_min]
         after_type_min = infolib.label_preproc[position_end_min+1:]

@@ -6,7 +6,7 @@ from voie_classes.decoupage_voie import DecoupageVoie
 from finders.find_complement.domain.usecase.complement_finder_use_case import ComplementFinderUseCase
 
 
-class ApplyComplementFinderOnListUseCase:
+class ApplyComplementFinderOnVoiesUseCase:
     @inject
     def __init__(self, complement_finder_use_case: ComplementFinderUseCase):
         self.complement_finder_use_case: ComplementFinderUseCase = complement_finder_use_case

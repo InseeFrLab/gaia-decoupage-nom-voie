@@ -8,7 +8,7 @@ from finders.find_type.domain.usecase.remove_wrong_detected_codes_use_case impor
 from finders.find_type.domain.model.type_finder_object import TypeFinderObject
 from voie_classes.voie import Voie
 
-class TypeFinder:
+class TypeFinderUseCase:
     @inject
     def __init__(self,
                  detect_codified_types_use_case: DetectCodifiedTypesUseCase,

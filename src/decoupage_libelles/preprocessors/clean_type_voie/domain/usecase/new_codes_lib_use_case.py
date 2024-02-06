@@ -11,7 +11,7 @@ class NewCodesLibUseCase:
                  {'CODE': 'ANV',
                  'LIBELLE': "ANCIENNE VOIE"},]
 
-    def execute(self, type_voie_df):
+    def execute(self, type_voie_df: pd.DataFrame) -> pd.DataFrame:
         """
         Ajoute un nouveau code de type de voie au DataFrame.
 

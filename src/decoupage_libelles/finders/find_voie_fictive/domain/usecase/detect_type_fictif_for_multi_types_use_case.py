@@ -1,13 +1,13 @@
 from typing import List
 
 from voie_classes.decoupage_voie import DecoupageVoie
-from constants.constant_lists import list_fictive
 
 
 class DetectTypeFictifForMultiTypes:
     def execute(self,
                 voie: DecoupageVoie,
-                liste_voie_commun: List[str]):
+                liste_voie_commun: List[str],
+                liste_fictive: List[str]) -> DecoupageVoie:
             
             for type_voie in liste_voie_commun:
                 if type_voie in voie.infolib.types_detected():
@@ -32,7 +32,7 @@ class DetectTypeFictifForMultiTypes:
                                                         else False)
 
                             if (one_word_label_fictif and 
-                                    elt_fictif[0] in list_fictive or
+                                    elt_fictif[0] in liste_fictive or
                                     one_word_label_fictif and
                                     elt_fictif[0] in ['L', 'D', 'A'] and
                                     has_type_fictif_in_last_pos):
