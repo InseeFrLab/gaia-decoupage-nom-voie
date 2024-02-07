@@ -11,8 +11,9 @@ class DetectCodifiedTypesUseCase():
                 for position in pos_type:
                     positions = (position,
                                  position)
-                    if lib_type not in type_finder_object.infolib.types_detected():
-                        type_finder_object.infolib.types_and_positions[(lib_type, 1)] = positions
+                    types_detected = [type_lib for type_lib, __ in type_finder_object.voie_big.types_and_positions.keys()]
+                    if lib_type not in types_detected:
+                        type_finder_object.voie_big.types_and_positions[(lib_type, 1)] = positions
                     else:
-                        type_finder_object.infolib.types_and_positions[(lib_type, 2)] = positions
+                        type_finder_object.voie_big.types_and_positions[(lib_type, 2)] = positions
         return type_finder_object

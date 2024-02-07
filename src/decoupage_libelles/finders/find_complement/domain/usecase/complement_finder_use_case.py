@@ -1,6 +1,6 @@
 from typing import List
 
-from voie_classes.decoupage_voie import DecoupageVoie
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 
 
 class ComplementFinderUseCase():
@@ -36,12 +36,12 @@ class ComplementFinderUseCase():
     ORTHOGRAPHES_IMMEUBLE = ['IM', 'IMM', 'IMMEUBLE']
 
     def execute(self,
-                 voie: DecoupageVoie,
-                 types_complement: list) -> DecoupageVoie:
+                 infovoie: InfoVoie,
+                 types_complement: list) -> InfoVoie:
         for type_compl in types_complement:  # parcours de la liste de types "complément"
-            if type_compl in voie.infolib.label_preproc:
-                position_type = voie.infolib.label_preproc.index(type_compl)
+            if type_compl in infovoie.label_preproc:
+                position_type = infovoie.label_preproc.index(type_compl)
                 positions = (position_type, position_type)
-                voie.infolib.types_and_positions[(type_compl, 1)] = positions
-                voie.infolib.sort_types_by_position()
-                return voie
+                infovoie.types_and_positions[(type_compl, 1)] = positions
+                infovoie.types_and_positions = dict(sorted(infovoie.types_and_positions.items(), key=lambda x: x[1][0]))
+                return infovoie

@@ -1,20 +1,28 @@
 from typing import List
+from injector import inject
 
-from voie_classes.decoupage_voie import DecoupageVoie
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
+from informations_on_type_in_lib.domain.usecase.generate_information_on_type_ordered_use_case import GenerateInformationOnTypeOrderedUseCase
+
 
 
 class DetectTypeFictifForOneTypeUseCase:
+    @inject
+    def __init__(self, generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase):
+        self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
+
     def execute(self,
-                voie: DecoupageVoie,
+                voie: InfoVoie,
                 liste_voie_commun: List[str],
-                liste_fictive: List[str]) -> DecoupageVoie:
+                liste_fictive: List[str]) -> InfoVoie:
             # si RUE A on garde type 'RUE' et libellé 'A'. Si il y a qlq chose avant 'RUE',
             # alors ca passe en voie fictive
 
             for type_voie in liste_voie_commun:
-                first_type, __, __ = voie.infolib.order_type_in_lib(1)
-                if (first_type == type_voie and
-                        voie.has_type_in_penultimate_pos(1) and
-                        voie.word_before_type(1) and
-                        voie.word_after_type(1) in liste_fictive+['L', 'D', 'A']):
+                first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
+
+                if (first_type.type_name == type_voie and
+                        first_type.is_in_penultimate_position and
+                        first_type.word_before and
+                        first_type.word_after in liste_fictive+['L', 'D', 'A']):
                     return voie

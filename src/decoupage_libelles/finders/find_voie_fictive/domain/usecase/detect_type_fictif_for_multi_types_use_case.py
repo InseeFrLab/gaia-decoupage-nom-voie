@@ -1,34 +1,38 @@
 from typing import List
+from injector import inject
 
-from voie_classes.decoupage_voie import DecoupageVoie
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
+from informations_on_type_in_lib.domain.usecase.generate_information_on_type_ordered_use_case import GenerateInformationOnTypeOrderedUseCase
+from informations_on_libelle_voie.domain.usecase.get_words_between_use_case import GetWordsBetweenUseCase
 
 
-class DetectTypeFictifForMultiTypes:
+class DetectTypeFictifForMultiTypesUseCase:
+    @inject
+    def __init__(self, generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase,
+                 get_words_between_use_case: GetWordsBetweenUseCase):
+        self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
+        self.get_words_between_use_case: GetWordsBetweenUseCase = get_words_between_use_case
+
     def execute(self,
-                voie: DecoupageVoie,
+                voie: InfoVoie,
                 liste_voie_commun: List[str],
-                liste_fictive: List[str]) -> DecoupageVoie:
+                liste_fictive: List[str]) -> InfoVoie:
             
             for type_voie in liste_voie_commun:
-                if type_voie in voie.infolib.types_detected():
+                if type_voie in voie.types_detected:
                     for occurence in range(1, 3):
-                        if (type_voie, occurence) in voie.infolib.types_and_positions:
-                            type_fictif = (type_voie, occurence)
-                            position_start, __ = voie.infolib.types_and_positions[type_fictif]
+                        if (type_voie, occurence) in voie.types_and_positions:
+                            type_fictif = self.generate_information_on_type_ordered_use_case.execute(voie, None, type_voie, occurence)
 
-                            type_after = voie.infolib.type_after_type(type_voie, 1)
+                            position_end = (voie.types_and_positions[(type_fictif.type_after, 1)][0]-1
+                                            if type_fictif.type_after
+                                            else len(voie.label_preproc)+1)
 
-                            position_end = (voie.infolib.types_and_positions[type_after][0]-1
-                                            if type_after
-                                            else len(voie.infolib.label_preproc)+1)
-
-                            elt_fictif = voie.infolib.get_words_between(
-                                            position_start+1,
-                                            position_end)
+                            elt_fictif = (self.get_words_between_use_case(voie, type_fictif.position_start+1, position_end)).split(' ')
 
                             one_word_label_fictif = True if len(elt_fictif) == 1 else False
                             has_type_fictif_in_last_pos = (True
-                                                        if not type_after
+                                                        if not type_fictif.type_after
                                                         else False)
 
                             if (one_word_label_fictif and 
