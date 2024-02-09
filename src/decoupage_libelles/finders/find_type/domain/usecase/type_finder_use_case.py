@@ -6,9 +6,10 @@ from finders.find_type.domain.usecase.update_occurences_by_order_of_apparition_u
 from finders.find_type.domain.usecase.remove_duplicates_use_case import RemoveDuplicatesUseCase
 from finders.find_type.domain.usecase.remove_wrong_detected_codes_use_case import RemoveWrongDetectedCodesUseCase
 from finders.find_type.domain.model.type_finder_object import TypeFinderObject
-from voie_classes.voie import Voie
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 
-class TypeFinder:
+
+class TypeFinderUseCase:
     @inject
     def __init__(self,
                  detect_codified_types_use_case: DetectCodifiedTypesUseCase,
@@ -22,12 +23,12 @@ class TypeFinder:
         self.remove_duplicates_use_case: RemoveDuplicatesUseCase = remove_duplicates_use_case
         self.remove_wrong_detected_codes_use_case: RemoveWrongDetectedCodesUseCase = remove_wrong_detected_codes_use_case
 
-    def execute(self, type_finder_object: TypeFinderObject) -> Voie:
+    def execute(self, type_finder_object: TypeFinderObject) -> InfoVoie:
         self.detect_codified_types_use_case.execute(type_finder_object)
         self.detect_complete_form_types_use_case.execute(type_finder_object)
-        if type_finder_object.infolib.nb_types_detected() > 1:
+        types_detected = [type_lib for type_lib, __ in type_finder_object.voie_big.types_and_positions.keys()]
+        if len(types_detected) > 1:
             self.update_occurences_by_order_of_apparition_use_case.execute(type_finder_object)
             self.remove_duplicates_use_case.execute(type_finder_object)
             self.remove_wrong_detected_codes_use_case.execute(type_finder_object)
-        type_finder_object.voie_big.infolib = type_finder_object.infolib
         return type_finder_object.voie_big

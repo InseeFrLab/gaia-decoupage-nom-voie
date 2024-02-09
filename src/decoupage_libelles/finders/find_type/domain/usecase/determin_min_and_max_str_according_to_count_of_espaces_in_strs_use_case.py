@@ -1,6 +1,6 @@
 class DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase:
 
-    def execute(str1: str, str2: str):
+    def execute(str1: str, str2: str) -> (str, str):
         espaces_str1 = str1.count(' ')
         espaces_str2 = str2.count(' ')
 

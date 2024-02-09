@@ -2,20 +2,20 @@ from injector import inject
 from typing import List
 from tqdm import tqdm
 
-from voie_classes.decoupage_voie import DecoupageVoie
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 from finders.find_complement.domain.usecase.complement_finder_use_case import ComplementFinderUseCase
 
 
-class ApplyComplementFinderOnListUseCase:
+class ApplyComplementFinderOnVoiesUseCase:
     @inject
     def __init__(self, complement_finder_use_case: ComplementFinderUseCase):
         self.complement_finder_use_case: ComplementFinderUseCase = complement_finder_use_case
 
     def execute(
             self,
-            voies_obj: List[DecoupageVoie],
+            voies_obj: List[InfoVoie],
             types_to_detect: List[str],
-            ) -> (List[DecoupageVoie], List[DecoupageVoie]):
+            ) -> (List[InfoVoie], List[InfoVoie]):
 
         voies_obj_compl = []
         new_voies_obj = voies_obj[:]
