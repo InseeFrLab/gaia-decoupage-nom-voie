@@ -1,10 +1,8 @@
 from typing import List
 from tqdm import tqdm
 
-from voie_classes.decoupage_voie import DecoupageVoie
-from finders.find_complement.complement_finder import ComplementFinder
-from constants.constant_lists import liste_types_complement_0
-from processors.no_type.no_type_assign_voies_complement import NoTypeAssignCompl
+
+from handle_voies_no_type.domain.usecase.no_type_handle_complement import NoTypeAssignCompl
 
 
 class NoTypeVoiesHandler():

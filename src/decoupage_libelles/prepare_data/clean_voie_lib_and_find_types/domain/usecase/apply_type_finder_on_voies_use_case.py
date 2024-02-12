@@ -5,7 +5,7 @@ from tqdm import tqdm
 
 from finders.find_type.domain.usecase.type_finder_use_case import TypeFinderUseCase
 from finders.find_type.domain.usecase.generate_type_finder_utils_use_case import GenerateTypeFinderUtilsUseCase
-from informations_on_libelle_voie.model.infovoie import InfoVoie
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 from finders.find_type.domain.model.type_finder_utils import TypeFinderUtils
 from finders.find_type.domain.model.type_finder_object import TypeFinderObject
 

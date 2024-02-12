@@ -1,6 +1,6 @@
 from typing import Optional
 
-from informations_on_libelle_voie.model.infovoie import InfoVoie
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 
 
 class GetWordsBetweenUseCase:

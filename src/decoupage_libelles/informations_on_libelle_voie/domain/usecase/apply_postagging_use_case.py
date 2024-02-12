@@ -1,5 +1,5 @@
-from informations_on_libelle_voie.usecase.nlp_model_singleton import NLPModelSingleton
-from informations_on_libelle_voie.model.infovoie import InfoVoie
+from informations_on_libelle_voie.domain.usecase.nlp_model_singleton import NLPModelSingleton
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 
 class ApplyPostaggingUseCase:
     def execute(self, infovoie: InfoVoie) -> InfoVoie:

@@ -1,11 +1,11 @@
 from injector import inject
 
-from informations_on_type_in_lib.usecase.order_type_in_lib_use_case import OrderTypeInLib
-from informations_on_libelle_voie.model.infovoie import InfoVoie
-from informations_on_type_in_lib.model.information_on_type_ordered import InformationOnTypeOrdered
+from informations_on_type_in_lib.domain.usecase.order_type_in_lib_use_case import OrderTypeInLib
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
+from informations_on_type_in_lib.domain.model.information_on_type_ordered import InformationOnTypeOrdered
 
 
-class HasTypeInMiddlePositionUseCase:
+class IsInMiddlePositionUseCase:
     @inject
     def __init__(self, order_type_in_lib_use_case: OrderTypeInLib):
          self.order_type_in_lib_use_case: OrderTypeInLib = order_type_in_lib_use_case

@@ -1,4 +1,4 @@
-from informations_on_type_in_lib.model.information_on_type_ordered import InformationOnTypeOrdered
+from informations_on_type_in_lib.domain.model.information_on_type_ordered import InformationOnTypeOrdered
 
 class TypeIsAgglomerantUseCase:
 

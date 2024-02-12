@@ -13,6 +13,9 @@ class GenerateTypeFinderUtilsUseCase:
 
     def execute(self,
                 type_finder_utils: TypeFinderUtils,) -> TypeFinderUtils:
+        
+        type_finder_utils.codes = list(set(type_finder_utils.type_voie_df['CODE'].tolist()))
+        type_finder_utils.lib2code = type_finder_utils.type_voie_df.set_index('LIBELLE')['CODE'].to_dict()
 
         types_lib = type_finder_utils.type_voie_df['LIBELLE'].tolist()
         types_lib = [InfoVoie(lib_raw) for lib_raw in types_lib]

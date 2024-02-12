@@ -3,7 +3,7 @@ from typing import List
 from tqdm import tqdm
 
 from prepare_data.ponctuation.domain.usecase.ponctuation_preprocessor_use_case import PonctuationPreprocessorUseCase
-from informations_on_libelle_voie.model.infovoie import InfoVoie
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 
 
 class ApplyPonctuationPreprocessorOnVoiesUseCase:

@@ -1,6 +1,6 @@
 from injector import inject
 
-from informations_on_libelle_voie.model.infovoie import InfoVoie
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 from prepare_data.ponctuation.domain.usecase.separate_words_with_apostrophe_and_supress_ponctuation_use_case import SeparateWordsWithApostropheAndSupressPonctuationUseCase
 from prepare_data.ponctuation.domain.usecase.suppress_ponctuation_in_words_use_case import SuppressPonctuationInWordsUseCase
 

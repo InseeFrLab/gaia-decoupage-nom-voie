@@ -24,6 +24,8 @@ class TypeFinderUseCase:
         self.remove_wrong_detected_codes_use_case: RemoveWrongDetectedCodesUseCase = remove_wrong_detected_codes_use_case
 
     def execute(self, type_finder_object: TypeFinderObject) -> InfoVoie:
+        type_finder_object.voie_sep = type_finder_object.voie_big.label_preproc[:]
+        type_finder_object.voie = (' ').join(type_finder_object.voie_big.label_preproc[:])
         self.detect_codified_types_use_case.execute(type_finder_object)
         self.detect_complete_form_types_use_case.execute(type_finder_object)
         types_detected = [type_lib for type_lib, __ in type_finder_object.voie_big.types_and_positions.keys()]

@@ -4,8 +4,8 @@ from informations_on_type_in_lib.domain.usecase.postag_before_type_use_case impo
 from informations_on_type_in_lib.domain.usecase.word_after_type_use_case import WordAfterTypeUseCase
 from informations_on_type_in_lib.domain.usecase.word_before_type_use_case import WordBeforeTypeUseCase
 from informations_on_type_in_lib.domain.usecase.order_type_in_lib_use_case import OrderTypeInLib
-from informations_on_type_in_lib.domain.usecase.has_type_in_middle_pos_use_case import HasTypeInMiddlePositionUseCase
-from informations_on_type_in_lib.domain.usecase.has_type_in_penultimate_position_use_case import HasTypeInPenultimatePositionUseCase
+from informations_on_type_in_lib.domain.usecase.is_in_middle_pos_use_case import IsInMiddlePositionUseCase
+from informations_on_type_in_lib.domain.usecase.is_in_penultimate_position_use_case import IsInPenultimatePositionUseCase
 from informations_on_type_in_lib.domain.usecase.type_is_agglomerant_use_case import TypeIsAgglomerantUseCase
 from informations_on_type_in_lib.domain.usecase.type_is_longitudinal_use_case import TypeIsLongitudinalUseCase
 from informations_on_type_in_lib.domain.usecase.type_is_complementaire_use_case import TypeIsComplementaireUseCase
@@ -21,8 +21,8 @@ class GenerateInformationOnTypeOrderedUseCase:
                  word_after_type_use_case: WordAfterTypeUseCase,
                  word_before_type_use_case: WordBeforeTypeUseCase,
                  order_type_in_lib_use_case: OrderTypeInLib,
-                 has_type_in_middle_pos_use_case: HasTypeInMiddlePositionUseCase,
-                 has_type_in_penultimate_position_use_case: HasTypeInPenultimatePositionUseCase,
+                 is_in_middle_pos_use_case: IsInMiddlePositionUseCase,
+                 is_in_penultimate_position_use_case: IsInPenultimatePositionUseCase,
                  type_is_agglomerant_use_case: TypeIsAgglomerantUseCase,
                  type_is_longitudinal_use_case: TypeIsLongitudinalUseCase,
                  type_is_complementaire_use_case: TypeIsComplementaireUseCase,
@@ -32,8 +32,8 @@ class GenerateInformationOnTypeOrderedUseCase:
         self.word_after_type_use_case: WordAfterTypeUseCase = word_after_type_use_case
         self.word_before_type_use_case: WordBeforeTypeUseCase = word_before_type_use_case
         self.order_type_in_lib_use_case: OrderTypeInLib = order_type_in_lib_use_case
-        self.has_type_in_middle_pos_use_case: HasTypeInMiddlePositionUseCase = has_type_in_middle_pos_use_case
-        self.has_type_in_penultimate_position_use_case: HasTypeInPenultimatePositionUseCase = has_type_in_penultimate_position_use_case
+        self.is_in_middle_pos_use_case: IsInMiddlePositionUseCase = has_type_in_middle_pos_use_case
+        self.is_in_penultimate_position_use_case: IsInPenultimatePositionUseCase = has_type_in_penultimate_position_use_case
         self.type_is_agglomerant_use_case: TypeIsAgglomerantUseCase = type_is_agglomerant_use_case
         self.type_is_longitudinal_use_case: TypeIsLongitudinalUseCase = type_is_longitudinal_use_case
         self.type_is_complementaire_use_case: TypeIsComplementaireUseCase = type_is_complementaire_use_case
@@ -48,8 +48,8 @@ class GenerateInformationOnTypeOrderedUseCase:
         if type_ordered:
             self.word_after_type_use_case.execute(infovoie, type_ordered)
             self.word_before_type_use_case.execute(infovoie, type_ordered)
-            self.has_type_in_middle_pos_use_case.execute(infovoie, type_ordered)
-            self.has_type_in_penultimate_position_use_case.execute(infovoie, type_ordered)
+            self.is_in_middle_pos_use_case.execute(infovoie, type_ordered)
+            self.is_in_penultimate_position_use_case.execute(infovoie, type_ordered)
             self.type_is_agglomerant_use_case.execute(type_ordered)
             self.type_is_longitudinal_use_case.execute(infovoie, type_ordered)
             self.type_is_complementaire_use_case.execute(infovoie, type_ordered)

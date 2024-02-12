@@ -4,7 +4,7 @@ from typing import List
 
 from prepare_data.clean_voie_lib_and_find_types.domain.usecase.apply_ponctuation_preprocessor_on_voies_use_case import ApplyPonctuationPreprocessorOnVoiesUseCase
 from prepare_data.clean_voie_lib_and_find_types.domain.usecase.apply_type_finder_on_voies_use_case import ApplyTypeFinderOnVoiesUseCase
-from informations_on_libelle_voie.model.infovoie import InfoVoie
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 
 
 class VoieLibPreprocessorUseCase:
