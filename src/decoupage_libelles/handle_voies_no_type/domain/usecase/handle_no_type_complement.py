@@ -24,11 +24,9 @@ class HandleNoTypeCompl():
                 first_type.has_adj_det_before):
             # 'LE TILLET BAT A'
             # lib + compl
-            voie_decoupee = self.assign_lib_compl_use_case.execute(voie_compl)
+            return self.assign_lib_compl_use_case.execute(voie_compl)
 
         else:
             # 'BAT JEAN LAMOUR'
             # lib
-            voie_decoupee = self.assign_lib_use_case.execute(voie_compl)
-
-        return voie_decoupee
+            return self.assign_lib_use_case.execute(voie_compl)

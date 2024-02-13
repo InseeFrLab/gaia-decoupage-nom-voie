@@ -1,9 +1,11 @@
 from injector import inject
+from typing import Optional
 
-from informations_on_libelle_voie.model.infovoie import InfoVoie
-from decoupe_voie.model.voie_decoupee import VoieDecoupee
-from informations_on_libelle_voie.usecase.get_words_between_use_case import GetWordsBetweenUseCase
-from informations_on_type_in_lib.usecase.order_type_in_lib_use_case import OrderTypeInLib
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
+from decoupe_voie.domain.model.voie_decoupee import VoieDecoupee
+from informations_on_libelle_voie.domain.usecase.get_words_between_use_case import GetWordsBetweenUseCase
+from informations_on_type_in_lib.domain.usecase.order_type_in_lib_use_case import OrderTypeInLib
+from informations_on_type_in_lib.domain.model.information_on_type_ordered import InformationOnTypeOrdered
 
 
 class AssignTypeLibComplUseCase:
@@ -16,9 +18,12 @@ class AssignTypeLibComplUseCase:
     def execute(
             self,
             infovoie: InfoVoie,
+            type_principal: Optional[InformationOnTypeOrdered] = None,
+            type_compl: Optional[InformationOnTypeOrdered] = None,
             ) -> VoieDecoupee:
-        type_principal = self.order_type_in_lib_use_case.execute(infovoie, 1)
-        type_compl = self.order_type_in_lib_use_case.execute(infovoie, 2)
+        if not type_principal and not type_compl:
+            type_principal = self.order_type_in_lib_use_case.execute(infovoie, 1)
+            type_compl = self.order_type_in_lib_use_case.execute(infovoie, 2)
         label_assigned = self.get_words_between_use_case.execute(infovoie, type_principal.position_end+1, type_compl.position_start)
         compl_assigned = self.get_words_between_use_case.execute(infovoie, type_compl.position_start)
 

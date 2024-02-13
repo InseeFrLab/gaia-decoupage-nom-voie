@@ -21,11 +21,9 @@ class ComplTypeInFirstOrLastPos:
         if first_type.is_complement:
             # 'IMM LE PARC'
             # lib
-            voie_traited = self.assign_lib_use_case.execute(voie_compl)
+            return self.assign_lib_use_case.execute(voie_compl)
         
         elif second_type.is_complement:
             # 'IMP DU PAVILLON'
             # 1er type + lib
-            voie_traited = self.assign_type_lib_use_case.execute(voie_compl, first_type)
-
-        return voie_traited
+            return self.assign_type_lib_use_case.execute(voie_compl, first_type)

@@ -28,14 +28,14 @@ class NoTypeVoiesHandler():
                                             voies,
                                             ComplementFinderUseCase.TYPES_COMPLEMENT_0
                                             )
-        voies_traited = []
+        voies_treated = []
         for voie_compl in tqdm(voies_complement):
-            voies_traited.append(self.handle_no_type_complement.execute(voie_compl))
+            voies_treated.append(self.handle_no_type_complement.execute(voie_compl))
 
         logging.info("Gestion du reste des voies")
         for voie in tqdm(voies):
             # 'LES HARDONNIERES'
             # lib
-            voies_traited.append(self.assign_lib_use_case.execute(voie))
+            voies_treated.append(self.assign_lib_use_case.execute(voie))
 
-        return voies_traited
+        return voies_treated

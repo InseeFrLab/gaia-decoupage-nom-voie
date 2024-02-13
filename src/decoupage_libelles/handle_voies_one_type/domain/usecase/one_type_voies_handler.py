@@ -34,9 +34,9 @@ class OneTypeVoiesHandler():
                                             voies,
                                             ComplementFinderUseCase.TYPES_COMPLEMENT_1_2
                                             )
-        voies_traited = []
+        voies_treated = []
         for voie_compl in tqdm(voies_complement):
-            voies_traited.append(self.handle_one_type_complement.execute(voie_compl))
+            voies_treated.append(self.handle_one_type_complement.execute(voie_compl))
 
         logging.info("Gestion des voies fictives")
         voies_fictives, voies = self.apply_voie_fictive_finder_on_voies_use_case.execute(
@@ -46,10 +46,10 @@ class OneTypeVoiesHandler():
         for voie_fictive in tqdm(voies_fictives):
             # 'LES VERNONS RUE B'
             # lib + compl
-            voies_traited.append(self.assign_lib_compl_use_case.execute(voie_fictive))
+            voies_treated.append(self.assign_lib_compl_use_case.execute(voie_fictive))
 
         logging.info("Gestion du reste des voies")
         for voie in tqdm(voies):
-            voies_traited.append(self.handle_one_type_not_compl_not_fictif.execute(voie))
+            voies_treated.append(self.handle_one_type_not_compl_not_fictif.execute(voie))
 
-        return voies_traited
+        return voies_treated

@@ -37,12 +37,12 @@ class HandleOneTypeNotComplNotFictif:
             # 1er type + lib
             # test = VoieType('CHE DES SEMAPHORES', ['CHE', 'DES', 'SEMAPHORES'], ['CHEMIN'], [0], [])
             first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
-            voie_traited = self.assign_type_lib_use_case.execute(voie, first_type)
+            voie_treated = self.assign_type_lib_use_case.execute(voie, first_type)
 
         else:
-            voie_traited = self.type_long_not_first_pos.execute(voie)
-            voie_traited = self.type_route_not_first_pos.execute(voie) if not voie_traited else voie_traited
-            voie_traited = self.type_agglo_not_first_pos.execute(voie) if not voie_traited else voie_traited
-            voie_traited = self.assign_lib_use_case.execute(voie) if not voie_traited else voie_traited
+            voie_treated = self.type_long_not_first_pos.execute(voie)
+            voie_treated = self.type_route_not_first_pos.execute(voie) if not voie_treated else voie_treated
+            voie_treated = self.type_agglo_not_first_pos.execute(voie) if not voie_treated else voie_treated
+            voie_treated = self.assign_lib_use_case.execute(voie) if not voie_treated else voie_treated
 
-        return voie_traited
+        return voie_treated

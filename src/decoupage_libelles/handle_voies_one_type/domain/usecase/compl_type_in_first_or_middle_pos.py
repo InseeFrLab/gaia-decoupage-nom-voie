@@ -31,20 +31,18 @@ class ComplTypeInFirstOrMiddlePos:
             if not second_type.has_adj_det_before:
                 # 'BAT L ANJOU AVE DE VLAMINC'
                 # compl + 2e type + lib
-                voie_traited = self.assign_compl_type_lib_use_case.execute(voie_compl, second_type)
+                return self.assign_compl_type_lib_use_case.execute(voie_compl, second_type)
             else:
                 # 'IMM LE LAC DU LOU'
                 # lib
-                voie_traited = self.assign_lib_use_case.execute(voie_compl)
+                return self.assign_lib_use_case.execute(voie_compl)
         
         elif second_type.is_complement:
             if not second_type.has_adj_det_before:
                 #  'HLM LES CHARTREUX BAT B2'
                 # 1er type + lib + compl
-                voie_traited = self.assign_type_lib_compl_use_case.execute(voie_compl, first_type, second_type)
+                return self.assign_type_lib_compl_use_case.execute(voie_compl, first_type, second_type)
             else:
                 # 'RUE DU PAVILLON DE LA MARINE'
                 # 1er type + lib
-                voie_traited = self.assign_type_lib_use_case.execute(voie_compl, first_type)
-
-        return voie_traited
+                return self.assign_type_lib_use_case.execute(voie_compl, first_type)

@@ -28,17 +28,15 @@ class HandleOneTypeCompl():
         if voie_compl.has_type_in_first_pos:
 
             if voie_compl.has_type_in_second_pos:
-                voie_traited = self.compl_type_in_first_or_second_pos.execute(voie_compl)
+                return self.compl_type_in_first_or_second_pos.execute(voie_compl)
 
             elif voie_compl.has_type_in_last_pos:
-                voie_traited = self.compl_type_in_first_or_last_pos.execute(voie_compl)
+                return self.compl_type_in_first_or_last_pos.execute(voie_compl)
 
             else:
-                voie_traited = self.compl_type_in_first_or_middle_pos.execute(voie_compl)
+                return self.compl_type_in_first_or_middle_pos.execute(voie_compl)
 
         else:
             # 'LE PAVILLON DE LA FORET'
             # lib
-            voie_traited = self.assign_lib_use_case.execute(voie_compl)
-        
-        return voie_traited
+            return self.assign_lib_use_case.execute(voie_compl)
