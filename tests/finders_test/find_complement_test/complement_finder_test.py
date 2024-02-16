@@ -2,40 +2,39 @@ import unittest
 import sys
 sys.path.append('../src/decoupage_libelles/')
 
-from voie_classes.decoupage_voie import DecoupageVoie
-from voie_classes.informations_on_libelle import InfoLib
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 from finders.find_complement.domain.usecase.complement_finder_use_case import ComplementFinderUseCase
 
 
-class ComplementFinderTest:
+class ComplementFinderTest(unittest.TestCase):
     def setUp(self):
         self.complement_finder_use_case: ComplementFinderUseCase = ComplementFinderUseCase()
 
     def test_complement_finder_no_type(self):
         # Given
-        infolib = InfoLib(label_preproc=["LE", "TILLET", "BAT", "A"], types_and_positions={})
-        voie = DecoupageVoie(label_raw="LE TILLET BAT A", infolib=infolib)
+        voie = InfoVoie(label_raw="LE TILLET BAT A", label_preproc=["LE", "TILLET", "BAT", "A"], types_and_positions={})
         # When
-        voie_traited = self.complement_finder_use_case.execute(voie, ["BAT"])
+        voie_treated = self.complement_finder_use_case.execute(voie, ["BAT"])
         # Then
-        self.assertEqual({('BAT', 1): (2, 2)}, voie_traited.infolib.types_and_positions)
+        voie_target = InfoVoie(label_raw="LE TILLET BAT A", label_preproc=["LE", "TILLET", "BAT", "A"], types_and_positions={('BAT', 1): (2, 2)})
+        self.assertEqual(voie_target, voie_treated)
 
     def test_complement_finder_one_type(self):
         # Given
-        infolib = InfoLib(label_preproc=["IMM", "L", "ANJOU", "AVE", "DE", "VLAMINC"], types_and_positions={("AVE", 1): (3, 3)})
-        voie = DecoupageVoie(label_raw="IMM L ANJOU AVE DE VLAMINC", infolib=infolib)
+        voie = InfoVoie(label_raw="IMM L ANJOU AVE DE VLAMINC", label_preproc=["IMM", "L", "ANJOU", "AVE", "DE", "VLAMINC"], types_and_positions={("AVE", 1): (3, 3)})
         # When
-        voie_traited = self.complement_finder_use_case.execute(voie, ["IMM"])
+        voie_treated = self.complement_finder_use_case.execute(voie, ["IMM"])
         # Then
-        self.assertEqual({("IMM", 1): (0, 0), ("AVE", 1): (3, 3)}, voie_traited.infolib.types_and_positions)
+        voie_target = InfoVoie(label_raw="IMM L ANJOU AVE DE VLAMINC", label_preproc=["IMM", "L", "ANJOU", "AVE", "DE", "VLAMINC"], types_and_positions={("IMM", 1): (0, 0), ("AVE", 1): (3, 3)})
+        self.assertEqual(voie_target, voie_treated)
 
-    def test_complement_finder_returns_empty_list(self):
+    def test_complement_finder_returns_empty_voie(self):
         # Given
-        voie = []
+        voie = InfoVoie("")
         # When
-        voie_traited = self.complement_finder_use_case.execute(voie, ["BAT"])
+        voie_treated = self.complement_finder_use_case.execute(voie, ["BAT"])
         # Then
-        self.assertEqual([], voie_traited)
+        self.assertEqual(voie_treated, voie_treated)
 
 
 if __name__ == "__main__":
