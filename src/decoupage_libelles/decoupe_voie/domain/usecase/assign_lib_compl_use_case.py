@@ -1,9 +1,9 @@
 from injector import inject
 
-from informations_on_libelle_voie.model.infovoie import InfoVoie
-from decoupe_voie.model.voie_decoupee import VoieDecoupee
-from informations_on_libelle_voie.usecase.get_words_between_use_case import GetWordsBetweenUseCase
-from informations_on_type_in_lib.usecase.order_type_in_lib_use_case import OrderTypeInLib
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
+from decoupe_voie.domain.model.voie_decoupee import VoieDecoupee
+from informations_on_libelle_voie.domain.usecase.get_words_between_use_case import GetWordsBetweenUseCase
+from informations_on_type_in_lib.domain.usecase.order_type_in_lib_use_case import OrderTypeInLib
 
 
 class AssignLibComplUseCase:

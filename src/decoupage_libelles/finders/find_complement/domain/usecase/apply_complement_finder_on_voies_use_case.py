@@ -1,5 +1,5 @@
 from injector import inject
-from typing import List
+from typing import List, Union
 from tqdm import tqdm
 
 from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
@@ -15,7 +15,7 @@ class ApplyComplementFinderOnVoiesUseCase:
             self,
             voies_obj: List[InfoVoie],
             types_to_detect: List[str],
-            ) -> (List[InfoVoie], List[InfoVoie]):
+            ) -> Union[List[InfoVoie], List[InfoVoie]]:
 
         voies_obj_compl = []
         new_voies_obj = voies_obj[:]

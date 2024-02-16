@@ -1,5 +1,5 @@
-from informations_on_libelle_voie.model.infovoie import InfoVoie
-from decoupe_voie.model.voie_decoupee import VoieDecoupee
+from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
+from decoupe_voie.domain.model.voie_decoupee import VoieDecoupee
 
 
 class AssignLibUseCase:

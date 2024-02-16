@@ -1,6 +1,9 @@
+from typing import Union
+
+
 class DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase:
 
-    def execute(str1: str, str2: str) -> (str, str):
+    def execute(str1: str, str2: str) -> Union[str, str]:
         espaces_str1 = str1.count(' ')
         espaces_str2 = str2.count(' ')
 

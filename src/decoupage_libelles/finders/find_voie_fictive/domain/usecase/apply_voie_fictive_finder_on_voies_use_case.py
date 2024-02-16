@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 from injector import inject
 from tqdm import tqdm
 
@@ -14,7 +14,7 @@ class ApplyVoieFictiveFinderOnVoiesUseCase:
     def execute(self,
             list_object_voies: List[InfoVoie],
             list_type_to_detect: List[str],
-            ) -> (List[InfoVoie], List[InfoVoie]):
+            ) -> Union[List[InfoVoie], List[InfoVoie]]:
 
         list_object_voies_fictives = []
         new_list_object_voies = list_object_voies[:]

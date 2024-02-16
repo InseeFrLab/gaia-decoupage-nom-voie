@@ -1,4 +1,3 @@
-from tqdm import tqdm
 from typing import List
 from injector import inject
 
