@@ -1,12 +1,12 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Optional, List
 
 
 @dataclass
 class InfoVoie:
     label_raw: str
-    label_preproc:Optional[List[str]]
-    types_and_positions: Optional[dict] = {}
+    label_preproc: Optional[List[str]] = field(default_factory=list)
+    types_and_positions: Optional[dict] = field(default_factory=dict)
     label_postag: Optional[List[str]] = None
     types_detected: Optional[List[str]] = None
     nb_types_detected: Optional[List[int]] = 0

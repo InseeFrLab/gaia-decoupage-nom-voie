@@ -1,5 +1,6 @@
 import unittest
-from preprocessors.ponctuation.domain.use_case.suppress_ponctuation_in_words_use_case import SuppressPonctuationInWordsUseCase
+
+from prepare_data.ponctuation.domain.usecase.suppress_ponctuation_in_words_use_case import SuppressPonctuationInWordsUseCase
 
 
 class SuppressPonctuationInWordsTest(unittest.TestCase):

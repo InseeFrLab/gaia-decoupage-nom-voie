@@ -1,6 +1,4 @@
 import unittest
-import sys
-sys.path.append('../src/decoupage_libelles/')
 
 from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 from finders.find_complement.domain.usecase.complement_finder_use_case import ComplementFinderUseCase
