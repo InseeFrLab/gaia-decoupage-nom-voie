@@ -8,7 +8,7 @@ from decoupe_voie.domain.usecase.assign_lib_use_case import AssignLibUseCase
 from decoupe_voie.domain.usecase.assign_type_lib_compl_use_case import AssignTypeLibComplUseCase
 
 
-class ComplTypeInFirstOrMiddlePos:
+class ComplTypeInFirstOrMiddlePosUseCase:
     def __init__(self, generate_information_on_lib_use_case: GenerateInformationOnLibUseCase,
                  generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase,
                  assign_type_lib_use_case: AssignTypeLibUseCase,

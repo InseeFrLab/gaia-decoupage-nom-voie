@@ -6,7 +6,7 @@ from decoupe_voie.domain.usecase.assign_type_lib_compl_use_case import AssignTyp
 from finders.find_complement.domain.usecase.complement_finder_use_case import ComplementFinderUseCase
 
 
-class ComplSecondTypeCompl:
+class ComplThirdTypeComplUseCase:
     def __init__(self,
                  generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase,
                  assign_lib_use_case: AssignLibUseCase, 
@@ -19,12 +19,12 @@ class ComplSecondTypeCompl:
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 1)
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 2)
         third_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 3)
-    
-        if second_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_1_2:
+
+        if third_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_1_2:
             if first_type.is_longitudinal or first_type.is_agglomerant:
-                # 1er type + lib + 2e type compl
-                return self.assign_type_lib_compl_use_case.execute(voie_compl)
-            elif third_type.is_longitudinal or third_type.is_agglomerant:
+                # 1er type + lib + 3e type compl
+                return self.assign_type_lib_compl_use_case.execute(voie_compl, first_type, third_type)
+            elif second_type.is_longitudinal or second_type.is_agglomerant:
                 # lib
                 return self.assign_lib_use_case.execute(voie_compl)
             else:

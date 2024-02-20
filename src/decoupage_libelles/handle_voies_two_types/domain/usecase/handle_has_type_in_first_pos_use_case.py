@@ -10,7 +10,7 @@ from decoupe_voie.domain.usecase.assign_type_lib_compl_use_case import AssignTyp
 from decoupe_voie.domain.usecase.assign_lib_use_case import AssignLibUseCase
 
 
-class HandleHasTypeInFirstPos:
+class HandleHasTypeInFirstPosUseCase:
     COMBINAISONS_LONG = {'CHEMIN/VOIE COMMUNALE': True,
                         'VOIE/RUE': False,
                         'IMPASSE/VOIE': True,

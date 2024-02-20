@@ -3,7 +3,7 @@ from typing import List
 from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 
 
-class ComplementFinderUseCase():
+class ComplementFinderUseCase:
     TYPES_COMPLEMENT_0 = ['IMM', 'IMMEUBLE',
                          'BLOC',
                          'BAT', 'BATIMENT']
@@ -37,7 +37,7 @@ class ComplementFinderUseCase():
 
     def execute(self,
                  infovoie: InfoVoie,
-                 types_complement: list) -> InfoVoie:
+                 types_complement: List[str]) -> InfoVoie:
         for type_compl in types_complement:  # parcours de la liste de types "complément"
             if type_compl in infovoie.label_preproc:
                 position_type = infovoie.label_preproc.index(type_compl)

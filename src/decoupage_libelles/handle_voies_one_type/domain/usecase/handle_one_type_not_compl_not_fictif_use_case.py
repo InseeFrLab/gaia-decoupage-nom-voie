@@ -6,28 +6,28 @@ from decoupe_voie.domain.usecase.assign_lib_use_case import AssignLibUseCase
 from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 from informations_on_libelle_voie.domain.usecase.generate_information_on_lib_use_case import GenerateInformationOnLibUseCase
 from informations_on_type_in_lib.domain.usecase.generate_information_on_type_ordered_use_case import GenerateInformationOnTypeOrderedUseCase
-from handle_voies_one_type.domain.usecase.type_long_not_first_pos import TypeLongNotFirstPos
-from handle_voies_one_type.domain.usecase.type_route_not_first_pos import TypeRouteNotFirstPos
-from handle_voies_one_type.domain.usecase.type_agglo_not_first_pos import TypeAggloNotFirstPos
+from handle_voies_one_type.domain.usecase.type_long_not_first_pos_use_case import TypeLongNotFirstPosUseCase
+from handle_voies_one_type.domain.usecase.type_route_not_first_pos_use_case import TypeRouteNotFirstPosUseCase
+from handle_voies_one_type.domain.usecase.type_agglo_not_first_pos_use_case import TypeAggloNotFirstPosUseCase
 
 
-class HandleOneTypeNotComplNotFictif:
+class HandleOneTypeNotComplNotFictifUseCase:
     @inject
     def __init__(self,
                  generate_information_on_lib_use_case: GenerateInformationOnLibUseCase,
                  generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase,
                  assign_type_lib_use_case: AssignTypeLibUseCase,
                  assign_lib_use_case: AssignLibUseCase,
-                 type_long_not_first_pos: TypeLongNotFirstPos,
-                 type_route_not_first_pos: TypeRouteNotFirstPos,
-                 type_agglo_not_first_pos: TypeAggloNotFirstPos):
+                 type_long_not_first_pos_use_case: TypeLongNotFirstPosUseCase,
+                 type_route_not_first_pos_use_case: TypeRouteNotFirstPosUseCase,
+                 type_agglo_not_first_pos_use_case: TypeAggloNotFirstPosUseCase):
         self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
         self.assign_type_lib_use_case: AssignTypeLibUseCase = assign_type_lib_use_case
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
-        self.type_long_not_first_pos: TypeLongNotFirstPos = type_long_not_first_pos
-        self.type_route_not_first_pos: TypeRouteNotFirstPos = type_route_not_first_pos
-        self.type_agglo_not_first_pos: TypeAggloNotFirstPos = type_agglo_not_first_pos
+        self.type_long_not_first_pos_use_case: TypeLongNotFirstPosUseCase = type_long_not_first_pos_use_case
+        self.type_route_not_first_pos_use_case: TypeRouteNotFirstPosUseCase = type_route_not_first_pos_use_case
+        self.type_agglo_not_first_pos_use_case: TypeAggloNotFirstPosUseCase = type_agglo_not_first_pos_use_case
 
 
     def execute(self, voie : InfoVoie) -> VoieDecoupee:
@@ -40,9 +40,9 @@ class HandleOneTypeNotComplNotFictif:
             voie_treated = self.assign_type_lib_use_case.execute(voie, first_type)
 
         else:
-            voie_treated = self.type_long_not_first_pos.execute(voie)
-            voie_treated = self.type_route_not_first_pos.execute(voie) if not voie_treated else voie_treated
-            voie_treated = self.type_agglo_not_first_pos.execute(voie) if not voie_treated else voie_treated
+            voie_treated = self.type_long_not_first_pos_use_case.execute(voie)
+            voie_treated = self.type_route_not_first_pos_use_case.execute(voie) if not voie_treated else voie_treated
+            voie_treated = self.type_agglo_not_first_pos_use_case.execute(voie) if not voie_treated else voie_treated
             voie_treated = self.assign_lib_use_case.execute(voie) if not voie_treated else voie_treated
 
         return voie_treated

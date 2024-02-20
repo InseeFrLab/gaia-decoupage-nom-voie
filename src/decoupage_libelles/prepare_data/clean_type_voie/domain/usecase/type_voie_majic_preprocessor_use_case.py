@@ -1,5 +1,6 @@
 import pandas as pd
 from injector import inject
+from typing import Union
 
 from prepare_data.clean_type_voie.domain.usecase.enrich_reduced_lib_use_case import EnrichReducedLibUseCase
 from prepare_data.clean_type_voie.domain.usecase.choose_unique_lib_use_case import ChooseUniqueLibUseCase
@@ -11,6 +12,7 @@ from prepare_data.clean_type_voie.domain.usecase.new_spelling_for_code_use_case 
 class TypeVoieMajicPreprocessorUseCase:
     FILEPATH_TYPE_VOIE = "../data/type_voie_majic.csv"
 
+    @inject
     def __init__(self, enrich_reduced_lib_use_case: EnrichReducedLibUseCase, choose_unique_lib_use_case: ChooseUniqueLibUseCase,
                  new_codes_lib_use_case: NewCodesLibUseCase, create_dict_code_lib_use_case: CreatDictCodeLibUseCase, new_spelling_for_code_use_case: NewSpellingForCodeUseCase):
         self.enrich_reduced_lib_use_case: EnrichReducedLibUseCase = enrich_reduced_lib_use_case
@@ -19,7 +21,7 @@ class TypeVoieMajicPreprocessorUseCase:
         self.create_dict_code_lib_use_case: CreatDictCodeLibUseCase = create_dict_code_lib_use_case
         self.new_spelling_for_code_use_case: NewSpellingForCodeUseCase = new_spelling_for_code_use_case
 
-    def execute(self) -> (pd.DataFrame, dict):
+    def execute(self) -> Union[pd.DataFrame, dict]:
         """
         Nettoie et enrichit les données de type de voie.
 

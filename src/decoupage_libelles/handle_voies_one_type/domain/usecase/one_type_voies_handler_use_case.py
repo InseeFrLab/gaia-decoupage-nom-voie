@@ -9,22 +9,23 @@ from finders.find_complement.domain.usecase.apply_complement_finder_on_voies_use
 from finders.find_voie_fictive.domain.usecase.apply_voie_fictive_finder_on_voies_use_case import ApplyVoieFictiveFinderOnVoiesUseCase
 from finders.find_voie_fictive.domain.usecase.voie_fictive_finder_use_case import VoieFictiveFinderUseCase
 from finders.find_complement.domain.usecase.complement_finder_use_case import ComplementFinderUseCase
-from handle_voies_one_type.domain.usecase.handle_one_type_complement import HandleOneTypeCompl
-from handle_voies_one_type.domain.usecase.handle_one_type_not_compl_not_fictif import HandleOneTypeNotComplNotFictif
+from handle_voies_one_type.domain.usecase.handle_one_type_complement_use_case import HandleOneTypeComplUseCase
+from handle_voies_one_type.domain.usecase.handle_one_type_not_compl_not_fictif_use_case import HandleOneTypeNotComplNotFictifUseCase
 from decoupe_voie.domain.usecase.assign_lib_compl_use_case import AssignLibComplUseCase
 
-class OneTypeVoiesHandler():
+
+class OneTypeVoiesHandlerUseCase:
     @inject
     def __init__(self,
                  apply_complement_finder_on_voies_use_case: ApplyComplementFinderOnVoiesUseCase,
                  apply_voie_fictive_finder_on_voies_use_case: ApplyVoieFictiveFinderOnVoiesUseCase,
-                 handle_one_type_complement: HandleOneTypeCompl,
-                 handle_one_type_not_compl_not_fictif: HandleOneTypeNotComplNotFictif,
+                 handle_one_type_complement_use_case: HandleOneTypeComplUseCase,
+                 handle_one_type_not_compl_not_fictif_use_case: HandleOneTypeNotComplNotFictifUseCase,
                  assign_lib_compl_use_case: AssignLibComplUseCase):
         self.apply_complement_finder_on_voies_use_case: ApplyComplementFinderOnVoiesUseCase = apply_complement_finder_on_voies_use_case
         self.apply_voie_fictive_finder_on_voies_use_case: ApplyVoieFictiveFinderOnVoiesUseCase = apply_voie_fictive_finder_on_voies_use_case
-        self.handle_one_type_complement: HandleOneTypeCompl = handle_one_type_complement
-        self.handle_one_type_not_compl_not_fictif: HandleOneTypeNotComplNotFictif = handle_one_type_not_compl_not_fictif
+        self.handle_one_type_complement_use_case: HandleOneTypeComplUseCase = handle_one_type_complement_use_case
+        self.handle_one_type_not_compl_not_fictif_use_case: HandleOneTypeNotComplNotFictifUseCase = handle_one_type_not_compl_not_fictif_use_case
         self.assign_lib_compl_use_case: AssignLibComplUseCase = assign_lib_compl_use_case
 
     def execute(self, voies: List[InfoVoie]) -> List[VoieDecoupee]:
@@ -36,7 +37,7 @@ class OneTypeVoiesHandler():
                                             )
         voies_treated = []
         for voie_compl in tqdm(voies_complement):
-            voies_treated.append(self.handle_one_type_complement.execute(voie_compl))
+            voies_treated.append(self.handle_one_type_complement_use_case.execute(voie_compl))
 
         logging.info("Gestion des voies fictives")
         voies_fictives, voies = self.apply_voie_fictive_finder_on_voies_use_case.execute(
@@ -50,6 +51,6 @@ class OneTypeVoiesHandler():
 
         logging.info("Gestion du reste des voies")
         for voie in tqdm(voies):
-            voies_treated.append(self.handle_one_type_not_compl_not_fictif.execute(voie))
+            voies_treated.append(self.handle_one_type_not_compl_not_fictif_use_case.execute(voie))
 
         return voies_treated

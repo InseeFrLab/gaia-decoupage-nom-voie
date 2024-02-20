@@ -7,7 +7,7 @@ from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 from informations_on_libelle_voie.domain.usecase.generate_information_on_lib_use_case import GenerateInformationOnLibUseCase
 from informations_on_type_in_lib.domain.usecase.generate_information_on_type_ordered_use_case import GenerateInformationOnTypeOrderedUseCase
 
-class TypeRouteNotFirstPos:
+class TypeRouteNotFirstPosUseCase:
     @inject
     def __init__(self,
                  generate_information_on_lib_use_case: GenerateInformationOnLibUseCase,

@@ -6,7 +6,7 @@ from decoupe_voie.domain.usecase.assign_lib_compl_use_case import AssignLibCompl
 from decoupe_voie.domain.usecase.assign_lib_use_case import AssignLibUseCase
 
 
-class HandleNoTypeCompl():
+class HandleNoTypeComplUseCase():
     def __init__(self, generate_information_on_lib_use_case: GenerateInformationOnLibUseCase,
                  generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase,
                  assign_lib_compl_use_case: AssignLibComplUseCase,

@@ -8,7 +8,7 @@ from decoupe_voie.domain.usecase.assign_compl_type_lib_use_case import AssignCom
 from decoupe_voie.domain.usecase.assign_lib_use_case import AssignLibUseCase
 
 
-class HandleNoTypeInFirstPos:
+class HandleNoTypeInFirstPosUseCase:
     @inject
     def __init__(self,
                  generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase,

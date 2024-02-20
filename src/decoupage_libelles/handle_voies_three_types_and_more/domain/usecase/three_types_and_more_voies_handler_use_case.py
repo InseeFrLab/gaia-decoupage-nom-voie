@@ -7,7 +7,7 @@ from informations_on_libelle_voie.domain.model.infovoie import InfoVoie
 from decoupe_voie.domain.model.voie_decoupee import VoieDecoupee
 from decoupe_voie.domain.usecase.assign_lib_use_case import AssignLibUseCase
 
-class ThreeTypesAndMoreVoiesHandler():
+class ThreeTypesAndMoreVoiesHandlerUseCase:
     @inject
     def __init__(self,
                  assign_lib_use_case: AssignLibUseCase):

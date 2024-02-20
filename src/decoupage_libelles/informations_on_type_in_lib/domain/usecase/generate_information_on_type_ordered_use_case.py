@@ -32,8 +32,8 @@ class GenerateInformationOnTypeOrderedUseCase:
         self.word_after_type_use_case: WordAfterTypeUseCase = word_after_type_use_case
         self.word_before_type_use_case: WordBeforeTypeUseCase = word_before_type_use_case
         self.order_type_in_lib_use_case: OrderTypeInLib = order_type_in_lib_use_case
-        self.is_in_middle_pos_use_case: IsInMiddlePositionUseCase = has_type_in_middle_pos_use_case
-        self.is_in_penultimate_position_use_case: IsInPenultimatePositionUseCase = has_type_in_penultimate_position_use_case
+        self.is_in_middle_pos_use_case: IsInMiddlePositionUseCase = is_in_middle_pos_use_case
+        self.is_in_penultimate_position_use_case: IsInPenultimatePositionUseCase = is_in_penultimate_position_use_case
         self.type_is_agglomerant_use_case: TypeIsAgglomerantUseCase = type_is_agglomerant_use_case
         self.type_is_longitudinal_use_case: TypeIsLongitudinalUseCase = type_is_longitudinal_use_case
         self.type_is_complementaire_use_case: TypeIsComplementaireUseCase = type_is_complementaire_use_case

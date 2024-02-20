@@ -14,7 +14,7 @@ class VoieLibPreprocessorUseCase:
         self.apply_ponctuation_preprocessor_on_voies_use_case: ApplyPonctuationPreprocessorOnVoiesUseCase = apply_ponctuation_preprocessor_on_voies_use_case
         self.apply_type_finder_on_voies_use_case: ApplyTypeFinderOnVoiesUseCase = apply_type_finder_on_voies_use_case
 
-    def run(self, voies_data: List[InfoVoie], type_voie_df: pd.DataFrame, code2lib: dict) -> List[InfoVoie]:
+    def execute(self, voies_data: List[InfoVoie], type_voie_df: pd.DataFrame, code2lib: dict) -> List[InfoVoie]:
         print("Traitement de la ponctuation")
         self.apply_ponctuation_preprocessor_on_voies_use_case.execute(voies_data)
         print("Détection des types de voies dans les libellés")

@@ -3,9 +3,9 @@ from informations_on_type_in_lib.domain.usecase.generate_information_on_type_ord
 from finders.find_complement.domain.usecase.complement_finder_use_case import ComplementFinderUseCase
 
 
-class CompleImmeubleBeforeType:
+class CompleImmeubleBeforeTypeUseCase:
     def __init__(self,
-                 generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase,):
+                 generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase):
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
 
     def execute(self, voie_compl: InfoVoie) -> InfoVoie:

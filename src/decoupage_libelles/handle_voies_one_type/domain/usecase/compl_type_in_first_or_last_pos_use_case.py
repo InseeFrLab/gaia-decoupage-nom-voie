@@ -5,7 +5,7 @@ from decoupe_voie.domain.usecase.assign_type_lib_use_case import AssignTypeLibUs
 from decoupe_voie.domain.usecase.assign_lib_use_case import AssignLibUseCase
 
 
-class ComplTypeInFirstOrLastPos:
+class ComplTypeInFirstOrLastPosUseCase:
     def __init__(self,
                  generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase,
                  assign_type_lib_use_case: AssignTypeLibUseCase,
