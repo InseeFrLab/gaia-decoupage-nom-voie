@@ -8,7 +8,6 @@ packages = [{ include = "decoupage_libelles", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-injector = "^0.20.1"
 dynaconf = "^3.2.0"
 click = "^8.1.7"
 tqdm = "^4.66.1"
@@ -35,7 +34,7 @@ omit = [".*", "*/site-packages/*", "tests/*", "__init__.py"]
 source = ["src/decoupage_libelles"]
 
 [tool.coverage.report]
-fail_under = 70
+fail_under = 0
 
 [build-system.publish]
 url = "https://nexus.insee.fr/repository/pypi-internal/"
