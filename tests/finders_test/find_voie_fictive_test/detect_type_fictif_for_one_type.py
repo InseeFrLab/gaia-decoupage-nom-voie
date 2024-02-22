@@ -1,10 +1,7 @@
 import unittest
-import sys
 
-sys.path.append("../src/decoupage_libelles/")
-
-from informations_on_libelle_voie.model.infovoie import InfoVoie
-from finders.find_voie_fictive.usecase.detect_type_fictif_for_one_type_use_case import DetectTypeFictifForOneTypeUseCase
+from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
+from decoupage_libelles.finders.find_voie_fictive.usecase.detect_type_fictif_for_one_type_use_case import DetectTypeFictifForOneTypeUseCase
 
 
 # ne marche pas à cause des injectors
