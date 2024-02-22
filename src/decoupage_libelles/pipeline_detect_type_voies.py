@@ -4,8 +4,8 @@ import sys
 from voie_classes.voie import Voie
 from voie_classes.decoupage_voie import DecoupageVoie
 
-from preprocessors.clean_type_voie.domain.usecase.type_voie_majic_preprocessor_use_case import TypeVoieMajicPreprocessor
-from preprocessors.clean_voie_lib_and_find_types.domain.usecase.voie_data_preprocessor import VoieDataPreprocessor
+from preprocessors.clean_type_voie.usecase.type_voie_majic_preprocessor_use_case import TypeVoieMajicPreprocessor
+from preprocessors.clean_voie_lib_and_find_types.usecase.voie_data_preprocessor import VoieDataPreprocessor
 from utils.proc_utils import save_voies_processed
 from processors.no_type.no_type_voies_handler import NoTypeVoiesHandler
 from processors.one_type.one_type_voies_handler import OneTypeVoiesHandler
@@ -14,9 +14,10 @@ from processors.three_more_types.three_more_types_voies_handler import ThreeMore
 
 
 class TypeVoieDetector:
-    def __init__(self,
-                 voies_data: list,
-                 ):
+    def __init__(
+        self,
+        voies_data: list,
+    ):
 
         self.voies_data = voies_data
         self.type_voie_df = None
@@ -29,23 +30,19 @@ class TypeVoieDetector:
 
     def preprocess_voie_libelle(self):
         voies_objects = [Voie(elt) for elt in self.voies_data]
-        self.voies_preproc = VoieDataPreprocessor(voies_objects,
-                                                  self.type_voie_df,
-                                                  self.code2lib).run()
+        self.voies_preproc = VoieDataPreprocessor(voies_objects, self.type_voie_df, self.code2lib).run()
 
     def instantiate_processing(self):
-        self.voies_preproc = [DecoupageVoie(
-                              voie.label_raw,
-                              voie.infolib) for voie in self.voies_preproc]
+        self.voies_preproc = [DecoupageVoie(voie.label_raw, voie.infolib) for voie in self.voies_preproc]
 
     def run_processing_voies(self):
 
-        print('Processing des voies sans type détecté')
+        print("Processing des voies sans type détecté")
         voies_proc_0 = NoTypeVoiesHandler(self.voies_preproc).run()
         self.voies_proc = voies_proc_0
         print("Done")
 
-        print('Processing des voies avec un type détecté')
+        print("Processing des voies avec un type détecté")
         voies_proc_1 = OneTypeVoiesHandler(self.voies_preproc).run()
         self.voies_proc += voies_proc_1
         print("Done")
@@ -63,9 +60,9 @@ class TypeVoieDetector:
     def run(self):
 
         print("*********")
-        print(' ')
-        print('Preprocessing')
-        print(' ')
+        print(" ")
+        print("Preprocessing")
+        print(" ")
         print("*********")
 
         print("Preprocessing des données 'types de voie' issues de Majic")
@@ -76,35 +73,37 @@ class TypeVoieDetector:
         self.preprocess_voie_libelle()
         print("Done")
 
-        print('Preprocessing fini')
+        print("Preprocessing fini")
 
         print("*********")
-        print(' ')
-        print('Processing')
-        print(' ')
+        print(" ")
+        print("Processing")
+        print(" ")
         print("*********")
 
         self.instantiate_processing()
 
         self.run_processing_voies()
-        print('Processing fini')
+        print("Processing fini")
 
         # return self.voies_proc
         return self.voies_preproc
 
 
 if __name__ == "__main__":
-    print('Lancement du pipeline pour découper correctement un libellé de voie en \
-type/libellé/complément')
+    print(
+        "Lancement du pipeline pour découper correctement un libellé de voie en \
+type/libellé/complément"
+    )
     format_data = sys.argv[1]
 
     if format_data == "parquet":
         filename_majic_parquet = sys.argv[2]
 
-        print('Lecture du fichier en entrée')
+        print("Lecture du fichier en entrée")
         voies_data_df = pd.read_parquet("../data/" + filename_majic_parquet + ".parquet.gz")
 
-        voies_data = voies_data_df['dvoilib'].values.tolist()
+        voies_data = voies_data_df["dvoilib"].values.tolist()
 
     elif format_data == "label":
         voie_label = sys.argv[2]
@@ -115,19 +114,21 @@ type/libellé/complément')
     voies_processed = TypeVoieDetector(voies_data).run()
 
     if format_data == "parquet":
-        print('Enregistrement des voies traitées')
+        print("Enregistrement des voies traitées")
         result_file_name = sys.argv[3]
         result_filepath = save_voies_processed(voies_processed, result_file_name)
 
-        print("Les voies traitées ont été enregistrées et sont accessibles en cliquant + Ctrl \
-sur ce lien :")
+        print(
+            "Les voies traitées ont été enregistrées et sont accessibles en cliquant + Ctrl \
+sur ce lien :"
+        )
         print(f"\033]8;;file://{result_filepath}\033\\{result_filepath}\033]8;;\033\\")
 
     elif format_data == "label":
         voie = voies_processed[0]
-        print(' ')
+        print(" ")
         print("*** Résultat ***")
-        print(' ')
+        print(" ")
         print(f"Nom de voie non traitée: {voie.label_raw}")
         print(f"Nom de voie traitée: {voie.infolib.label_preproc}")
         print(f"Type(s) détecté(s): {voie.infolib.types_and_positions}")
@@ -136,7 +137,7 @@ sur ce lien :")
         print(f"Type de voie: {voie.type_assigned}")
         print(f"Nom de voie: {voie.label_assigned}")
         print(f"Complément d'adresse: {voie.compl_assigned}")
-        print(' ')
+        print(" ")
         print("*********")
 
 # python pipeline_detect_type_voies.py "label" "IMM ERNEST RENAN RUE DES LYS"
