@@ -10,7 +10,7 @@ Pour définir cet environnement, on utliise le fichier `pyproject.toml` où tout
 Pour initialiser l'environnement viruel :
 
 ```bash
-postry install
+poetry install
 ```
 
 Cette commande créera un fichier poetry.lock (qu'il faut ajouter à gitignore)
@@ -18,7 +18,7 @@ Cette commande créera un fichier poetry.lock (qu'il faut ajouter à gitignore)
 Une fois l'environnement virtuel créé, pour mettre à jour les dépendances associées au fichier `pyproject.toml` :
 
 ```bash
-postry update
+poetry update
 ```
 
 ## Lancement de l'application
