@@ -1,5 +1,3 @@
-import pandas as pd
-
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
 from decoupage_libelles.prepare_data.ponctuation.usecase.ponctuation_preprocessor_use_case import PonctuationPreprocessorUseCase
 from decoupage_libelles.finders.find_type.model.type_finder_utils import TypeFinderUtils
@@ -13,7 +11,6 @@ class GenerateTypeFinderUtilsUseCase:
         self,
         type_finder_utils: TypeFinderUtils,
     ) -> TypeFinderUtils:
-
         type_finder_utils.codes = list(set(type_finder_utils.type_voie_df["CODE"].tolist()))
         type_finder_utils.lib2code = type_finder_utils.type_voie_df.set_index("LIBELLE")["CODE"].to_dict()
 

@@ -3,7 +3,6 @@ from decoupage_libelles.informations_on_type_in_lib.model.information_on_type_or
 
 
 class FindOrderOfApparitionInLibUseCase:
-
     def execute(infovoie: InfoVoie, type_name: str, occurence: int) -> InformationOnTypeOrdered:
         type_to_find = (type_name, occurence)
         liste_cles = list(infovoie.types_and_positions.keys())

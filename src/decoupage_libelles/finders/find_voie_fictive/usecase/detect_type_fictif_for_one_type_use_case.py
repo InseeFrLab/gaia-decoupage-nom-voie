@@ -6,7 +6,6 @@ from decoupage_libelles.informations_on_type_in_lib.model.information_on_type_or
 
 
 class DetectTypeFictifForOneTypeUseCase:
-
     def __init__(
         self,
         generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = GenerateInformationOnTypeOrderedUseCase(),

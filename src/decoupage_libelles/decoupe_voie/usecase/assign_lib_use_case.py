@@ -3,7 +3,6 @@ from decoupage_libelles.decoupe_voie.model.voie_decoupee import VoieDecoupee
 
 
 class AssignLibUseCase:
-
     def execute(
         self,
         infovoie: InfoVoie,

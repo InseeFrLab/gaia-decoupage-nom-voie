@@ -3,7 +3,6 @@ from decoupage_libelles.prepare_data.ponctuation.usecase.ponctuation_preprocesso
 
 
 class ApplyPonctuationPreprocessingOnTypeVoie:
-
     def __init__(
         self,
         ponctuation_preprocessor_use_case: PonctuationPreprocessorUseCase = PonctuationPreprocessorUseCase(),

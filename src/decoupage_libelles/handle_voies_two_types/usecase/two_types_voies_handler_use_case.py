@@ -16,7 +16,6 @@ from decoupage_libelles.handle_voies_two_types.usecase.handle_no_type_in_first_p
 
 
 class TwoTypesVoiesHandlerUseCase:
-
     def __init__(
         self,
         apply_complement_finder_on_voies_use_case: ApplyComplementFinderOnVoiesUseCase = ApplyComplementFinderOnVoiesUseCase(),

@@ -2,7 +2,6 @@ from decoupage_libelles.informations_on_type_in_lib.model.information_on_type_or
 
 
 class TypeIsAgglomerantUseCase:
-
     TYPESAGGLOMERANTS = [
         "DOMAINE",
         "MAISON",

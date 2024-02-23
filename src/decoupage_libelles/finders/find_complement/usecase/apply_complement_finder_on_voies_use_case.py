@@ -6,7 +6,6 @@ from decoupage_libelles.finders.find_complement.usecase.complement_finder_use_ca
 
 
 class ApplyComplementFinderOnVoiesUseCase:
-
     def __init__(self, complement_finder_use_case: ComplementFinderUseCase = ComplementFinderUseCase()):
         self.complement_finder_use_case: ComplementFinderUseCase = complement_finder_use_case
 
@@ -15,7 +14,6 @@ class ApplyComplementFinderOnVoiesUseCase:
         voies_obj: List[InfoVoie],
         types_to_detect: List[str],
     ) -> Union[List[InfoVoie], List[InfoVoie]]:
-
         voies_obj_compl = []
         new_voies_obj = voies_obj[:]
         for voie in tqdm(voies_obj):

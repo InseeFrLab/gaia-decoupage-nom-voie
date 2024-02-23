@@ -3,7 +3,6 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 
 class TypeIsLongitudinalUseCase:
-
     TYPESLONGITUDINAUX = ["ROUTE", "BOULEVARD", "RUE", "AVENUE", "IMPASSE", "CHEMIN", "VOIE", "PLACE", "CHEMINEMENT", "VOIE COMMUNALE"]
 
     TYPESLONGITUDINAUX2 = ["ROUTE", "BOULEVARD", "RUE", "AVENUE", "IMPASSE", "CHEMIN", "VOIE", "PLACE", "CHEMINEMENT", "VOIE COMMUNALE", "ALLEE"]

@@ -8,7 +8,6 @@ from decoupage_libelles.handle_voies_one_type.usecase.compl_type_in_first_or_las
 
 
 class HandleOneTypeComplUseCase:
-
     def __init__(
         self,
         compl_type_in_first_or_second_pos_use_case: ComplTypeInFirstOrSecondPosUseCase = ComplTypeInFirstOrSecondPosUseCase(),
@@ -27,7 +26,6 @@ class HandleOneTypeComplUseCase:
         self.generate_information_on_lib_use_case.execute(voie_compl, apply_nlp_model=False)
 
         if voie_compl.has_type_in_first_pos:
-
             if voie_compl.has_type_in_second_pos:
                 return self.compl_type_in_first_or_second_pos_use_case.execute(voie_compl)
 

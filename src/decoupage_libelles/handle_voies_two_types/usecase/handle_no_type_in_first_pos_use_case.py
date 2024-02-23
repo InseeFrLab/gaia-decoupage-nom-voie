@@ -7,7 +7,6 @@ from decoupage_libelles.decoupe_voie.usecase.assign_lib_use_case import AssignLi
 
 
 class HandleNoTypeInFirstPosUseCase:
-
     def __init__(
         self,
         generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = GenerateInformationOnTypeOrderedUseCase(),

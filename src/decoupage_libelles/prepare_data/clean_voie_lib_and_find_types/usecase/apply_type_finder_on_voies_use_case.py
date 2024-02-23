@@ -10,7 +10,6 @@ from decoupage_libelles.finders.find_type.model.type_finder_object import TypeFi
 
 
 class ApplyTypeFinderOnVoiesUseCase:
-
     def __init__(
         self,
         type_finder_use_case: TypeFinderUseCase = TypeFinderUseCase(),

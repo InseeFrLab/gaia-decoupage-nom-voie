@@ -14,7 +14,6 @@ from decoupage_libelles.informations_on_type_in_lib.usecase.find_order_of_appari
 
 
 class GenerateInformationOnTypeOrderedUseCase:
-
     def __init__(
         self,
         postag_before_type_use_case: PostagBeforeTypeUseCase = PostagBeforeTypeUseCase(),

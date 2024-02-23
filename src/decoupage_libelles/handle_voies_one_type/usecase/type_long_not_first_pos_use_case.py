@@ -7,7 +7,6 @@ from decoupage_libelles.informations_on_type_in_lib.usecase.generate_information
 
 
 class TypeLongNotFirstPosUseCase:
-
     def __init__(
         self,
         generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = GenerateInformationOnLibUseCase(),

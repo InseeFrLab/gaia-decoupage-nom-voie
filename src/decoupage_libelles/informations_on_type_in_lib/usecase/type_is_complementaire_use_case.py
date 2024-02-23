@@ -4,7 +4,6 @@ from decoupage_libelles.finders.find_complement.usecase.complement_finder_use_ca
 
 
 class TypeIsComplementaireUseCase:
-
     def execute(self, infovoie: InfoVoie, information_on_type_ordered: InformationOnTypeOrdered) -> InformationOnTypeOrdered:
         if len(infovoie.types_and_positions) == 0:
             types_compl = ComplementFinderUseCase.TYPES_COMPLEMENT_0

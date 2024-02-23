@@ -5,7 +5,6 @@ from decoupage_libelles.informations_on_type_in_lib.usecase.order_type_in_lib_us
 
 
 class AssignLibTypeUseCase:
-
     def __init__(
         self,
         get_words_between_use_case: GetWordsBetweenUseCase = GetWordsBetweenUseCase(),

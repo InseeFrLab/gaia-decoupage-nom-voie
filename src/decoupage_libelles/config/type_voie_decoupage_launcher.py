@@ -12,7 +12,6 @@ from decoupage_libelles.handle_voies_three_types_and_more.usecase.three_types_an
 
 
 class TypeVoieDecoupageLauncher:
-
     def __init__(
         self,
         type_voie_majic_preprocessor_use_case: TypeVoieMajicPreprocessorUseCase = TypeVoieMajicPreprocessorUseCase(),

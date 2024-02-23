@@ -2,7 +2,6 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 
 class RemoveTypeFromLibAndTypesUseCase:
-
     def execute(self, infovoie: InfoVoie, position_start_min: int, position_end_min: int) -> InfoVoie:
         # Supprimer de la liste preproc le type codifié
         before_type_min = infovoie.label_preproc[:position_start_min]

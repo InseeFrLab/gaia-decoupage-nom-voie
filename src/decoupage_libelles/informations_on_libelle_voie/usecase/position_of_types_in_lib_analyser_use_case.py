@@ -3,12 +3,10 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 
 class PositionOfTypesInLibAnalyserUseCase:
-
     def __init__(self, order_type_in_lib_use_case: OrderTypeInLib = OrderTypeInLib()):
         self.order_type_in_lib_use_case: OrderTypeInLib = order_type_in_lib_use_case
 
     def execute(self, infovoie: InfoVoie) -> InfoVoie:
-
         type_ordered_first = self.order_type_in_lib_use_case.execute(infovoie, 1)
         if type_ordered_first and type_ordered_first.position_start == 0:
             infovoie.has_type_in_first_pos = True

@@ -5,7 +5,6 @@ from decoupage_libelles.informations_on_libelle_voie.usecase.get_words_between_u
 
 
 class AssignComplTypeLibUseCase:
-
     def __init__(self, get_words_between_use_case: GetWordsBetweenUseCase = GetWordsBetweenUseCase()):
         self.get_words_between_use_case: GetWordsBetweenUseCase = get_words_between_use_case
 
