@@ -7,7 +7,6 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 
 class VoieLibPreprocessorUseCase:
-
     def __init__(
         self,
         apply_ponctuation_preprocessor_on_voies_use_case: ApplyPonctuationPreprocessorOnVoiesUseCase = ApplyPonctuationPreprocessorOnVoiesUseCase(),

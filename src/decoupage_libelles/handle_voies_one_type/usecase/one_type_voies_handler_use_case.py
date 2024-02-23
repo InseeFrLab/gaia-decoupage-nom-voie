@@ -14,7 +14,6 @@ from decoupage_libelles.decoupe_voie.usecase.assign_lib_compl_use_case import As
 
 
 class OneTypeVoiesHandlerUseCase:
-
     def __init__(
         self,
         apply_complement_finder_on_voies_use_case: ApplyComplementFinderOnVoiesUseCase = ApplyComplementFinderOnVoiesUseCase(),

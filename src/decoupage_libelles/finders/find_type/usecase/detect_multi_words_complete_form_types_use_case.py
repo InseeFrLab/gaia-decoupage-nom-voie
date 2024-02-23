@@ -4,7 +4,6 @@ from decoupage_libelles.finders.find_type.usecase.find_position_of_word_in_sente
 
 
 class DetectMultiWordsCompleteFormTypesUseCase:
-
     def __init__(
         self,
         find_positions_of_word_in_sentence_str_use_case: FindPositionsOfWordInSentenceStrUseCase = FindPositionsOfWordInSentenceStrUseCase(),

@@ -8,7 +8,6 @@ from decoupage_libelles.decoupe_voie.usecase.assign_lib_use_case import AssignLi
 
 
 class ThreeTypesAndMoreVoiesHandlerUseCase:
-
     def __init__(self, assign_lib_use_case: AssignLibUseCase = AssignLibUseCase()):
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
 

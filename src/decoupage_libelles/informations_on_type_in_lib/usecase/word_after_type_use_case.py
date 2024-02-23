@@ -4,7 +4,6 @@ from decoupage_libelles.informations_on_type_in_lib.model.information_on_type_or
 
 
 class WordAfterTypeUseCase:
-
     def __init__(
         self,
         order_type_in_lib_use_case: OrderTypeInLib = OrderTypeInLib(),

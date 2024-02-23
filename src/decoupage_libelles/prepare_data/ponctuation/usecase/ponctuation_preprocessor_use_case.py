@@ -4,7 +4,6 @@ from decoupage_libelles.prepare_data.ponctuation.usecase.suppress_ponctuation_in
 
 
 class PonctuationPreprocessorUseCase:
-
     PONCTUATIONS = ["-", ".", ",", ";", ":", "!", "?", "(", ")", "[", "]", "{", "}", "'", '"', "«", "»", "*", "/"]
 
     def __init__(

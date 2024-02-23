@@ -10,7 +10,6 @@ from decoupage_libelles.handle_voies_two_types.usecase.compl_third_type_compl_us
 
 
 class HandleTwoTypesComplUseCase:
-
     def __init__(
         self,
         generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = GenerateInformationOnLibUseCase(),

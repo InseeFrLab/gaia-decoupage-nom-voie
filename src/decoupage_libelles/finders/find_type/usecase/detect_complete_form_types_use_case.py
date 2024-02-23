@@ -5,7 +5,6 @@ from decoupage_libelles.finders.find_type.model.type_finder_object import TypeFi
 
 
 class DetectCompleteFormTypesUseCase:
-
     def __init__(
         self,
         detect_one_word_complete_form_types_use_case: DetectOneWordCompleteFormTypesUseCase = DetectOneWordCompleteFormTypesUseCase(),
@@ -17,7 +16,6 @@ class DetectCompleteFormTypesUseCase:
         self.list_is_included_in_other_list_use_case: ListIsIncludedInOtherListUseCase = list_is_included_in_other_list_use_case
 
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
-
         for type_lib in type_finder_object.type_data.types_lib_preproc:
             type_detect = type_finder_object.type_data.types_lib_preproc2types_lib_raw[type_lib]
             type_detect = type_finder_object.type_data.lib2code[type_detect]

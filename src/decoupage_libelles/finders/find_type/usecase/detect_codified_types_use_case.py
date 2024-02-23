@@ -3,7 +3,6 @@ from decoupage_libelles.finders.find_type.model.type_finder_object import TypeFi
 
 class DetectCodifiedTypesUseCase:
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
-
         for code_type in type_finder_object.type_data.codes:
             lib_type = type_finder_object.type_data.code2lib[code_type]
             if code_type in type_finder_object.voie_sep:

@@ -121,6 +121,21 @@ sonar:
     - export SONAR_SCANNER_OPTS="-Djavax.net.ssl.trustStore=/tmp/insee.ts"
     - sonar-scanner -X -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.login="${SONAR_TOKEN}" -Dsonar.projectName="${PROJECT_NAME}" -Dsonar.qualitygate.wait=true -Dsonar.language="py" -Dsonar.python.version="3.11" -Dsonar.sources="${SOURCE_FOLDER}" -Dsonar.exclusions="${EXCLUSIONS}" -Dsonar.python.coverage.reportPaths="${COVERAGE_REPORT}" -Dsonar.projectKey="${PROJECT_KEY}" -Djavax.net.ssl.trustStore="/tmp/insee.ts"
 
+black:
+  image: python:$PYTHON_VERSION
+  stage: analyse
+  before_script:
+    - *default_configuration
+  script:
+    - poetry install --no-interaction --with dev
+    - poetry run black --check --verbose .
 
-
+flake:
+  image: python:$PYTHON_VERSION
+  stage: analyse
+  before_script:
+    - *default_configuration
+  script:
+    - poetry install --no-interaction --with dev
+    - poetry run flake8
 

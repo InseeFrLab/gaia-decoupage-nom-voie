@@ -3,7 +3,6 @@ from decoupage_libelles.informations_on_type_in_lib.model.information_on_type_or
 
 
 class OrderTypeInLib:
-
     def execute(self, infovoie: InfoVoie, type_order: int) -> InformationOnTypeOrdered:
         """
         Retourne le type et la position de début et de fin du type

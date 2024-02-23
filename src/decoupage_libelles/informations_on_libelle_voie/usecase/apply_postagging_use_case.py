@@ -3,7 +3,6 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 
 class ApplyPostaggingUseCase:
-
     def __init__(self, nlp_model_execution: NLPModelExecution = NLPModelExecution()) -> None:
         self.nlp_model_execution = nlp_model_execution
 

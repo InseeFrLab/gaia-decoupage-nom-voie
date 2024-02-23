@@ -2,7 +2,6 @@ from decoupage_libelles.finders.find_type.model.type_finder_object import TypeFi
 
 
 class UpdateOccurencesByOrderOfApparitionUseCase:
-
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
         type_finder_object.voie_big.types_and_positions = dict(sorted(type_finder_object.voie_big.types_and_positions.items(), key=lambda x: x[1][0]))
         sorted_keys = type_finder_object.voie_big.types_and_positions.keys()

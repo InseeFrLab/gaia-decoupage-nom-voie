@@ -8,7 +8,6 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 
 class TypeFinderUseCase:
-
     def __init__(
         self,
         detect_codified_types_use_case: DetectCodifiedTypesUseCase = DetectCodifiedTypesUseCase(),

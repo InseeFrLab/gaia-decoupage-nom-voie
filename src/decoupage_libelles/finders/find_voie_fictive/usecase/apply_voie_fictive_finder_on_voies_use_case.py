@@ -6,7 +6,6 @@ from decoupage_libelles.finders.find_voie_fictive.usecase.voie_fictive_finder_us
 
 
 class ApplyVoieFictiveFinderOnVoiesUseCase:
-
     def __init__(self, voie_fictive_finder_use_case: VoieFictiveFinderUseCase = VoieFictiveFinderUseCase()):
         self.voie_fictive_finder_use_case: VoieFictiveFinderUseCase = voie_fictive_finder_use_case
 
@@ -15,7 +14,6 @@ class ApplyVoieFictiveFinderOnVoiesUseCase:
         list_object_voies: List[InfoVoie],
         list_type_to_detect: List[str],
     ) -> Union[List[InfoVoie], List[InfoVoie]]:
-
         list_object_voies_fictives = []
         new_list_object_voies = list_object_voies[:]
         for voie in tqdm(list_object_voies):

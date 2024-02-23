@@ -11,7 +11,6 @@ from decoupage_libelles.decoupe_voie.usecase.assign_lib_use_case import AssignLi
 
 
 class NoTypeVoiesHandlerUseCase:
-
     def __init__(
         self,
         apply_complement_finder_on_voies_use_case: ApplyComplementFinderOnVoiesUseCase = ApplyComplementFinderOnVoiesUseCase(),

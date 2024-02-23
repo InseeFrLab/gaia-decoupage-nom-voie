@@ -6,7 +6,6 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 
 class GenerateInformationOnLibUseCase:
-
     def __init__(
         self,
         apply_postagging_use_case: ApplyPostaggingUseCase = ApplyPostaggingUseCase(),

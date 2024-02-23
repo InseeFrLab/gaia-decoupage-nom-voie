@@ -3,7 +3,6 @@ from decoupage_libelles.finders.find_type.usecase.remove_type_from_lib_and_types
 
 
 class RemoveDuplicatesUseCase:
-
     def __init__(self, remove_type_from_lib_and_types_use_case: RemoveTypeFromLibAndTypesUseCase = RemoveTypeFromLibAndTypesUseCase()):
         self.remove_type_from_lib_and_types_use_case: RemoveTypeFromLibAndTypesUseCase = remove_type_from_lib_and_types_use_case
 

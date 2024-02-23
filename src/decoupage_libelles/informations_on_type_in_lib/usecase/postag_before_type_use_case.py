@@ -4,7 +4,6 @@ from decoupage_libelles.informations_on_type_in_lib.model.information_on_type_or
 
 
 class PostagBeforeTypeUseCase:
-
     POSTAG = ["DET", "ADJ", "ADP", "CCONJ"]
 
     def __init__(

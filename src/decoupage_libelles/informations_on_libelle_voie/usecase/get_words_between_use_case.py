@@ -4,7 +4,6 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 
 class GetWordsBetweenUseCase:
-
     def execute(self, infovoie: InfoVoie, position_start: int, position_end: Optional[int] = None) -> Optional[str]:
         if position_end and len(infovoie.label_preproc) >= position_end:
             return (" ").join(infovoie.label_preproc[position_start:position_end])

@@ -93,7 +93,6 @@ class HandleHasTypeInFirstPosUseCase:
             return self.assign_type_lib_use_case.execute(voie, first_type)
 
         else:
-
             if (
                 not first_type.is_longitudinal
                 and not first_type.is_agglomerant
@@ -108,7 +107,6 @@ class HandleHasTypeInFirstPosUseCase:
                 return self.assign_type_lib_use_case.execute(voie, first_type)
 
             elif not first_type.is_longitudinal and not first_type.is_agglomerant and second_type.is_longitudinal and second_type.is_agglomerant:
-
                 self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
                 first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
                 second_type = self.generate_information_on_type_ordered_use_case.execute(voie, 2)

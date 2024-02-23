@@ -3,7 +3,6 @@ from decoupage_libelles.finders.find_type.usecase.determin_min_and_max_str_accor
 
 
 class RemoveWrongDetectedCodesUseCase:
-
     def __init__(
         self,
         determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case: DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase = DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase(),
