@@ -31,7 +31,7 @@ line-length = 200
 
 [tool.coverage.run]
 omit = [".*", "*/site-packages/*", "tests/*", "__init__.py"]
-source = ["src/decoupage_libelles"]
+source = ["src"]
 
 [tool.coverage.report]
 fail_under = 0
