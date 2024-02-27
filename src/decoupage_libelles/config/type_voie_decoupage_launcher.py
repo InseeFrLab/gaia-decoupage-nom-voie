@@ -54,25 +54,25 @@ class TypeVoieDecoupageLauncher:
         logging.info("Processing des voies sans type détecté")
         if voies_0:
             voies_proc_0 = self.no_type_voies_handler_use_case.execute(voies_0)
-            voies_processed.append(voies_proc_0)
+            voies_processed += voies_proc_0
         logging.info("Done")
 
         logging.info("Processing des voies avec un seul type détecté")
         if voies_1:
             voies_proc_1 = self.one_type_voies_handler_use_case.execute(voies_1)
-            voies_processed.append(voies_proc_1)
+            voies_processed += voies_proc_1
         logging.info("Done")
 
         logging.info("Processing des voies avec deux types détectés")
         if voies_2:
             voies_proc_2 = self.two_types_voies_handler_use_case.execute(voies_2)
-            voies_processed.append(voies_proc_2)
+            voies_processed += voies_proc_2
         logging.info("Done")
 
         logging.info("Processing des voies avec trois types détectés ou plus")
         if voies_3_and_more:
             voies_proc_3_and_more = self.three_types_and_more_voies_handler_use_case.execute(voies_3_and_more)
-            voies_processed.append(voies_proc_3_and_more)
+            voies_processed += voies_proc_3_and_more
         logging.info("Done")
 
         return voies_processed

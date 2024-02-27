@@ -9,7 +9,6 @@ class InfoVoie:
     types_and_positions: Optional[dict] = field(default_factory=dict)
     label_postag: Optional[List[str]] = None
     types_detected: Optional[List[str]] = None
-    nb_types_detected: Optional[List[int]] = 0
     has_type_in_first_pos: Optional[bool] = False
     has_type_in_second_pos: Optional[bool] = False
     has_type_in_last_pos: Optional[bool] = False

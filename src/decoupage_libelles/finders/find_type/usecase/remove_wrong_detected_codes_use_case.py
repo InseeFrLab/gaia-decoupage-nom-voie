@@ -1,15 +1,18 @@
 from decoupage_libelles.finders.find_type.model.type_finder_object import TypeFinderObject
 from decoupage_libelles.finders.find_type.usecase.determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case import DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase
+from decoupage_libelles.informations_on_type_in_lib.usecase.generate_information_on_type_ordered_use_case import GenerateInformationOnTypeOrderedUseCase
 
 
 class RemoveWrongDetectedCodesUseCase:
     def __init__(
         self,
         determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case: DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase = DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase(),
+        generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = GenerateInformationOnTypeOrderedUseCase(),
     ):
         self.determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case: DeterminMinAndMaxStrAccordingToCountOfEspacesInStrsUseCase = (
             determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case
         )
+        self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
 
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
         # Supprime les types codifiés détectés à tord
@@ -17,18 +20,21 @@ class RemoveWrongDetectedCodesUseCase:
         for i in range(1, len(type_finder_object.voie_big.types_and_positions)):
             dict_two_types = {}
 
-            type_i, position_start_i, position_end_i = type_finder_object.voie_big.order_type_in_lib(i)
-            type_i1, position_start_i1, position_end_i1 = type_finder_object.voie_big.order_type_in_lib(i + 1)
+            type_i = self.generate_information_on_type_ordered_use_case.execute(type_finder_object.voie_big, i)
+            type_i1 = self.generate_information_on_type_ordered_use_case.execute(type_finder_object.voie_big, i + 1)
 
-            dict_two_types[type_i] = (position_start_i, position_end_i)
-            dict_two_types[type_i1] = (position_start_i1, position_end_i1)
+            dict_two_types[type_i.type_name] = (type_i.position_start, type_i.position_end)
+            dict_two_types[type_i1.type_name] = (type_i1.position_start, type_i1.position_end)
 
-            type_min, type_max = self.determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case.execute(type_i, type_i1)
+            type_min, type_max = self.determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case.execute(type_i.type_name, type_i1.type_name)
 
-            position_start_min, __ = dict_two_types[type_min]
+            position_start_min, position_end_min = dict_two_types[type_min]
             position_start_max, position_end_max = dict_two_types[type_max]
 
-            if position_start_min in list(range(position_start_max, position_end_max + 1)):
+            if (
+                position_start_min in list(range(position_start_max, position_end_max + 1))
+                and type_finder_object.voie_big.label_preproc[position_start_min : position_end_min + 1][0] in type_finder_object.voie_big.label_preproc[position_start_max : position_end_max + 1]
+            ):
                 del type_finder_object.voie_big.types_and_positions[(type_min, 1)]
 
         return type_finder_object

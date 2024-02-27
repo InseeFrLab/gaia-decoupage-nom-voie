@@ -3,16 +3,18 @@ from decoupage_libelles.finders.find_type.usecase.remove_type_from_lib_and_types
 
 
 class RemoveDuplicatesUseCase:
-    def __init__(self, remove_type_from_lib_and_types_use_case: RemoveTypeFromLibAndTypesUseCase = RemoveTypeFromLibAndTypesUseCase()):
+    def __init__(
+        self,
+        remove_type_from_lib_and_types_use_case: RemoveTypeFromLibAndTypesUseCase = RemoveTypeFromLibAndTypesUseCase(),
+    ):
         self.remove_type_from_lib_and_types_use_case: RemoveTypeFromLibAndTypesUseCase = remove_type_from_lib_and_types_use_case
 
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
         for __, occurence in type_finder_object.voie_big.types_and_positions.keys():
-            if occurence > 1:
-                has_duplicated_types = True
+            has_duplicated_types = True if occurence > 1 else False
 
         if has_duplicated_types:
-            types_duplicates = [type_lib for type_lib, occurence in type_finder_object.infolib.types_and_positions if occurence > 1]
+            types_duplicates = [type_lib for type_lib, occurence in type_finder_object.voie_big.types_and_positions if occurence > 1]
 
             for type_duplicate in types_duplicates:
                 dict_two_positions = {"first": type_finder_object.voie_big.types_and_positions[(type_duplicate, 1)], "second": type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]}

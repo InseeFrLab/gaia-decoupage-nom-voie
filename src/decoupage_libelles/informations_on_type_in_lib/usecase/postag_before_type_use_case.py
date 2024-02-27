@@ -26,7 +26,7 @@ class PostagBeforeTypeUseCase:
         Returns:
             (str)
         """
-        if information_on_type_ordered.position_start > 0:
+        if information_on_type_ordered.position_start > 0 and infovoie.label_postag:
             postag = infovoie.label_postag[information_on_type_ordered.position_start - 1]
             information_on_type_ordered.postag_before = postag
 
