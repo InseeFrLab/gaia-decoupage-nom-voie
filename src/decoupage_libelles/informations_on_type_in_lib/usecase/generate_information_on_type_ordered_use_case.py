@@ -43,8 +43,10 @@ class GenerateInformationOnTypeOrderedUseCase:
     def execute(self, infovoie: InfoVoie, type_order: int, type_name: str = None, occurence: int = None) -> InformationOnTypeOrdered:
         if type_order:
             type_ordered = self.order_type_in_lib_use_case.execute(infovoie=infovoie, type_order=type_order)
+        elif type_name and occurence:
+            type_ordered = self.find_order_of_apparition_in_lib_use_case.execute(infovoie=infovoie, type_name=type_name, occurence=occurence)
         else:
-            type_ordered = self.find_order_of_apparition_in_lib_use_case.execute(type_name=type_name, occurence=occurence)
+            type_ordered = None
         if type_ordered:
             self.word_after_type_use_case.execute(infovoie, type_ordered)
             self.word_before_type_use_case.execute(infovoie, type_ordered)
@@ -56,4 +58,4 @@ class GenerateInformationOnTypeOrderedUseCase:
             self.postag_before_type_use_case.execute(infovoie, type_ordered)
             self.type_after_type_use_case.execute(infovoie, type_ordered)
 
-        return type_ordered
+            return type_ordered

@@ -20,7 +20,6 @@ def run():
         voies_data = voies_data_df["dvoilib"].values.tolist()
 
     elif format_data == "label":
-        # voie_label = "RUE DES LYs residence djks gdkg"
         voie_label = sys.argv[2]
         voies_data = [voie_label.upper()]
 

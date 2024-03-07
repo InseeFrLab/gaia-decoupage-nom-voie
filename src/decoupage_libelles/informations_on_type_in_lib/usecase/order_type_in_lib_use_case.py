@@ -22,19 +22,21 @@ class OrderTypeInLib:
             type_position_in_lib_end (int) :
                 La position de fin du type dans la liste de mots du libellé preprocessé.
         """
-        nb_types_detected = len(infovoie.types_and_positions)
-        if not infovoie.types_and_positions or nb_types_detected < type_order:
+        if not infovoie.types_and_positions or len(infovoie.types_and_positions) < type_order:
             return None
 
-        if type_order >= 1:  # 1er ou plus
-            position = type_order - 1
-        elif type_order == -1:  # dernier
-            position = type_order
+        else:
+            if type_order >= 1:  # 1er ou plus
+                position = type_order - 1
+            elif type_order == -1:  # dernier
+                position = type_order
+            else:
+                return None
 
-        types_sorted = sorted(infovoie.types_and_positions.items(), key=lambda item: item[1])
-        types_sorted = [(type_voie, occurence, positions) for (type_voie, occurence), positions in types_sorted]
+            types_sorted = sorted(infovoie.types_and_positions.items(), key=lambda item: item[1])
+            types_sorted = [(type_voie, occurence, positions) for (type_voie, occurence), positions in types_sorted]
 
-        type_to_find, occurence, positions = types_sorted[position]
-        type_position_in_lib_start, type_position_in_lib_end = positions
+            type_to_find, occurence, positions = types_sorted[position]
+            type_position_in_lib_start, type_position_in_lib_end = positions
 
-        return InformationOnTypeOrdered(type_name=type_to_find, order_in_lib=type_order, position_start=type_position_in_lib_start, position_end=type_position_in_lib_end, occurence=occurence)
+            return InformationOnTypeOrdered(type_name=type_to_find, order_in_lib=type_order, position_start=type_position_in_lib_start, position_end=type_position_in_lib_end, occurence=occurence)

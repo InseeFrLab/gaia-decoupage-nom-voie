@@ -3,7 +3,7 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 class TypesDetectedUseCase:
     def execute(self, infovoie: InfoVoie) -> InfoVoie:
-        types_detected = [type_lib for type_lib, __ in infovoie.types_and_positions.keys()]
-        if types_detected:
+        if infovoie.types_and_positions:
+            types_detected = [type_lib for type_lib, __ in infovoie.types_and_positions.keys()]
             infovoie.types_detected = types_detected
         return infovoie
