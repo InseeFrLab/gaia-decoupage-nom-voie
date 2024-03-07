@@ -8,7 +8,6 @@ class WordBeforeTypeUseCase:
         self.order_type_in_lib_use_case: OrderTypeInLib = order_type_in_lib_use_case
 
     def execute(self, infovoie: InfoVoie, information_on_type_ordered: InformationOnTypeOrdered):
-        print(f"l'ordre du type dans le libelle est {information_on_type_ordered.order_in_lib}")
         type_ordered = self.order_type_in_lib_use_case.execute(infovoie, information_on_type_ordered.order_in_lib)
         if type_ordered and type_ordered.position_start > 0:
             index_word_before = type_ordered.position_start - 1

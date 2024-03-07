@@ -25,10 +25,13 @@ class ComplFirstTypeComplUseCase:
         if first_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_1_2:
             if second_type.is_longitudinal or second_type.is_agglomerant:
                 # compl + 2e type + lib
+                # "PAVILLON BEAU SOLEIL LOT DE LA FONTAINE"
                 return self.assign_compl_type_lib_use_case.execute(voie_compl, second_type)
             elif third_type.is_longitudinal or third_type.is_agglomerant:
                 # compl + 3e type + lib
+                # "PAVILLON LA FONTAINE LOT BEAU SOLEIL"
                 return self.assign_compl_type_lib_use_case.execute(voie_compl, third_type)
             else:
                 # lib
+                # "PAVILLON LA FONTAINE CHATEAU BEAU SOLEIL"
                 return self.assign_lib_use_case.execute(voie_compl)

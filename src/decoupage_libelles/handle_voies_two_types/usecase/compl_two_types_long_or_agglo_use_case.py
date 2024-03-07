@@ -38,6 +38,6 @@ class ComplTwoTypesLongOrAggloUseCase:
             return self.assign_type_lib_compl_use_case.execute(voie_compl)
 
         else:
-            # IMM BLEU RUE DES LYS RESIDENCE ERNEST RENAN
+            # "IMM BLEU RUE DES LYS RESIDENCE ERNEST RENAN"
             # compl + 2e type + lib + 3e compl
             return self.assign_compl_type_lib_compl_use_case.execute(voie_compl, second_type, third_type)
