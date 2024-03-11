@@ -15,8 +15,8 @@ class ThreeTypesAndMoreVoiesHandlerUseCase:
         voies = [voie for voie in voies if len(voie.types_and_positions) >= 3]
         logging.info("Gestion des voies avec trois types ou plus")
         voies_treated = []
-        for voie_fictive in tqdm(voies):
-            # 'LES VERNONS RUE B'
-            # lib + compl
-            voies_treated.append(self.assign_lib_use_case.execute(voie_fictive))
+        for voie in tqdm(voies):
+            # "RESIDENCE COUR DE FERME"
+            # lib
+            voies_treated.append(self.assign_lib_use_case.execute(voie))
         return voies_treated

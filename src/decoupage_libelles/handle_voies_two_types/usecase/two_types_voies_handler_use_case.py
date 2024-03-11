@@ -55,6 +55,7 @@ class TwoTypesVoiesHandlerUseCase:
             voies_treated.append(self.handle_two_types_voie_fictive_use_case.execute(voie_fictive))
 
         for voie in tqdm(voies):
+            voie_treated = None
             if voie.has_type_in_first_pos:
                 logging.info("Gestion des voies avec un type en première position")
                 logging.info("Étape longue")
