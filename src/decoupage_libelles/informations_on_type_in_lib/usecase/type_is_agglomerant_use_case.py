@@ -37,7 +37,6 @@ class TypeIsAgglomerantUseCase:
     ]
 
     def execute(self, information_on_type_ordered: InformationOnTypeOrdered) -> InformationOnTypeOrdered:
-        if information_on_type_ordered.type_name in TypeIsAgglomerantUseCase.TYPESAGGLOMERANTS:
-            information_on_type_ordered.is_agglomerant = True
+        information_on_type_ordered.is_agglomerant = True if information_on_type_ordered.type_name in TypeIsAgglomerantUseCase.TYPESAGGLOMERANTS else False
 
         return information_on_type_ordered

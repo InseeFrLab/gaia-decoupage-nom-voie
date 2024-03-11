@@ -18,12 +18,7 @@ class ComplImmeubleBeforeTypeUseCase:
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 2)
         voie_to_treat_by_compl = None
         voie_to_treat_two_types = None
-        if (
-            first_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_1_2
-            and voie_compl.has_type_in_first_pos
-            and voie_compl.has_type_in_second_pos
-            and second_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_IMMEUBLE
-        ):
+        if first_type.is_complement and voie_compl.has_type_in_first_pos and voie_compl.has_type_in_second_pos and second_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_IMMEUBLE:
             # 'IMM RES DU SOLEIL RUE DE BRAS'
             # supprimer le type complement devant et repasser à deux types
             voie_compl.label_preproc = voie_compl.label_preproc[1:]

@@ -13,7 +13,6 @@ class IsInPenultimatePositionUseCase:
     def execute(self, infovoie: InfoVoie, information_on_type_ordered: InformationOnTypeOrdered) -> InformationOnTypeOrdered:
         type_ordered_penultimate = self.order_type_in_lib_use_case.execute(infovoie, information_on_type_ordered.order_in_lib)
         if type_ordered_penultimate:
-            if type_ordered_penultimate.position_end == len(infovoie.label_preproc) - 2:
-                information_on_type_ordered.is_in_penultimate_position = True
+            information_on_type_ordered.is_in_penultimate_position = True if type_ordered_penultimate.position_end == len(infovoie.label_preproc) - 2 else False
 
         return information_on_type_ordered

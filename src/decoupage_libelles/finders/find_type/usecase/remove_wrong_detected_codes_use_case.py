@@ -23,18 +23,20 @@ class RemoveWrongDetectedCodesUseCase:
             type_i = self.generate_information_on_type_ordered_use_case.execute(type_finder_object.voie_big, i)
             type_i1 = self.generate_information_on_type_ordered_use_case.execute(type_finder_object.voie_big, i + 1)
 
-            dict_two_types[type_i.type_name] = (type_i.position_start, type_i.position_end)
-            dict_two_types[type_i1.type_name] = (type_i1.position_start, type_i1.position_end)
+            if type_i.type_name != type_i1.type_name:
 
-            type_min, type_max = self.determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case.execute(type_i.type_name, type_i1.type_name)
+                dict_two_types[type_i.type_name] = (type_i.position_start, type_i.position_end)
+                dict_two_types[type_i1.type_name] = (type_i1.position_start, type_i1.position_end)
 
-            position_start_min, position_end_min = dict_two_types[type_min]
-            position_start_max, position_end_max = dict_two_types[type_max]
+                type_min, type_max = self.determin_min_and_max_str_according_to_count_of_espaces_in_strs_use_case.execute(type_i.type_name, type_i1.type_name)
 
-            if (
-                position_start_min in list(range(position_start_max, position_end_max + 1))
-                and type_finder_object.voie_big.label_preproc[position_start_min : position_end_min + 1][0] in type_finder_object.voie_big.label_preproc[position_start_max : position_end_max + 1]
-            ):
-                del type_finder_object.voie_big.types_and_positions[(type_min, 1)]
+                position_start_min, position_end_min = dict_two_types[type_min]
+                position_start_max, position_end_max = dict_two_types[type_max]
+
+                if (
+                    position_start_min in list(range(position_start_max, position_end_max + 1))
+                    and type_finder_object.voie_big.label_preproc[position_start_min : position_end_min + 1][0] in type_finder_object.voie_big.label_preproc[position_start_max : position_end_max + 1]
+                ):
+                    del type_finder_object.voie_big.types_and_positions[(type_min, 1)]
 
         return type_finder_object

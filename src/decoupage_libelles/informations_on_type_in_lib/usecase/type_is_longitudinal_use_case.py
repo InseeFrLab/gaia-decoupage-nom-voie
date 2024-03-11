@@ -13,7 +13,8 @@ class TypeIsLongitudinalUseCase:
         else:
             types_long = TypeIsLongitudinalUseCase.TYPESLONGITUDINAUX2
 
-        if information_on_type_ordered.type_name in types_long:
-            information_on_type_ordered.is_longitudinal = True
+        information_on_type_ordered.is_longitudinal = True if information_on_type_ordered.type_name in types_long else False
+
+        information_on_type_ordered.is_longitudinal_or_agglomerant = True if information_on_type_ordered.is_agglomerant or information_on_type_ordered.is_longitudinal else False
 
         return information_on_type_ordered
