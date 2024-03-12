@@ -31,7 +31,7 @@ def run():
 
     if format_data == "parquet":
         logging.info("Enregistrement des voies traitées")
-        result_file_name = sys.argv[3]
+        result_file_name = sys.argv[4]
 
         voies_processed_list = [[voie.label_raw, voie.num_assigned, voie.type_assigned, voie.label_assigned, voie.compl_assigned] for voie in voies_processed]
 
