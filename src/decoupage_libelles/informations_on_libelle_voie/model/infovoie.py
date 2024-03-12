@@ -4,7 +4,9 @@ from typing import Optional, List
 
 @dataclass
 class InfoVoie:
+    label_origin: str = None
     label_raw: str = None
+    complement: str = None
     label_preproc: Optional[List[str]] = field(default_factory=list)
     types_and_positions: Optional[dict] = field(default_factory=dict)
     label_postag: Optional[List[str]] = None

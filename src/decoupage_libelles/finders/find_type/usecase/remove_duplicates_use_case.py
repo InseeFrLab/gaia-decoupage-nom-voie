@@ -10,6 +10,7 @@ class RemoveDuplicatesUseCase:
         self.remove_type_from_lib_and_types_use_case: RemoveTypeFromLibAndTypesUseCase = remove_type_from_lib_and_types_use_case
 
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
+        # "ART ANCIENNE ROUTE" --> "ANCIENNE ROUTE"
         has_duplicated_types = set()
         for __, occurence in type_finder_object.voie_big.types_and_positions.keys():
             if occurence > 1:

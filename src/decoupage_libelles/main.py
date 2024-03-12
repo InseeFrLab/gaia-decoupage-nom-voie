@@ -33,7 +33,7 @@ def run():
         logging.info("Enregistrement des voies traitées")
         result_file_name = sys.argv[4]
 
-        voies_processed_list = [[voie.label_raw, voie.num_assigned, voie.type_assigned, voie.label_assigned, voie.compl_assigned] for voie in voies_processed]
+        voies_processed_list = [[voie.label_origin, voie.num_assigned, voie.type_assigned, voie.label_assigned, voie.compl_assigned] for voie in voies_processed]
 
         voies_processed_df = pd.DataFrame(voies_processed_list, columns=["libelle_origin", "numero", "type", "libelle_voie", "complement"])
         resultat_df = pd.merge(voies_data_df, voies_processed_df, left_on=var_name_voie, right_on="libelle_origin", how="left")
@@ -52,10 +52,10 @@ sur ce lien :"
         print(" ")
         logging.info("*** Résultat ***")
         print(" ")
-        logging.info(f"Nom de voie non traitée: {voie.label_raw}")
-        logging.info(f"Type de voie: {voie.type_assigned}")
-        logging.info(f"Nom de voie: {voie.label_assigned}")
-        logging.info(f"Complément d'adresse: {voie.compl_assigned}")
+        print(f"Nom de voie non traitée: {voie.label_origin}")
+        print(f"Type de voie: {voie.type_assigned}")
+        print(f"Nom de voie: {voie.label_assigned}")
+        print(f"Complément d'adresse: {voie.compl_assigned}")
         print(" ")
         print("*********")
 

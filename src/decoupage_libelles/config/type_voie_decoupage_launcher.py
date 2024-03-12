@@ -36,7 +36,7 @@ class TypeVoieDecoupageLauncher:
         logging.info("Done")
 
         logging.info("Preprocessing des libellés de voie donnés en entrée")
-        voies_objects = [InfoVoie(voie) for voie in voies_data]
+        voies_objects = [InfoVoie(label_origin=voie) for voie in voies_data]
         voies_prepared = self.voie_lib_preprocessor_use_case.execute(voies_objects, type_voie_df, code2lib)
         logging.info("Done")
 
