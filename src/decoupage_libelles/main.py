@@ -12,12 +12,13 @@ def run():
     format_data = sys.argv[1]
 
     if format_data == "parquet":
-        filename_majic_parquet = sys.argv[2]
+        filename_parquet = sys.argv[2]
 
         logging.info("Lecture du fichier en entrée")
-        voies_data_df = pd.read_parquet("../data/" + filename_majic_parquet + ".parquet.gz")
+        voies_data_df = pd.read_parquet("../data/" + filename_parquet + ".parquet.gz")
 
-        voies_data = voies_data_df["dvoilib"].values.tolist()
+        var_name_voie = sys.argv[3]
+        voies_data = voies_data_df[var_name_voie].values.tolist()
 
     elif format_data == "label":
         voie_label = sys.argv[2]
@@ -35,9 +36,10 @@ def run():
         voies_processed_list = [[voie.label_raw, voie.num_assigned, voie.type_assigned, voie.label_assigned, voie.compl_assigned] for voie in voies_processed]
 
         voies_processed_df = pd.DataFrame(voies_processed_list, columns=["libelle_origin", "numero", "type", "libelle_voie", "complement"])
+        resultat_df = pd.merge(voies_data_df, voies_processed_df, left_on=var_name_voie, right_on="libelle_origin", how="left")
 
         result_filepath = os.path.abspath("../data/" + result_file_name + ".parquet.gz")
-        voies_processed_df.to_parquet(result_filepath)
+        resultat_df.to_parquet(result_filepath)
 
         logging.info(
             "Les voies traitées ont été enregistrées et sont accessibles en cliquant + Ctrl \

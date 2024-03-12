@@ -28,6 +28,8 @@ class NewSpellingForCodeUseCase:
         {"CODE": "ANV", "LIBELLE": "ANC VOIE"},
         {"CODE": "GPL", "LIBELLE": "GDE PCE"},
         {"CODE": "GR", "LIBELLE": "GR RUE"},
+        {"CODE": "GAV", "LIBELLE": "GDE AV"},
+        {"CODE": "QUA", "LIBELLE": "QU"},
     ]
 
     def __init__(
