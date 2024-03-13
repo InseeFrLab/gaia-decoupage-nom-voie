@@ -33,6 +33,7 @@ class HandleTwoTypesComplUseCase:
 
         voie_to_treat_by_compl, voie_to_treat_two_types = self.compl_immeuble_before_type_use_case.execute(voie_compl)
 
+        voie_treated = None
         if voie_to_treat_by_compl:
             voie_treated = self.compl_two_types_long_or_agglo_use_case.execute(voie_to_treat_by_compl)
             voie_treated = self.compl_first_type_compl_use_case.execute(voie_to_treat_by_compl) if not voie_treated else voie_treated

@@ -9,9 +9,8 @@ class WordBeforeTypeUseCase:
 
     def execute(self, infovoie: InfoVoie, information_on_type_ordered: InformationOnTypeOrdered):
         type_ordered = self.order_type_in_lib_use_case.execute(infovoie, information_on_type_ordered.order_in_lib)
-        position_type_in_lib_start = type_ordered.position_start
-        if position_type_in_lib_start or position_type_in_lib_start > 0:
-            index_word_before = position_type_in_lib_start - 1
+        if type_ordered and type_ordered.position_start > 0:
+            index_word_before = type_ordered.position_start - 1
             information_on_type_ordered.word_before = infovoie.label_preproc[index_word_before]
 
         return information_on_type_ordered

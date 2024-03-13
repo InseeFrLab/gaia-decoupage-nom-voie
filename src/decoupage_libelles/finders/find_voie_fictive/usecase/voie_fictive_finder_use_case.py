@@ -21,7 +21,7 @@ class VoieFictiveFinderUseCase:
         self.detect_type_fictif_for_multi_types_use_case: DetectTypeFictifForMultiTypesUseCase = detect_type_fictif_for_multi_types_use_case
 
     def execute(self, voie: InfoVoie, liste_voie_commun: List[str]) -> InfoVoie:
-        if voie.nb_types_detected == 1:
+        if len(voie.types_and_positions) == 1:
             return self.detect_type_fictif_for_one_type_use_case.execute(voie, liste_voie_commun, VoieFictiveFinderUseCase.LISTE_FICTIVE)
-        elif voie.nb_types_detected > 1:
+        elif len(voie.types_and_positions) > 1:
             return self.detect_type_fictif_for_multi_types_use_case.execute(voie, liste_voie_commun, VoieFictiveFinderUseCase.LISTE_FICTIVE)

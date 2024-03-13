@@ -25,7 +25,7 @@ class TypeAggloNotFirstPosUseCase:
         if first_type.is_agglomerant:
             if not first_type.has_adj_det_before and voie.has_type_in_last_pos:
                 # lib + 1er type
-                # test = VoieType('AVILLON HAM', ['AVILLON', 'HAM'], ['HAMEAU'], [1], ['PROPN', 'PROPN'])
+                # 'AVILLON HAM'
                 return self.assign_lib_type_use_case.execute(voie)
             else:
                 # lib

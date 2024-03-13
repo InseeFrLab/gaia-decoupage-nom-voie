@@ -25,7 +25,7 @@ class TypeRouteNotFirstPosUseCase:
         if first_type == "ROUTE":
             if first_type.word_before in ["C", "N", "D"] or first_type.word_after in ["C", "N", "D"]:
                 # 1 er type + lib
-                # test = VoieType('N RTE NATIONALE 9', ['N', 'RTE', 'NATIONALE', '9'], ['ROUTE'], [1], ['PRON', 'PRON', 'ADJ', 'NUM'])
+                # 'N RTE NATIONALE 9'
                 return self.assign_type_lib_use_case.execute(voie, first_type)
             else:
                 # lib

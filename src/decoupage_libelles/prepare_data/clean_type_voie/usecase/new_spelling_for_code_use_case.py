@@ -26,6 +26,11 @@ class NewSpellingForCodeUseCase:
         {"CODE": "GRA", "LIBELLE": "GDE ALLEE"},
         {"CODE": "APL", "LIBELLE": "ANC PL"},
         {"CODE": "ANV", "LIBELLE": "ANC VOIE"},
+        {"CODE": "GPL", "LIBELLE": "GDE PCE"},
+        {"CODE": "GR", "LIBELLE": "GR RUE"},
+        {"CODE": "GAV", "LIBELLE": "GDE AV"},
+        {"CODE": "QUA", "LIBELLE": "QU"},
+        {"CODE": "ART", "LIBELLE": "ANCIENNE RTE"},
     ]
 
     def __init__(

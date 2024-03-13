@@ -25,19 +25,21 @@ class ComplTwoTypesLongOrAggloUseCase:
         third_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 3)
 
         if first_type.is_agglomerant and second_type.is_longitudinal:
-            # 'HLM AVE KLEBER BAT DESCARTES'
+            # 'HLM AV KLEBER BAT DESCARTES'
             # compl + 2e type + lib + 3e type compl
             return self.assign_compl_type_lib_compl_use_case.execute(voie_compl, second_type, third_type)
 
         elif first_type.is_agglomerant and third_type.is_longitudinal or second_type.is_agglomerant and third_type.is_longitudinal:
+            # "HLM BAT DESCARTES AV KLEBER"
             # compl + 3e type + lib
             return self.assign_compl_type_lib_use_case.execute(voie_compl, third_type)
 
         elif first_type.is_longitudinal and second_type.is_agglomerant or first_type.is_longitudinal and third_type.is_agglomerant:
             # 1er type + lib + 2e type compl
+            # "RUE HOCHE HLM BAT DESCARTES"
             return self.assign_type_lib_compl_use_case.execute(voie_compl)
 
-        else:
-            # IMM BLEU RUE DES LYS RESIDENCE ERNEST RENAN
+        elif second_type.is_agglomerant and third_type.is_agglomerant or second_type.is_longitudinal and third_type.is_longitudinal or second_type.is_longitudinal and third_type.is_agglomerant:
+            # "IMM BLEU RUE DES LYS RESIDENCE ERNEST RENAN"
             # compl + 2e type + lib + 3e compl
             return self.assign_compl_type_lib_compl_use_case.execute(voie_compl, second_type, third_type)

@@ -12,7 +12,7 @@ class WordAfterTypeUseCase:
 
     def execute(self, infovoie: InfoVoie, information_on_type_ordered: InformationOnTypeOrdered):
         position_type_in_lib_end = information_on_type_ordered.position_end
-        if position_type_in_lib_end or not position_type_in_lib_end == len(infovoie.label_preproc) - 1:
+        if position_type_in_lib_end and position_type_in_lib_end < len(infovoie.label_preproc) - 1:
             index_word_after = position_type_in_lib_end + 1
             information_on_type_ordered.word_after = infovoie.label_preproc[index_word_after]
 

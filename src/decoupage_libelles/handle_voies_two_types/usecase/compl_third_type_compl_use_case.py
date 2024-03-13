@@ -22,13 +22,16 @@ class ComplThirdTypeComplUseCase:
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 2)
         third_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 3)
 
-        if third_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_1_2:
-            if first_type.is_longitudinal or first_type.is_agglomerant:
+        if third_type.is_complement:
+            if first_type.is_longitudinal_or_agglomerant and not second_type.is_longitudinal_or_agglomerant:
                 # 1er type + lib + 3e type compl
+                # "RUE DU CHATEAU BAT BLEU"
                 return self.assign_type_lib_compl_use_case.execute(voie_compl, first_type, third_type)
-            elif second_type.is_longitudinal or second_type.is_agglomerant:
+            elif second_type.is_longitudinal_or_agglomerant and not first_type.is_longitudinal_or_agglomerant:
                 # lib
+                # "LA GRANDE PLAGE DE LA RUE BAT BLEU"
                 return self.assign_lib_use_case.execute(voie_compl)
             else:
                 # lib
+                # "ROND POINT DU CHATEAU BAT BLEU"
                 return self.assign_lib_use_case.execute(voie_compl)

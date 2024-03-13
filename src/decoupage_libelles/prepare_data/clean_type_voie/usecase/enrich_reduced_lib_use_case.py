@@ -2,7 +2,13 @@ import pandas as pd
 
 
 class EnrichReducedLibUseCase:
-    NEW_LIB_FOR_EXISTING_CODES = {"ZA": "ZONE D'ACTIVITES", "ZAC": "ZONE D'AMENAGEMENT CONCERTE", "ZAD": "ZONE D'AMENAGEMENT DIFFERE", "ZI": "ZONE INDUSTRIELLE", "ZUP": "ZONE A URBANISER EN PRIORITE"}
+    NEW_LIB_FOR_EXISTING_CODES = {
+        "ZA": "ZONE D'ACTIVITES",
+        "ZAC": "ZONE D'AMENAGEMENT CONCERTE",
+        "ZAD": "ZONE D'AMENAGEMENT DIFFERE",
+        "ZI": "ZONE INDUSTRIELLE",
+        "ZUP": "ZONE A URBANISER EN PRIORITE",
+    }
 
     def execute(self, type_voie_df: pd.DataFrame) -> pd.DataFrame:
         """
