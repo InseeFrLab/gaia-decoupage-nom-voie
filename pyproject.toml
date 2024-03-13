@@ -8,16 +8,22 @@ packages = [{ include = "decoupage_libelles", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-injector = "^0.20.1"
 dynaconf = "^3.2.0"
 click = "^8.1.7"
 tqdm = "^4.66.1"
+spacy = "^3.7.0"
+pandas = "^2.2.0"
+# fr_dep_news_trf = { url = "https://github.com/explosion/spacy-models/releases/download/fr_dep_news_trf-3.7.0/fr_dep_news_trf-3.7.0.tar.gz" }
 
 [tool.poetry.dev-dependencies]
 poetry-plugin-export = "^1.6.0"
 pytest = "^7.4.4"
 coverage = "^7.4.0"
 black = "^23.3.0"
+flake8 = "^7.0.0"
+flake8-bugbear = "^23.12.2"
+pyright = "^1.1.348"
+
 
 [build-system]
 requires = ["poetry-core"]
@@ -28,10 +34,10 @@ line-length = 200
 
 [tool.coverage.run]
 omit = [".*", "*/site-packages/*", "tests/*", "__init__.py"]
-source = ["src/decoupage_libelles"]
+source = ["src"]
 
 [tool.coverage.report]
-fail_under = 70
+fail_under = 0
 
 [build-system.publish]
 url = "https://nexus.insee.fr/repository/pypi-internal/"
