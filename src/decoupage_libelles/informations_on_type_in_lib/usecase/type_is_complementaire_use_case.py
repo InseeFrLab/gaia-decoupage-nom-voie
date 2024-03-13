@@ -10,7 +10,6 @@ class TypeIsComplementaireUseCase:
         else:
             types_compl = ComplementFinderUseCase.TYPES_COMPLEMENT_1_2
 
-        if information_on_type_ordered.type_name in types_compl:
-            information_on_type_ordered.is_complement = True
+        information_on_type_ordered.is_complement = True if information_on_type_ordered.type_name in types_compl else False
 
         return information_on_type_ordered

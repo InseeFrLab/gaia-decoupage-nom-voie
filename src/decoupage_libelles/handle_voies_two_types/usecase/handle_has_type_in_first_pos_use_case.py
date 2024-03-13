@@ -90,33 +90,29 @@ class HandleHasTypeInFirstPosUseCase:
 
         if voie.has_type_in_second_pos or voie.has_type_in_last_pos:
             # 1er type + lib
+            # "RUE RESIDENCE SOLEIL"
             return self.assign_type_lib_use_case.execute(voie, first_type)
 
         else:
-            if (
-                not first_type.is_longitudinal
-                and not first_type.is_agglomerant
-                and not second_type.is_longitudinal
-                and not second_type.is_agglomerant
-                or first_type.is_longitudinal
-                and first_type.is_agglomerant
-                and not second_type.is_longitudinal
-                and not second_type.is_agglomerant
-            ):
+            if not second_type.is_longitudinal_or_agglomerant:
                 # 1er type + lib
+                # "FONTAINE DU CHATEAU"
+                # "RUE DU CHATEAU"
                 return self.assign_type_lib_use_case.execute(voie, first_type)
 
-            elif not first_type.is_longitudinal and not first_type.is_agglomerant and second_type.is_longitudinal and second_type.is_agglomerant:
+            elif not first_type.is_longitudinal_or_agglomerant and second_type.is_longitudinal_or_agglomerant:
                 self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
                 first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
                 second_type = self.generate_information_on_type_ordered_use_case.execute(voie, 2)
 
                 if second_type.has_adj_det_before:
                     # 1er type + lib
+                    # "CHATEAU DE LA GRANDE RUE HOCHE"
                     return self.assign_type_lib_use_case.execute(voie, first_type)
                 else:
                     # compl + 2e type + lib
-                    self.assign_compl_type_lib_use_case.execute(voie, second_type)
+                    # "CHATEAU DE VERSAILLES RUE HOCHE"
+                    return self.assign_compl_type_lib_use_case.execute(voie, second_type)
 
             else:
                 self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
@@ -125,37 +121,46 @@ class HandleHasTypeInFirstPosUseCase:
 
                 if second_type.has_adj_det_before:
                     # 1er type + lib
+                    # "HAMEAU DU GRAND CHATEAU DE VINCENNES"
                     return self.assign_type_lib_use_case.execute(voie, first_type)
 
                 else:
                     if first_type.is_agglomerant and second_type.is_longitudinal:
                         # compl + 2e type + lib
+                        # "RESIDENCE VINCENNES RUE HOCHE"
                         return self.assign_compl_type_lib_use_case.execute(voie, second_type)
 
                     elif first_type.is_longitudinal and second_type.is_longitudinal:
                         two_longs = ("/").join([first_type.type_name, second_type.type_name])
                         if first_type.type_name == second_type.type_name:
                             # lib
-                            self.assign_lib_use_case.execute(voie)
+                            # "RUE HOCHE RUE VERDIER"
+                            return self.assign_lib_use_case.execute(voie)
 
                         elif two_longs in HandleHasTypeInFirstPosUseCase.COMBINAISONS_LONG and not HandleHasTypeInFirstPosUseCase.COMBINAISONS_LONG[two_longs]:
                             # compl + 2e type + lib
+                            # "IMPASSE HOCHE AVENUE VERDIER"
                             return self.assign_compl_type_lib_use_case.execute(voie, second_type)
                         else:
                             # 1er type + lib + compl
+                            # "AVENUE VERDIER IMPASSE HOCHE"
                             return self.assign_type_lib_compl_use_case.execute(voie)
 
                     elif first_type.is_agglomerant and second_type.is_agglomerant:
                         if first_type.type_name == second_type.type_name:
                             # lib
+                            # "HAMEAU SOLEIL HAMEAU VERDIER"
                             return self.assign_lib_use_case.execute(voie)
-                        elif second_type.type_name == "RESIDENCE":
+                        elif second_type.type_name in ["RESIDENCE", "HLM"]:
                             # compl + 2e type + lib
+                            # "HAMEAU SOLEIL RESIDENCE BLEUE"
                             return self.assign_compl_type_lib_use_case.execute(voie, second_type)
                         else:
                             # 1er type + lib + compl
+                            # "HAMEAU SOLEIL LOTISSEMENT VERDIER"
                             return self.assign_type_lib_compl_use_case.execute(voie)
 
                     else:  # si le premier est long et le deuxieme agglo
                         # 1er type + lib + compl
+                        # "RUE HOCHE RESIDENCE ERNEST RENAN"
                         return self.assign_type_lib_compl_use_case.execute(voie)

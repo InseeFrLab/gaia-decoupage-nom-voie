@@ -1,4 +1,5 @@
 import spacy
+import logging
 
 
 class NLPModelExecution:
@@ -18,6 +19,6 @@ class NLPModelSingleton:
 
     @staticmethod
     def _load_model():
-        print("Chargement du modèle SpaCy pour le postagging")
+        logging.info("Chargement du modèle SpaCy pour le postagging")
         # Code pour charger le modèle NLP
         return spacy.load("fr_dep_news_trf")

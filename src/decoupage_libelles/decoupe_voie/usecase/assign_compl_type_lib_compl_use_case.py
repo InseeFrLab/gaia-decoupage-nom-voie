@@ -17,4 +17,4 @@ class AssignComplTypeLibComplUseCase:
         self.label_assigned = label_assigned
         self.compl_assigned = compl_assigned
 
-        return VoieDecoupee(label_raw=infovoie.label_raw, type_assigned=type_principal.type_name, label_assigned=label_assigned, compl_assigned=compl_assigned)
+        return VoieDecoupee(label_origin=infovoie.label_origin, type_assigned=type_principal.type_name, label_assigned=label_assigned, compl_assigned=compl_assigned, compl2=infovoie.complement)

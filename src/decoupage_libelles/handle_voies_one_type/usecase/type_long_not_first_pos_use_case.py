@@ -25,7 +25,7 @@ class TypeLongNotFirstPosUseCase:
         if first_type.is_longitudinal:
             if not first_type.has_adj_det_before and not voie.has_type_in_last_pos:
                 # compl + 1er type + lib
-                # test = VoieType('LE BAS FAURE RUE DE TOUL', ['LE', 'BAS', 'FAURE', 'RUE', 'DE', 'TOUL'], ['RUE'], [3], ['DET', 'PROPN', 'PROPN', 'NOUN', 'ADP', 'PROPN'])
+                # 'LE BAS FAURE RUE DE TOUL'
                 return self.assign_compl_type_lib_use_case.execute(voie, first_type)
             else:
                 # lib

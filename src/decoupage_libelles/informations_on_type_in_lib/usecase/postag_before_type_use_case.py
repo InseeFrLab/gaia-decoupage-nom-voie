@@ -26,11 +26,10 @@ class PostagBeforeTypeUseCase:
         Returns:
             (str)
         """
-        if information_on_type_ordered.position_start > 0:
+        if information_on_type_ordered.position_start > 0 and infovoie.label_postag:
             postag = infovoie.label_postag[information_on_type_ordered.position_start - 1]
             information_on_type_ordered.postag_before = postag
 
-            if postag in PostagBeforeTypeUseCase.POSTAG:
-                information_on_type_ordered.has_adj_det_before = True
+            information_on_type_ordered.has_adj_det_before = True if postag in PostagBeforeTypeUseCase.POSTAG else False
 
         return information_on_type_ordered

@@ -18,4 +18,5 @@ class InformationOnTypeOrdered:
     is_in_penultimate_position: Optional[bool] = None
     is_longitudinal: Optional[bool] = None
     is_agglomerant: Optional[bool] = None
+    is_longitudinal_or_agglomerant: Optional[bool] = None
     is_complement: Optional[bool] = None

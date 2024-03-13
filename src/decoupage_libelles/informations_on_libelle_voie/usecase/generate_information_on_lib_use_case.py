@@ -19,10 +19,9 @@ class GenerateInformationOnLibUseCase:
         self.types_detected_use_case: TypesDetectedUseCase = types_detected_use_case
 
     def execute(self, infovoie: InfoVoie, apply_nlp_model: bool = False) -> InfoVoie:
-        self.position_of_types_in_lib_analyser_use_case.execute(infovoie)
         if apply_nlp_model:
             self.apply_postagging_use_case.execute(infovoie)
-            self.position_of_types_in_lib_analyser_use_case.execute(infovoie)
-            self.has_duplicated_types_use_case.execute(infovoie)
-            self.types_detected_use_case.execute(infovoie)
+        self.position_of_types_in_lib_analyser_use_case.execute(infovoie)
+        self.has_duplicated_types_use_case.execute(infovoie)
+        self.types_detected_use_case.execute(infovoie)
         return infovoie

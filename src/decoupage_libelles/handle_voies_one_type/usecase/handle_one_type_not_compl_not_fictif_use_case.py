@@ -33,7 +33,7 @@ class HandleOneTypeNotComplNotFictifUseCase:
 
         if voie.has_type_in_first_pos:
             # 1er type + lib
-            # test = VoieType('CHE DES SEMAPHORES', ['CHE', 'DES', 'SEMAPHORES'], ['CHEMIN'], [0], [])
+            # 'CHE DES SEMAPHORES'
             first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
             voie_treated = self.assign_type_lib_use_case.execute(voie, first_type)
 

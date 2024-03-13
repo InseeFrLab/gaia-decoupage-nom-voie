@@ -32,7 +32,7 @@ class ComplTypeInFirstOrMiddlePosUseCase:
 
         if first_type.is_complement:
             if not second_type.has_adj_det_before:
-                # 'BAT L ANJOU AVE DE VLAMINC'
+                # 'BAT L ANJOU AV DE VLAMINC'
                 # compl + 2e type + lib
                 return self.assign_compl_type_lib_use_case.execute(voie_compl, second_type)
             else:

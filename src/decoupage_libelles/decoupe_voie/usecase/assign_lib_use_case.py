@@ -8,4 +8,4 @@ class AssignLibUseCase:
         infovoie: InfoVoie,
     ) -> VoieDecoupee:
         label_assigned = (" ").join(infovoie.label_preproc)
-        return VoieDecoupee(label_raw=infovoie.label_raw, type_assigned=" ", label_assigned=label_assigned, compl_assigned=" ")
+        return VoieDecoupee(label_origin=infovoie.label_origin, type_assigned=" ", label_assigned=label_assigned, compl_assigned=" ", compl2=infovoie.complement)

@@ -20,4 +20,4 @@ class AssignLibTypeUseCase:
         type_principal = self.order_type_in_lib_use_case.execute(infovoie, 1)
         label_assigned = self.get_words_between_use_case.execute(infovoie, 0, type_principal.position_start)
 
-        return VoieDecoupee(label_raw=infovoie.label_raw, type_assigned=type_principal.type_name, label_assigned=label_assigned, compl_assigned=" ")
+        return VoieDecoupee(label_origin=infovoie.label_origin, type_assigned=type_principal.type_name, label_assigned=label_assigned, compl_assigned=" ", compl2=infovoie.complement)

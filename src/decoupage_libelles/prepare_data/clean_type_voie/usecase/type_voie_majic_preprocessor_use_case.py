@@ -41,10 +41,10 @@ class TypeVoieMajicPreprocessorUseCase:
         avec libellés uniques.
         """
         type_voie_df = pd.read_csv(TypeVoieMajicPreprocessorUseCase.FILEPATH_TYPE_VOIE)
-        self.enrich_reduced_lib_use_case.execute(type_voie_df)
-        libs_for_code_df = self.choose_unique_lib_use_case.execute(type_voie_df)
-        self.new_codes_lib_use_case.execute(type_voie_df)
+        type_voie_df = self.enrich_reduced_lib_use_case.execute(type_voie_df)
+        type_voie_df, libs_for_code_df = self.choose_unique_lib_use_case.execute(type_voie_df)
+        type_voie_df = self.new_codes_lib_use_case.execute(type_voie_df)
         code2lib = self.create_dict_code_lib_use_case.execute(type_voie_df)
-        self.new_spelling_for_code_use_case.execute(type_voie_df, libs_for_code_df)
+        type_voie_df = self.new_spelling_for_code_use_case.execute(type_voie_df, libs_for_code_df)
 
         return type_voie_df, code2lib
