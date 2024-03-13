@@ -8,7 +8,7 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 def test_preprocessor_calls_different_services():
     # Given
-    voie_obj = InfoVoie(label_raw="libelle")
+    voie_obj = InfoVoie(label_origin="libelle", label_raw="libelle")
     mock_suppress_ponctuation_in_words_use_case = MagicMock(spec=SuppressPonctuationInWordsUseCase)
     mock_suppress_ponctuation_in_words_use_case.execute.return_value = ["libelle"]
     mock_separate_words_with_apostrophe_and_supress_ponctuation_use_case = MagicMock(spec=SeparateWordsWithApostropheAndSupressPonctuationUseCase)
@@ -17,7 +17,7 @@ def test_preprocessor_calls_different_services():
     ponctuation_preprocessor_use_case = PonctuationPreprocessorUseCase(mock_separate_words_with_apostrophe_and_supress_ponctuation_use_case, mock_suppress_ponctuation_in_words_use_case)
     voie = ponctuation_preprocessor_use_case.execute(voie_obj)
     # Then
-    voie_target = InfoVoie(label_raw="libelle", label_preproc=["libelle"])
+    voie_target = InfoVoie(label_origin="libelle", label_raw="libelle", label_preproc=["libelle"])
     assert voie_target == voie
     mock_separate_words_with_apostrophe_and_supress_ponctuation_use_case.execute.assert_called_once()
     mock_suppress_ponctuation_in_words_use_case.execute.assert_called_once()
