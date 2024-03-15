@@ -1,7 +1,6 @@
 from decoupage_libelles.finders.find_type.model.type_finder_object import TypeFinderObject
 from decoupage_libelles.finders.find_type.usecase.detect_codified_types_use_case import DetectCodifiedTypesUseCase
 from decoupage_libelles.finders.find_type.usecase.generate_type_finder_utils_use_case import TypeFinderUtils
-from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
 
 
 def use_case():
