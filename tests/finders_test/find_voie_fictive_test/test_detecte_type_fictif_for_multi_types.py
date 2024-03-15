@@ -8,8 +8,13 @@ from decoupage_libelles.informations_on_type_in_lib.usecase.generate_information
 
 def test_execute_voie_fictive():
     # Given
-    voie = InfoVoie(label_origin="LES TILLETS RUE A", label_raw="LES TILLETS RUE A", label_preproc=["LES", "TILLETS", "RUE", "A"], types_and_positions={("RUE", 1): (2, 2)}, types_detected=["RUE"])
-
+    voie = InfoVoie(
+        label_origin="LES TILLETS RUE A",
+        label_raw="LES TILLETS RUE A",
+        label_preproc=["LES", "TILLETS", "RUE", "A"],
+        types_and_positions={("RUE", 1): (2, 2)},
+        types_detected=["RUE"],
+    )
     liste_voie_commun = ["RUE"]
     liste_fictive = ["A", "B", "C"]
     generate_information_on_type_ordered_use_case_mock = MagicMock(spec=GenerateInformationOnTypeOrderedUseCase)
@@ -24,7 +29,7 @@ def test_execute_voie_fictive():
         order_in_lib=1,
     )
     get_words_between_use_case_mock = MagicMock(spec=GetWordsBetweenUseCase)
-    get_words_between_use_case_mock.return_value = "A"
+    get_words_between_use_case_mock.execute.return_value = "A"
     # When
     use_case = DetectTypeFictifForMultiTypesUseCase(generate_information_on_type_ordered_use_case_mock, get_words_between_use_case_mock)
     result = use_case.execute(voie, liste_voie_commun, liste_fictive)
