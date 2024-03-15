@@ -15,7 +15,9 @@ def test_complement_finder_no_type():
 
 def test_complement_finder_one_type():
     # Given
-    voie = InfoVoie(label_origin="LE TILLET BAT A", label_raw="IMM L ANJOU AVE DE VLAMINC", label_preproc=["IMM", "L", "ANJOU", "AVE", "DE", "VLAMINC"], types_and_positions={("AVE", 1): (3, 3)})
+    voie = InfoVoie(
+        label_origin="IMM L ANJOU AVE DE VLAMINC", label_raw="IMM L ANJOU AVE DE VLAMINC", label_preproc=["IMM", "L", "ANJOU", "AVE", "DE", "VLAMINC"], types_and_positions={("AVE", 1): (3, 3)}
+    )
     # When
     use_case = ComplementFinderUseCase()
     voie_treated = use_case.execute(voie, ["IMM"])

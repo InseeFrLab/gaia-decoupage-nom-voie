@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 from decoupage_libelles.prepare_data.ponctuation.usecase.ponctuation_preprocessor_use_case import PonctuationPreprocessorUseCase
 from decoupage_libelles.prepare_data.ponctuation.usecase.separate_words_with_apostrophe_and_supress_ponctuation_use_case import SeparateWordsWithApostropheAndSupressPonctuationUseCase
 from decoupage_libelles.prepare_data.ponctuation.usecase.suppress_ponctuation_in_words_use_case import SuppressPonctuationInWordsUseCase
+from decoupage_libelles.prepare_data.ponctuation.usecase.separate_complementary_part_use_case import SeparateComplementaryPartUseCase
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
 
 
@@ -13,11 +14,16 @@ def test_preprocessor_calls_different_services():
     mock_suppress_ponctuation_in_words_use_case.execute.return_value = ["libelle"]
     mock_separate_words_with_apostrophe_and_supress_ponctuation_use_case = MagicMock(spec=SeparateWordsWithApostropheAndSupressPonctuationUseCase)
     mock_separate_words_with_apostrophe_and_supress_ponctuation_use_case.execute.return_value = ["libelle"]
+    mock_separate_complementary_part_use_case = MagicMock(spec=SeparateComplementaryPartUseCase)
+    mock_separate_complementary_part_use_case.execute.return_value = voie_obj
     # When
-    ponctuation_preprocessor_use_case = PonctuationPreprocessorUseCase(mock_separate_words_with_apostrophe_and_supress_ponctuation_use_case, mock_suppress_ponctuation_in_words_use_case)
+    ponctuation_preprocessor_use_case = PonctuationPreprocessorUseCase(
+        mock_separate_complementary_part_use_case, mock_separate_words_with_apostrophe_and_supress_ponctuation_use_case, mock_suppress_ponctuation_in_words_use_case
+    )
     voie = ponctuation_preprocessor_use_case.execute(voie_obj)
     # Then
     voie_target = InfoVoie(label_origin="libelle", label_raw="libelle", label_preproc=["libelle"])
     assert voie_target == voie
+    mock_separate_complementary_part_use_case.execute.assert_called_once()
     mock_separate_words_with_apostrophe_and_supress_ponctuation_use_case.execute.assert_called_once()
     mock_suppress_ponctuation_in_words_use_case.execute.assert_called_once()
