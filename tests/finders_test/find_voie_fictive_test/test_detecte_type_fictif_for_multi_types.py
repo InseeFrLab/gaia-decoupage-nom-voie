@@ -8,11 +8,8 @@ from decoupage_libelles.informations_on_type_in_lib.usecase.generate_information
 
 def test_execute_voie_fictive():
     # Given
-    voie = InfoVoie(label_origin = "LES TILLETS RUE A", label_raw = "LES TILLETS RUE A", label_preproc = ["LES", "TILLETS", "RUE", "A"], types_and_positions = {("RUE", 1): (2, 2)}
-)
-    voie.types_detected = ["RUE"]
-    
-    voie.
+    voie = InfoVoie(label_origin="LES TILLETS RUE A", label_raw="LES TILLETS RUE A", label_preproc=["LES", "TILLETS", "RUE", "A"], types_and_positions={("RUE", 1): (2, 2)}, types_detected=["RUE"])
+
     liste_voie_commun = ["RUE"]
     liste_fictive = ["A", "B", "C"]
     generate_information_on_type_ordered_use_case_mock = MagicMock(spec=GenerateInformationOnTypeOrderedUseCase)
@@ -22,8 +19,8 @@ def test_execute_voie_fictive():
         word_before=None,
         word_after=None,
         occurence=1,
-        position_start=0,
-        position_end=0,
+        position_start=2,
+        position_end=2,
         order_in_lib=1,
     )
     get_words_between_use_case_mock = MagicMock(spec=GetWordsBetweenUseCase)
