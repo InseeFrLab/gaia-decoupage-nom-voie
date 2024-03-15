@@ -50,3 +50,38 @@ def test_assign_type_lib_compl_use_case_types_non_definis():
         compl_assigned="compl_assigned",
         compl2=infovoie.complement,
     )
+
+
+def test_assign_type_lib_compl_use_case_types_definis():
+    # Given
+    infovoie = InfoVoie(
+        label_origin="",
+        label_raw="",
+        complement="",
+    )
+    type_principal = InformationOnTypeOrdered(
+        type_name="type_name",
+        order_in_lib=1,
+        position_start=1,
+        position_end=1,
+        occurence=1,
+    )
+    type_compl = InformationOnTypeOrdered(
+        type_name="",
+        order_in_lib=2,
+        position_start=2,
+        position_end=2,
+        occurence=2,
+    )
+    get_words_between_use_case = MagicMock()
+    get_words_between_use_case.execute.side_effect = ["label_assigned", "compl_assigned"]
+    # When
+    res = use_case(get_words_between_use_case).execute(infovoie, type_principal, type_compl)
+    # Then
+    assert res == VoieDecoupee(
+        label_origin=infovoie.label_origin,
+        type_assigned="type_name",
+        label_assigned="label_assigned",
+        compl_assigned="compl_assigned",
+        compl2=infovoie.complement,
+    )
