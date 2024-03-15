@@ -4,10 +4,11 @@ from decoupage_libelles.informations_on_libelle_voie.usecase.get_words_between_u
 from decoupage_libelles.informations_on_type_in_lib.model.information_on_type_ordered import InformationOnTypeOrdered
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
 from decoupage_libelles.decoupe_voie.model.voie_decoupee import VoieDecoupee
-from decoupage_libelles.informations_on_libelle_voie.usecase.get_words_between_use_case import GetWordsBetweenUseCase
 
 
-def use_case(get_words_between_use_case: GetWordsBetweenUseCase) -> AssignComplTypeLibComplUseCase:
+def use_case(
+    get_words_between_use_case: GetWordsBetweenUseCase = None,
+) -> AssignComplTypeLibComplUseCase:
     return AssignComplTypeLibComplUseCase(get_words_between_use_case)
 
 

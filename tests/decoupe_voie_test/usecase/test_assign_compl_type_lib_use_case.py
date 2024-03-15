@@ -6,7 +6,9 @@ from decoupage_libelles.decoupe_voie.model.voie_decoupee import VoieDecoupee
 from decoupage_libelles.informations_on_libelle_voie.usecase.get_words_between_use_case import GetWordsBetweenUseCase
 
 
-def use_case(get_words_between_use_case: GetWordsBetweenUseCase):
+def use_case(
+    get_words_between_use_case: GetWordsBetweenUseCase = None,
+):
     return AssignComplTypeLibUseCase(get_words_between_use_case)
 
 
