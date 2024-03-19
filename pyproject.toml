@@ -13,6 +13,7 @@ click = "^8.1.7"
 tqdm = "^4.66.1"
 spacy = "^3.7.0"
 pandas = "^2.2.0"
+pyarrow = "^15.0.2"
 # fr_dep_news_trf = { url = "https://github.com/explosion/spacy-models/releases/download/fr_dep_news_trf-3.7.0/fr_dep_news_trf-3.7.0.tar.gz" }
 
 [tool.poetry.dev-dependencies]
