@@ -37,5 +37,4 @@ class RemoveDuplicatesUseCase:
                         del type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
                     else:
                         del type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
-        print(type_finder_object)
         return type_finder_object
