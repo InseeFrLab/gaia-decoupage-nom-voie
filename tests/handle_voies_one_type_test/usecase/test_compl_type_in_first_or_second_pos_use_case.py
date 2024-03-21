@@ -31,7 +31,7 @@ def test_execute_no_complement():
     assert res is None
 
 
-def test_execute_no_complement_1():
+def test_execute_complement_1():
     # Given
     voie_compl = InfoVoie()
     generate_information_on_type_ordered_use_case = MagicMock()
@@ -39,7 +39,73 @@ def test_execute_no_complement_1():
         InformationOnTypeOrdered(is_complement=True, type_name="", order_in_lib=1, position_start=1, position_end=1, occurence=1),
         InformationOnTypeOrdered(is_complement=False, type_name="", order_in_lib=1, position_start=1, position_end=1, occurence=1),
     ]
+    assign_lib_use_case = MagicMock()
+    expected_res = VoieDecoupee(label_origin="")
+    assign_lib_use_case.execute.return_value = expected_res
     # When
-    res = use_case(generate_information_on_type_ordered_use_case=generate_information_on_type_ordered_use_case).execute(voie_compl)
+    res = use_case(
+        generate_information_on_type_ordered_use_case=generate_information_on_type_ordered_use_case,
+        assign_lib_use_case=assign_lib_use_case,
+    ).execute(voie_compl)
     # Then
-    assert res is None
+    assert res == expected_res
+
+
+def test_execute_complement_1_immeuble_1():
+    # Given
+    voie_compl = InfoVoie()
+    generate_information_on_type_ordered_use_case = MagicMock()
+    generate_information_on_type_ordered_use_case.execute.side_effect = [
+        InformationOnTypeOrdered(is_complement=True, type_name="IMM", order_in_lib=1, position_start=1, position_end=1, occurence=1),
+        InformationOnTypeOrdered(is_complement=False, type_name="", order_in_lib=1, position_start=1, position_end=1, occurence=1),
+    ]
+    assign_lib_use_case = MagicMock()
+    expected_res = VoieDecoupee(label_origin="")
+    assign_lib_use_case.execute.return_value = expected_res
+    # When
+    res = use_case(
+        generate_information_on_type_ordered_use_case=generate_information_on_type_ordered_use_case,
+        assign_lib_use_case=assign_lib_use_case,
+    ).execute(voie_compl)
+    # Then
+    assert res == expected_res
+
+
+def test_execute_complement_1_immeuble_1_et_complement_2():
+    # Given
+    voie_compl = InfoVoie()
+    generate_information_on_type_ordered_use_case = MagicMock()
+    generate_information_on_type_ordered_use_case.execute.side_effect = [
+        InformationOnTypeOrdered(is_complement=True, type_name="IMM", order_in_lib=1, position_start=1, position_end=1, occurence=1),
+        InformationOnTypeOrdered(is_complement=False, type_name="HLM", order_in_lib=1, position_start=1, position_end=1, occurence=1),
+    ]
+    assign_type_lib_use_case = MagicMock()
+    expected_res = VoieDecoupee(label_origin="")
+    assign_type_lib_use_case.execute.return_value = expected_res
+    # When
+    res = use_case(
+        generate_information_on_type_ordered_use_case=generate_information_on_type_ordered_use_case,
+        assign_type_lib_use_case=assign_type_lib_use_case,
+    ).execute(voie_compl)
+    # Then
+    assert res == expected_res
+
+
+def test_execute_complement_2():
+    # Given
+    voie_compl = InfoVoie()
+    generate_information_on_type_ordered_use_case = MagicMock()
+    generate_information_on_type_ordered_use_case.execute.side_effect = [
+        InformationOnTypeOrdered(is_complement=False, type_name="", order_in_lib=1, position_start=1, position_end=1, occurence=1),
+        InformationOnTypeOrdered(is_complement=True, type_name="", order_in_lib=1, position_start=1, position_end=1, occurence=1),
+    ]
+    assign_type_lib_use_case = MagicMock()
+    expected_res = VoieDecoupee(label_origin="")
+    assign_type_lib_use_case.execute.return_value = expected_res
+    # When
+    res = use_case(
+        generate_information_on_type_ordered_use_case=generate_information_on_type_ordered_use_case,
+        assign_type_lib_use_case=assign_type_lib_use_case,
+    ).execute(voie_compl)
+    # Then
+    assert res == expected_res
