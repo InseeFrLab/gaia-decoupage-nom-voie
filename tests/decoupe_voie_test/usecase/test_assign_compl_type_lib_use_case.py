@@ -7,7 +7,7 @@ from decoupage_libelles.informations_on_libelle_voie.usecase.get_words_between_u
 
 
 def use_case(
-    get_words_between_use_case: GetWordsBetweenUseCase = None,
+    get_words_between_use_case: GetWordsBetweenUseCase = MagicMock(),
 ):
     return AssignComplTypeLibUseCase(get_words_between_use_case)
 

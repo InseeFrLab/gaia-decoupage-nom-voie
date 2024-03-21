@@ -7,7 +7,7 @@ from decoupage_libelles.decoupe_voie.model.voie_decoupee import VoieDecoupee
 
 
 def use_case(
-    get_words_between_use_case: GetWordsBetweenUseCase = None,
+    get_words_between_use_case: GetWordsBetweenUseCase = MagicMock(),
 ) -> AssignComplTypeLibComplUseCase:
     return AssignComplTypeLibComplUseCase(get_words_between_use_case)
 

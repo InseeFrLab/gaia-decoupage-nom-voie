@@ -8,8 +8,8 @@ from decoupage_libelles.informations_on_type_in_lib.model.information_on_type_or
 
 
 def use_case(
-    get_words_between_use_case: GetWordsBetweenUseCase = None,
-    order_type_in_lib_use_case: OrderTypeInLib = None,
+    get_words_between_use_case: GetWordsBetweenUseCase = MagicMock(),
+    order_type_in_lib_use_case: OrderTypeInLib = MagicMock(),
 ):
     return AssignLibTypeUseCase(get_words_between_use_case, order_type_in_lib_use_case)
 
