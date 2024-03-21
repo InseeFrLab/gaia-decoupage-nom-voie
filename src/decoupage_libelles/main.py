@@ -44,10 +44,7 @@ def run():
         result_filepath = os.path.abspath("../data/" + result_file_name + ".parquet")
         resultat_df.to_parquet(result_filepath)
 
-        logging.info(
-            "Les voies traitées ont été enregistrées et sont accessibles en cliquant + Ctrl \
-sur ce lien :"
-        )
+        logging.info("Les voies traitées ont été enregistrées et sont accessibles en cliquant + Ctrl sur ce lien :")
         logging.info(f"\033]8;;file://{result_filepath}\033\\{result_filepath}\033]8;;\033\\")
 
     elif format_data == "label":
