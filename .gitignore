@@ -1,4 +1,6 @@
 *.parquet.gz
+*.parquet
+*.xlsx
 *.ipynb_checkpoints
 dist
 __pycache__

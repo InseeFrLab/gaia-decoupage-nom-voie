@@ -9,4 +9,5 @@ class VoieDecoupee:
     label_assigned: Optional[str] = None
     compl_assigned: Optional[str] = None
     num_assigned: Optional[str] = None
+    indice_rep: Optional[str] = None
     compl2: Optional[str] = None
