@@ -37,10 +37,19 @@ def run():
         result_file_name = sys.argv[4]
 
         voies_processed_list = [
-            [voie.label_origin.lower(), voie.num_assigned, voie.indice_rep.lower(), voie.type_assigned.lower(), voie.label_assigned.lower(), voie.compl_assigned.lower()] for voie in voies_processed
+            {
+                var_name_voie: voie.label_origin.lower() if voie.label_origin else "",
+                "numero": voie.num_assigned if voie.num_assigned is not None else "",
+                "indice_rep": voie.indice_rep.lower() if voie.indice_rep else "",
+                "typeVoie": voie.type_assigned.lower() if voie.type_assigned else "",
+                "libelleVoie": voie.label_assigned.lower() if voie.label_assigned else "",
+                "complementAdresse": voie.compl_assigned.lower() if voie.compl_assigned else "",
+                "complementAdresse2": voie.compl2.lower() if voie.compl2 else "",
+            }
+            for voie in voies_processed
         ]
 
-        voies_processed_df = pd.DataFrame(voies_processed_list, columns=[var_name_voie, "numero", "indice_rep", "type", "libelle_voie", "complement"])
+        voies_processed_df = pd.DataFrame(voies_processed_list)
         resultat_df = pd.merge(voies_data_df, voies_processed_df, left_on=var_name_voie, right_on=var_name_voie, how="left")
 
         result_filepath = os.path.abspath("../data/" + result_file_name + ".parquet")
