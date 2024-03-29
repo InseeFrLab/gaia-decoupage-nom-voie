@@ -8,6 +8,7 @@ class NewCodesLibUseCase:
         {"CODE": "APL", "LIBELLE": "ANCIENNE PLACE"},
         {"CODE": "ANV", "LIBELLE": "ANCIENNE VOIE"},
         {"CODE": "GAV", "LIBELLE": "GRANDE AVENUE"},
+        {"CODE": "LDT", "LIBELLE": "LIEU-DIT"},
     ]
 
     def execute(self, type_voie_df: pd.DataFrame) -> pd.DataFrame:
