@@ -22,7 +22,6 @@ class HandleNoTypeComplUseCase:
     def execute(self, voie_compl: InfoVoie) -> VoieDecoupee:
         self.generate_information_on_lib_use_case.execute(voie_compl, apply_nlp_model=True)
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 1)
-
         if first_type.is_in_middle_position and not first_type.has_adj_det_before:
             # 'LE TILLET BAT A'
             # lib + compl

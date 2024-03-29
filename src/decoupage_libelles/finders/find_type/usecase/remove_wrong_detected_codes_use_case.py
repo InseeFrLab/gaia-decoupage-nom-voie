@@ -24,7 +24,6 @@ class RemoveWrongDetectedCodesUseCase:
             type_i1 = self.generate_information_on_type_ordered_use_case.execute(type_finder_object.voie_big, i + 1)
 
             if type_i.type_name != type_i1.type_name:
-
                 dict_two_types[type_i.type_name] = (type_i.position_start, type_i.position_end, type_i.occurence)
                 dict_two_types[type_i1.type_name] = (type_i1.position_start, type_i1.position_end, type_i1.occurence)
 

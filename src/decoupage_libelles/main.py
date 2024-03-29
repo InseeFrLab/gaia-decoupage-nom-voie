@@ -11,11 +11,14 @@ def run():
     logging.info("Programme de découpage des libellés de voies")
     format_data = sys.argv[1]
 
-    if format_data == "parquet":
+    if format_data == "parquetgz" or format_data == "parquet":
         filename_parquet = sys.argv[2]
 
         logging.info("Lecture du fichier en entrée")
-        voies_data_df = pd.read_parquet("../data/" + filename_parquet + ".parquet.gz")
+        if format_data == "parquetgz":
+            voies_data_df = pd.read_parquet("../data/" + filename_parquet + ".parquet.gz")
+        elif format_data == "parquet":
+            voies_data_df = pd.read_parquet("../data/" + filename_parquet + ".parquet")
 
         var_name_voie = sys.argv[3]
         voies_data = voies_data_df[var_name_voie].values.tolist()
@@ -29,7 +32,7 @@ def run():
     typevoiedecoupagelauncher: TypeVoieDecoupageLauncher = TypeVoieDecoupageLauncher()
     voies_processed = typevoiedecoupagelauncher.execute(voies_data=voies_data)
 
-    if format_data == "parquet":
+    if format_data == "parquetgz" or format_data == "parquet":
         logging.info("Enregistrement des voies traitées")
         result_file_name = sys.argv[4]
 
@@ -38,13 +41,10 @@ def run():
         voies_processed_df = pd.DataFrame(voies_processed_list, columns=["libelle_origin", "numero", "type", "libelle_voie", "complement"])
         resultat_df = pd.merge(voies_data_df, voies_processed_df, left_on=var_name_voie, right_on="libelle_origin", how="left")
 
-        result_filepath = os.path.abspath("../data/" + result_file_name + ".parquet.gz")
+        result_filepath = os.path.abspath("../data/" + result_file_name + ".parquet")
         resultat_df.to_parquet(result_filepath)
 
-        logging.info(
-            "Les voies traitées ont été enregistrées et sont accessibles en cliquant + Ctrl \
-sur ce lien :"
-        )
+        logging.info("Les voies traitées ont été enregistrées et sont accessibles en cliquant + Ctrl sur ce lien :")
         logging.info(f"\033]8;;file://{result_filepath}\033\\{result_filepath}\033]8;;\033\\")
 
     elif format_data == "label":

@@ -16,4 +16,10 @@ class AssignComplTypeLibUseCase:
         label_assigned = self.get_words_between_use_case.execute(infovoie=infovoie, position_start=type_principal.position_end + 1)
         compl_assigned = self.get_words_between_use_case.execute(infovoie=infovoie, position_start=0, position_end=type_principal.position_start)
 
-        return VoieDecoupee(label_origin=infovoie.label_origin, type_assigned=type_principal.type_name, label_assigned=label_assigned, compl_assigned=compl_assigned, compl2=infovoie.complement)
+        return VoieDecoupee(
+            label_origin=infovoie.label_origin,
+            type_assigned=type_principal.type_name,
+            label_assigned=label_assigned,
+            compl_assigned=compl_assigned,
+            compl2=infovoie.complement,
+        )

@@ -4,7 +4,6 @@ from decoupage_libelles.informations_on_type_in_lib.usecase.generate_information
 from decoupage_libelles.decoupe_voie.usecase.assign_lib_use_case import AssignLibUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_type_lib_compl_use_case import AssignTypeLibComplUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_compl_type_lib_use_case import AssignComplTypeLibUseCase
-from decoupage_libelles.finders.find_complement.usecase.complement_finder_use_case import ComplementFinderUseCase
 
 
 class ComplSecondTypeComplUseCase:

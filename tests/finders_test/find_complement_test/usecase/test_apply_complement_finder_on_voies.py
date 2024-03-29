@@ -4,7 +4,7 @@ from decoupage_libelles.finders.find_complement.usecase.apply_complement_finder_
 from unittest.mock import MagicMock
 
 
-def use_case(complement_finder_use_case: ComplementFinderUseCase) -> ApplyComplementFinderOnVoiesUseCase:
+def use_case(complement_finder_use_case: ComplementFinderUseCase = MagicMock()) -> ApplyComplementFinderOnVoiesUseCase:
     return ApplyComplementFinderOnVoiesUseCase(complement_finder_use_case=complement_finder_use_case)
 
 
