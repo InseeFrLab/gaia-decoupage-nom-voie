@@ -25,7 +25,7 @@ def run():
 
     elif format_data == "label":
         voie_label = sys.argv[2]
-        voies_data = [voie_label.upper()]
+        voies_data = [voie_label]
 
     voies_data = list(set(voies_data))
 
@@ -36,10 +36,12 @@ def run():
         logging.info("Enregistrement des voies traitées")
         result_file_name = sys.argv[4]
 
-        voies_processed_list = [[voie.label_origin, voie.num_assigned, voie.type_assigned, voie.label_assigned, voie.compl_assigned] for voie in voies_processed]
+        voies_processed_list = [
+            [voie.label_origin.lower(), voie.num_assigned, voie.indice_rep.lower(), voie.type_assigned.lower(), voie.label_assigned.lower(), voie.compl_assigned.lower()] for voie in voies_processed
+        ]
 
-        voies_processed_df = pd.DataFrame(voies_processed_list, columns=["libelle_origin", "numero", "type", "libelle_voie", "complement"])
-        resultat_df = pd.merge(voies_data_df, voies_processed_df, left_on=var_name_voie, right_on="libelle_origin", how="left")
+        voies_processed_df = pd.DataFrame(voies_processed_list, columns=[var_name_voie, "numero", "indice_rep", "type", "libelle_voie", "complement"])
+        resultat_df = pd.merge(voies_data_df, voies_processed_df, left_on=var_name_voie, right_on=var_name_voie, how="left")
 
         result_filepath = os.path.abspath("../data/" + result_file_name + ".parquet")
         resultat_df.to_parquet(result_filepath)
