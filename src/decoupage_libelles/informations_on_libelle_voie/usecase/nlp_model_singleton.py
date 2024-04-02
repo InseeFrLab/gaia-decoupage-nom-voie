@@ -21,4 +21,5 @@ class NLPModelSingleton:
     def _load_model():
         logging.info("Chargement du modèle SpaCy pour le postagging")
         # Code pour charger le modèle NLP
-        return spacy.load("fr_dep_news_trf")
+        model_path = "../data/fr_dep_news_trf-3.7.0/fr_dep_news_trf/fr_dep_news_trf-3.7.0/"
+        return spacy.load(model_path)

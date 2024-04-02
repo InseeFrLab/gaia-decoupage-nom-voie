@@ -15,6 +15,7 @@ settings = Dynaconf(
         Validator(
             "chemin_fichier_majic",
             "chemin_referentiel_types_voies",
+            "chemin_nlp_modele",
             "chemin_sortie",
             must_exist=True,
             env="default",
