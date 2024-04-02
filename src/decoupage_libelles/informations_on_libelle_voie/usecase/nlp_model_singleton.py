@@ -1,4 +1,5 @@
 import spacy
+from spacy.util import load_config
 import logging
 
 
