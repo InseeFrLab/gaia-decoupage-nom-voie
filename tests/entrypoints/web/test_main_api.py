@@ -14,9 +14,23 @@ client = TestClient(app)
 
 def test_analyse_libelles_voies():
     # Given
-    libelle_data = {"libelle": "Rue de la Paix"}
+    list_labels_voies = {"list_labels_voies": ["rue Hoche", "Residence Soleil Rue des cerisiers"]}
     # When
-    response = client.post("/analyse-libelles-voies", json=libelle_data)
+    response = client.post("/analyse-libelles-voies", json=list_labels_voies)
     # Then
     assert response.status_code == 200
-    assert response.json() == {"reponse": {"libelle": "Rue de la Paix"}}
+    assert response.json() == {
+        "reponse": [
+            {"rue hoche": {"numero": "", "indice_rep": "", "typeVoie": "rue", "libelleVoie": "hoche", "complementAdresse": " ", "complementAdresse2": ""}},
+            {
+                "residence soleil rue des cerisiers": {
+                    "numero": "",
+                    "indice_rep": "",
+                    "typeVoie": "rue",
+                    "libelleVoie": "des cerisiers",
+                    "complementAdresse": "residence soleil",
+                    "complementAdresse2": "",
+                }
+            },
+        ]
+    }
