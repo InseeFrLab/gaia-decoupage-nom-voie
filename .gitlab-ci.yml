@@ -155,5 +155,4 @@ deploy-nexus:
     - build
     - test
     - flake
-    - pyright
   when: manual
