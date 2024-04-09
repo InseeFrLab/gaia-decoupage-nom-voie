@@ -23,6 +23,8 @@ stages:
 
 
 .default_configuration: &default_configuration
+    # Mise à jour de pip
+  - pip install --upgrade pip
     # Configure pip pour faire confiance au serveur d'hébergement 
   - pip config set global.trusted-host ${NEXUS_HOST} 
     # Configure pip pour rechercher les dépendances dans le dépot ${DEPOT_DEPENDANCES} (dépréciée)
@@ -139,3 +141,19 @@ flake:
     - poetry install --no-interaction --with dev
     - poetry run flake8
 
+deploy-nexus:
+  stage: deploy
+  image: python:$PYTHON_VERSION
+  before_script:
+    - *default_configuration
+  script:
+    - poetry config repositories.nexus ${DEPOT_LIVRAISON}
+    - poetry config --unset http-basic.nexus
+    - poetry install
+    - poetry -v publish -r nexus
+  needs: 
+    - build
+    - test
+    - flake
+    - pyright
+  when: manual

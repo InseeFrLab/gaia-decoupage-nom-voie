@@ -1,5 +1,5 @@
 import spacy
-from spacy.util import load_config
+from decoupage_libelles.config.settings_configuration import settings
 import logging
 
 
@@ -22,5 +22,4 @@ class NLPModelSingleton:
     def _load_model():
         logging.info("Chargement du modèle SpaCy pour le postagging")
         # Code pour charger le modèle NLP
-        model_path = "../data/fr_dep_news_trf-3.7.0/fr_dep_news_trf/fr_dep_news_trf-3.7.0/"
-        return spacy.load(model_path)
+        return spacy.load(settings.chemin_nlp_modele)

@@ -22,6 +22,7 @@ settings = Dynaconf(
         )
     ],
 )
+# settings.chemin_nlp_modele = "../data/fr_dep_news_trf-3.7.0/fr_dep_news_trf/fr_dep_news_trf-3.7.0/"
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
 # `settings_files` = Load these files in the order.
