@@ -4,11 +4,16 @@ from decoupage_libelles.prepare_data.clean_type_voie.usecase.apply_ponctuation_p
 
 
 class NewSpellingForCodeUseCase:
-    OTHER_LIBS_FOR_CODES = ["CALLADA", "DARCE", "SENTE", "VALLON"]
-
     OTHER_SPELLING_FOR_CODES = [
+        {"CODE": "ZA", "LIBELLE": "ZONE ACTIVITES"},
+        {"CODE": "ZAC", "LIBELLE": "ZONE AMENAGEMENT CONCERTE"},
+        {"CODE": "ZAD", "LIBELLE": "ZONE AMENAGEMENT DIFFERE"},
+        {"CODE": "VOIE", "LIBELLE": "VOI"},
+        {"CODE": "PTR", "LIBELLE": "PR"},
         {"CODE": "CHP", "LIBELLE": "CHAMPS"},
+        {"CODE": "CHP", "LIBELLE": "CHPS"},
         {"CODE": "GR", "LIBELLE": "GDE RUE"},
+        {"CODE": "GR", "LIBELLE": "GRAND RUE"},
         {"CODE": "ACH", "LIBELLE": "ANCIEN CHEM"},
         {"CODE": "ACH", "LIBELLE": "ANC CHEM"},
         {"CODE": "ART", "LIBELLE": "ANC RTE"},
@@ -23,15 +28,15 @@ class NewSpellingForCodeUseCase:
         {"CODE": "AV", "LIBELLE": "AVE"},
         {"CODE": "PTR", "LIBELLE": "PTE RUE"},
         {"CODE": "VGE", "LIBELLE": "VILLAG"},
+        {"CODE": "VGE", "LIBELLE": "VLG"},
         {"CODE": "GRA", "LIBELLE": "GDE ALLEE"},
         {"CODE": "APL", "LIBELLE": "ANC PL"},
         {"CODE": "ANV", "LIBELLE": "ANC VOIE"},
         {"CODE": "GPL", "LIBELLE": "GDE PCE"},
         {"CODE": "GR", "LIBELLE": "GR RUE"},
         {"CODE": "GAV", "LIBELLE": "GDE AV"},
-        {"CODE": "QUA", "LIBELLE": "QU"},
+        {"CODE": "QUAI", "LIBELLE": "QU"},
         {"CODE": "ART", "LIBELLE": "ANCIENNE RTE"},
-        {"CODE": "LDT", "LIBELLE": "LD"},
     ]
 
     def __init__(
@@ -58,8 +63,7 @@ class NewSpellingForCodeUseCase:
         - libs_for_code_df : DataFrame contenant les libellés alternatifs
                             à ajouter.
         """
-        other_libs_for_codes_df = libs_for_code_df[libs_for_code_df["LIBELLE"].isin(NewSpellingForCodeUseCase.OTHER_LIBS_FOR_CODES)]
-        type_voie_df = pd.concat([type_voie_df, other_libs_for_codes_df], ignore_index=True)
+
         new_row_df = pd.DataFrame(NewSpellingForCodeUseCase.OTHER_SPELLING_FOR_CODES)
 
         type_voie_df = pd.concat([type_voie_df, new_row_df], ignore_index=True).sort_values(by="CODE", ascending=True).reset_index(drop=True)

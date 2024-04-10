@@ -1,9 +1,11 @@
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
+from unidecode import unidecode
 
 
 class SeparateComplementaryPartUseCase:
     def execute(self, voie: InfoVoie) -> InfoVoie:
-        voie_upper = voie.label_origin.upper()
+        voie_ascii_folded = unidecode(voie.label_origin)
+        voie_upper = voie_ascii_folded.upper()
         split_on_underscore = voie_upper.split(" - ")
         split_hashtag = voie_upper.split("#")
 

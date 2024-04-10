@@ -19,7 +19,7 @@ def process(voies_data) -> List[Dict[str, Dict[str, str]]]:
 
     voies_processed_dict = [
         {
-            voie.label_origin.lower() if voie.label_origin else "": {
+            voie.label_origin if voie.label_origin else "": {
                 "numero": voie.num_assigned if voie.num_assigned is not None else "",
                 "indice_rep": voie.indice_rep.lower() if voie.indice_rep else "",
                 "typeVoie": voie.type_assigned.lower() if voie.type_assigned else "",

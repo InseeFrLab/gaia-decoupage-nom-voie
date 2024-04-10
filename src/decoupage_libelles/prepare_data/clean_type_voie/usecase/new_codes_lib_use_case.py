@@ -2,13 +2,15 @@ import pandas as pd
 
 
 class NewCodesLibUseCase:
+    OTHER_LIBS_FOR_CODES = ["CALLADA", "DARCE", "SENTE", "VALLON"]
+
     NEW_CODES = [
         {"CODE": "ZAE", "LIBELLE": "ZONE D'ACTIVITES ECONOMIQUES"},
         {"CODE": "GRA", "LIBELLE": "GRANDE ALLEE"},
         {"CODE": "APL", "LIBELLE": "ANCIENNE PLACE"},
         {"CODE": "ANV", "LIBELLE": "ANCIENNE VOIE"},
         {"CODE": "GAV", "LIBELLE": "GRANDE AVENUE"},
-        {"CODE": "LDT", "LIBELLE": "LIEU-DIT"},
+        {"CODE": "PTS", "LIBELLE": "PETIT SENTIER"},
     ]
 
     def execute(self, type_voie_df: pd.DataFrame) -> pd.DataFrame:
@@ -26,4 +28,8 @@ class NewCodesLibUseCase:
         """
         new_row_df = pd.DataFrame(NewCodesLibUseCase.NEW_CODES)
         type_voie_df = pd.concat([type_voie_df, new_row_df], ignore_index=True).sort_values(by="CODE").reset_index(drop=True)
+
+        other_libs_for_codes_df = pd.DataFrame({"CODE": NewCodesLibUseCase.OTHER_LIBS_FOR_CODES, "LIBELLE": NewCodesLibUseCase.OTHER_LIBS_FOR_CODES})
+        type_voie_df = pd.concat([type_voie_df, other_libs_for_codes_df], ignore_index=True).sort_values(by="CODE").reset_index(drop=True)
+
         return type_voie_df
