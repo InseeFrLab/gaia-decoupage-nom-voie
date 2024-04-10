@@ -13,15 +13,15 @@ settings = Dynaconf(
     Validators=[
         # valide que les elements de configuration sont bien renseignés
         Validator(
-            "chemin_fichier_majic",
-            "chemin_referentiel_types_voies",
             "chemin_nlp_modele",
-            "chemin_sortie",
+            "chemin_types_voies_majic",
             must_exist=True,
             env="default",
         )
     ],
 )
+# settings.chemin_nlp_modele = "../data/fr_dep_news_trf-3.7.0/fr_dep_news_trf/fr_dep_news_trf-3.7.0/"
+# settings.chemin_types_voies_majic="../data/type_voie_majic.csv"
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
 # `settings_files` = Load these files in the order.

@@ -9,14 +9,18 @@ from dataclasses import dataclass
 
 @dataclass
 class VoiesData(BaseModel):
-    list_labels_voies: List[str] = Field(..., example=["rue Hoche", "Residence Soleil Rue des cerisiers"])
+    list_labels_voies: List[str] = Field(
+        ...,
+        example=[
+            "rue Hoche",
+            "Residence Soleil Rue des cerisiers",
+        ],
+    )
 
 
 def process(voies_data) -> List[Dict[str, Dict[str, str]]]:
     list_labels_voies = list(set(voies_data.list_labels_voies))
-
     voies_processed = TypeVoieDecoupageLauncher().execute(voies_data=list_labels_voies)
-
     voies_processed_dict = [
         {
             voie.label_origin if voie.label_origin else "": {
@@ -37,9 +41,6 @@ app = FastAPI()
 
 
 def initialize_api():
-    """_summary_
-    Code exécuté au démarrage de l'API
-    """
     logging.info("Démarrage de l'API")
     logging.info("API de découpage des libellés de voies")
 
