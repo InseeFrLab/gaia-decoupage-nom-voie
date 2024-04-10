@@ -6,10 +6,10 @@ from decoupage_libelles.prepare_data.clean_type_voie.usecase.choose_unique_lib_u
 from decoupage_libelles.prepare_data.clean_type_voie.usecase.new_codes_lib_use_case import NewCodesLibUseCase
 from decoupage_libelles.prepare_data.clean_type_voie.usecase.create_dict_code_lib_use_case import CreatDictCodeLibUseCase
 from decoupage_libelles.prepare_data.clean_type_voie.usecase.new_spelling_for_code_use_case import NewSpellingForCodeUseCase
+from decoupage_libelles.config.settings_configuration import settings
 
 
 class TypeVoieMajicPreprocessorUseCase:
-    FILEPATH_TYPE_VOIE = "../data/type_voie_majic.csv"
 
     def __init__(
         self,
@@ -40,7 +40,7 @@ class TypeVoieMajicPreprocessorUseCase:
         Retourne : Le DataFrame nettoyé et un dictionnaire des codes
         avec libellés uniques.
         """
-        type_voie_df = pd.read_csv(TypeVoieMajicPreprocessorUseCase.FILEPATH_TYPE_VOIE)
+        type_voie_df = pd.read_csv(settings.chemin_types_voies_majic)
         type_voie_df = self.enrich_reduced_lib_use_case.execute(type_voie_df)
         type_voie_df, libs_for_code_df = self.choose_unique_lib_use_case.execute(type_voie_df)
         type_voie_df = self.new_codes_lib_use_case.execute(type_voie_df)
