@@ -26,7 +26,7 @@ class HandleTwoTypesVoieFictiveUseCase:
             return self.assign_type_lib_compl_use_case.execute(voie)
         else:
             words_between_types = voie.label_preproc[first_type.position_end + 1 : second_type.position_start]
-            if len(words_between_types) == 1:
+            if len(words_between_types) == 1 and len(words_between_types[0]) == 1:
                 # compl + 2e type + lib
                 # "RUE A RESIDENCE ERNEST RENAN"
                 return self.assign_compl_type_lib_use_case.execute(voie, second_type)

@@ -22,8 +22,9 @@ class TypeRouteNotFirstPosUseCase:
     def execute(self, voie: InfoVoie) -> VoieDecoupee:
         self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=False)
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
-        if first_type == "ROUTE":
+        if first_type.type_name in ["ROUTE NATIONALE", "ROUTE DEPARTEMENTALE"]:
             if first_type.word_before in ["C", "N", "D"] or first_type.word_after in ["C", "N", "D"]:
+                print("oui")
                 # 1 er type + lib
                 # 'N RTE NATIONALE 9'
                 return self.assign_type_lib_use_case.execute(voie, first_type)

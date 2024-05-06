@@ -4,6 +4,7 @@ from typing import Union
 
 class ChooseUniqueLibUseCase:
     UNIQUE_LIBS_FOR_CODES = ["CALLE", "DARSE", "SENTIER", "VALLEE"]
+    OTHER_LIBS_FOR_CODES = ["CALLADA", "DARCE", "SENTE", "VALLON"]
 
     def execute(self, type_voie_df: pd.DataFrame) -> Union[pd.DataFrame, pd.DataFrame]:
         """
@@ -17,11 +18,9 @@ class ChooseUniqueLibUseCase:
         La méthode extrait d'abord les libellés contenant des barres '|',
         les divise en libellés séparés,  puis réintègre une sélection de ces
         nouveaux libellés dans le DataFrame principal 'type_voie_df'.
-        Les indices spécifiques [0, 2, 4, 7] sont utilisés pour choisir les
-        libellés à conserver.
 
         Retourne :
-            DataFrame contenant les libellés non conservés pour chaque code.
+            DataFrame contenant les libellés et les codes.
         """
         list_barre = [elt for elt in type_voie_df["LIBELLE"].tolist() if "|" in elt]
         libs_for_code_df = type_voie_df[type_voie_df["LIBELLE"].isin(list_barre)]
@@ -32,6 +31,8 @@ class ChooseUniqueLibUseCase:
         libs_for_code_df = libs_for_code_df.assign(LIBELLE=libs_for_code_df["LIBELLE"].str.split("|")).explode("LIBELLE").reset_index(drop=True)
 
         unique_libs_for_codes_df = libs_for_code_df[libs_for_code_df["LIBELLE"].isin(ChooseUniqueLibUseCase.UNIQUE_LIBS_FOR_CODES)]
+        other_libs_for_codes_df = pd.DataFrame({"CODE": ChooseUniqueLibUseCase.OTHER_LIBS_FOR_CODES, "LIBELLE": ChooseUniqueLibUseCase.OTHER_LIBS_FOR_CODES})
         type_voie_df = pd.concat([type_voie_df, unique_libs_for_codes_df], ignore_index=True)
+        type_voie_df = pd.concat([type_voie_df, other_libs_for_codes_df], ignore_index=True)
 
-        return type_voie_df, libs_for_code_df
+        return type_voie_df

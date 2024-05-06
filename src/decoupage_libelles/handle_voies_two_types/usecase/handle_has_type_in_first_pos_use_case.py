@@ -154,7 +154,7 @@ class HandleHasTypeInFirstPosUseCase:
                         elif second_type.type_name in ["RESIDENCE", "HLM"]:
                             # compl + 2e type + lib
                             # "HAMEAU SOLEIL RESIDENCE BLEUE"
-                            return self.assign_compl_type_lib_use_case.execute(voie, second_type)
+                            return self.assign_type_lib_compl_use_case.execute(voie, second_type, first_type)
                         else:
                             # 1er type + lib + compl
                             # "HAMEAU SOLEIL LOTISSEMENT VERDIER"

@@ -39,6 +39,10 @@ class TypeIsLongitudinalOrAgglomerantUseCase:
         "PARKING",
         "FERME",
         "VALLEE",
+        "PAVILLON",
+        "BATIMENT",
+        "IMMEUBLE",
+        "LIEU DIT",
     ]
 
     def execute(self, infovoie: InfoVoie, information_on_type_ordered: InformationOnTypeOrdered) -> InformationOnTypeOrdered:

@@ -25,7 +25,11 @@ class AssignTypeLibComplUseCase:
         if not type_principal and not type_compl:
             type_principal = self.order_type_in_lib_use_case.execute(infovoie, 1)
             type_compl = self.order_type_in_lib_use_case.execute(infovoie, 2)
-        label_assigned = self.get_words_between_use_case.execute(infovoie, type_principal.position_end + 1, type_compl.position_start)
-        compl_assigned = self.get_words_between_use_case.execute(infovoie, type_compl.position_start)
+        if type_principal.position_start < type_compl.position_start:
+            label_assigned = self.get_words_between_use_case.execute(infovoie, type_principal.position_end + 1, type_compl.position_start)
+            compl_assigned = self.get_words_between_use_case.execute(infovoie, type_compl.position_start)
+        else:
+            label_assigned = self.get_words_between_use_case.execute(infovoie, type_principal.position_end + 1)
+            compl_assigned = self.get_words_between_use_case.execute(infovoie, type_compl.position_start, type_principal.position_start)
 
         return VoieDecoupee(label_origin=infovoie.label_origin, type_assigned=type_principal.type_name, label_assigned=label_assigned, compl_assigned=compl_assigned, compl2=infovoie.complement)

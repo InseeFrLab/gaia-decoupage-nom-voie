@@ -4,6 +4,7 @@ from decoupage_libelles.informations_on_type_in_lib.usecase.generate_information
 from decoupage_libelles.informations_on_libelle_voie.usecase.generate_information_on_lib_use_case import GenerateInformationOnLibUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_compl_type_lib_use_case import AssignComplTypeLibUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_lib_use_case import AssignLibUseCase
+from decoupage_libelles.decoupe_voie.usecase.assign_compl_type_lib_compl_use_case import AssignComplTypeLibComplUseCase
 
 
 class HandleNoTypeInFirstPosUseCase:
@@ -13,11 +14,13 @@ class HandleNoTypeInFirstPosUseCase:
         generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = GenerateInformationOnLibUseCase(),
         assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = AssignComplTypeLibUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
+        assign_compl_type_lib_compl_use_case: AssignComplTypeLibComplUseCase = AssignComplTypeLibComplUseCase(),
     ):
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
         self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
         self.assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = assign_compl_type_lib_use_case
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
+        self.assign_compl_type_lib_compl_use_case: AssignComplTypeLibComplUseCase = assign_compl_type_lib_compl_use_case
 
     def execute(self, voie: InfoVoie) -> VoieDecoupee:
         self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
@@ -68,9 +71,9 @@ class HandleNoTypeInFirstPosUseCase:
 
                 else:
                     if first_type.is_longitudinal:
-                        # compl + 1er type + lib
+                        # compl + 1er type + lib + compl
                         # "VERDIER RUE HOCHE RESIDENCE SOLEIL"
-                        return self.assign_compl_type_lib_use_case.execute(voie, first_type)
+                        return self.assign_compl_type_lib_compl_use_case.execute(voie, first_type, second_type)
                     elif first_type.is_agglomerant:  # équivalent à else
                         # compl + 2e type + lib
                         # "VERDIER RESIDENCE SOLEIL RUE HOCHE"

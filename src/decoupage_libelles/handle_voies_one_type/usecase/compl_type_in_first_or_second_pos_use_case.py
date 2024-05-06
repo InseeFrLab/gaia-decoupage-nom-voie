@@ -21,21 +21,22 @@ class ComplTypeInFirstOrSecondPosUseCase:
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 1)
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 2)
 
-        if first_type.is_complement:
-            if first_type.type_name in ComplementFinderUseCase.ORTHOGRAPHES_IMMEUBLE:
-                if second_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_IMMEUBLE:
-                    # 'IMM RESIDENCE BERYL'
-                    # 2eme type + lib
-                    return self.assign_type_lib_use_case.execute(voie_compl, second_type)
-                else:
-                    # "IMMEUBLE VAL D'ILLAZ"
-                    # lib
-                    return self.assign_lib_use_case.execute(voie_compl)
+        # if first_type.is_complement:
+        #     if first_type.type_name in ComplementFinderUseCase.ORTHOGRAPHES_IMMEUBLE and second_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_IMMEUBLE:
+        #         # 'IMM RESIDENCE BERYL'
+        #         # 2eme type + lib
+        #         return self.assign_type_lib_use_case.execute(voie_compl, second_type)
+        #     else:
+        #         # 'LDT VAL DES PINS'
+        #         # "IMMEUBLE VAL D'ILLAZ"
+        #         # lib
+        #         return self.assign_lib_use_case.execute(voie_compl)
 
-            else:
-                # 'LDT VAL DES PINS'
-                # lib
-                return self.assign_lib_use_case.execute(voie_compl)
+        if first_type.is_complement:
+            # 'LDT VAL DES PINS'
+            # "IMMEUBLE VAL D'ILLAZ"
+            # lib
+            return self.assign_lib_use_case.execute(voie_compl)
 
         elif second_type.is_complement:
             # 'VC  LDT LA PALUN CTE CENTRALE'

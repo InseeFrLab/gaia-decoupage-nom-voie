@@ -31,7 +31,10 @@ class HandleTwoTypesComplUseCase:
     def execute(self, voie_compl: InfoVoie) -> VoieDecoupee:
         self.generate_information_on_lib_use_case.execute(voie_compl, apply_nlp_model=False)
 
-        voie_to_treat_by_compl, voie_to_treat_two_types = self.compl_immeuble_before_type_use_case.execute(voie_compl)
+        # voie_to_treat_by_compl, voie_to_treat_two_types = self.compl_immeuble_before_type_use_case.execute(voie_compl)
+
+        voie_to_treat_by_compl = voie_compl
+        voie_to_treat_two_types = None
 
         voie_treated = None
         if voie_to_treat_by_compl:

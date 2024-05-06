@@ -37,6 +37,25 @@ class NewSpellingForCodeUseCase:
         {"CODE": "GAV", "LIBELLE": "GDE AV"},
         {"CODE": "QUAI", "LIBELLE": "QU"},
         {"CODE": "ART", "LIBELLE": "ANCIENNE RTE"},
+        {"CODE": "ILOT", "LIBELLE": "ILO"},
+        {"CODE": "QUA", "LIBELLE": "QRT"},
+        {"CODE": "RD", "LIBELLE": "RTE DEPARTEMENTALE"},
+        # {"CODE": "RD", "LIBELLE": "ROUTE DEPARTEMENTALE"},
+        {"CODE": "RD", "LIBELLE": "RTE D"},
+        {"CODE": "RD", "LIBELLE": "ROUTE D"},
+        {"CODE": "ZAD", "LIBELLE": "ZONE DAMENAGEMENT DIFFERE"},
+        {"CODE": "FG", "LIBELLE": "FDG"},
+        {"CODE": "ZAC", "LIBELLE": "ZONE DAMENAGEMENT CONCRETE"},
+        {"CODE": "LD", "LIBELLE": "LDT"},
+        {"CODE": "LD", "LIBELLE": "LIEUDIT"},
+        {"CODE": "HLM", "LIBELLE": "HABITATION A LOYER MODERE"},
+        {"CODE": "VGE", "LIBELLE": "VLGE"},
+        {"CODE": "CCAL", "LIBELLE": "CCIAL"},
+        {"CODE": "IMM", "LIBELLE": "IM"},
+        {"CODE": "RN", "LIBELLE": "RTE NATIONALE"},
+        # {"CODE": "RN", "LIBELLE": "NATIONALE"},
+        {"CODE": "RN", "LIBELLE": "RTE N"},
+        {"CODE": "RN", "LIBELLE": "ROUTE N"},
     ]
 
     def __init__(
@@ -45,23 +64,17 @@ class NewSpellingForCodeUseCase:
     ):
         self.apply_ponctuation_preprocessing_on_type_voie_use_case: ApplyPonctuationPreprocessingOnTypeVoie = apply_ponctuation_preprocessing_on_type_voie_use_case
 
-    def execute(self, type_voie_df: pd.DataFrame, libs_for_code_df: pd.DataFrame) -> pd.DataFrame:
+    def execute(self, type_voie_df: pd.DataFrame) -> pd.DataFrame:
         """
         Ajoute de nouvelles orthographes pour les codes de types de voie.
 
         Cette méthode enrichit le DataFrame 'type_voie_df' avec des
         orthographes alternatives pour les libellés de types de voie.
-        Elle prend un DataFrame 'libs_for_code_df' contenant des libellés
-        alternatifs et les intègre dans le DataFrame principal. Ensuite,
-        elle ajoute d'autres orthographes spécifiées dans
+        Elle ajoute d'autres orthographes spécifiées dans
         'other_spelling_for_codes'.
 
         Les nouvelles entrées sont triées par code et l'index du DataFrame est
         réinitialisé pour garantir la cohérence.
-
-        Paramètres :
-        - libs_for_code_df : DataFrame contenant les libellés alternatifs
-                            à ajouter.
         """
 
         new_row_df = pd.DataFrame(NewSpellingForCodeUseCase.OTHER_SPELLING_FOR_CODES)
