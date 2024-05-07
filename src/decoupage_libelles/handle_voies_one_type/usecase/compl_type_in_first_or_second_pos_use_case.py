@@ -21,24 +21,22 @@ class ComplTypeInFirstOrSecondPosUseCase:
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 1)
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 2)
 
-        # if first_type.is_complement:
-        #     if first_type.type_name in ComplementFinderUseCase.ORTHOGRAPHES_IMMEUBLE and second_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_IMMEUBLE:
-        #         # 'IMM RESIDENCE BERYL'
-        #         # 2eme type + lib
-        #         return self.assign_type_lib_use_case.execute(voie_compl, second_type)
-        #     else:
-        #         # 'LDT VAL DES PINS'
-        #         # "IMMEUBLE VAL D'ILLAZ"
-        #         # lib
-        #         return self.assign_lib_use_case.execute(voie_compl)
-
         if first_type.is_complement:
-            # 'LDT VAL DES PINS'
-            # "IMMEUBLE VAL D'ILLAZ"
-            # lib
-            return self.assign_lib_use_case.execute(voie_compl)
+            if first_type.type_name in ComplementFinderUseCase.ORTHOGRAPHES_IMMEUBLE and second_type.type_name in ComplementFinderUseCase.TYPES_COMPLEMENT_IMMEUBLE:
+                # 'IMM RESIDENCE BERYL'
+                # 2eme type + lib
+                return self.assign_type_lib_use_case.execute(voie_compl, second_type)
+            else:
+                if first_type.is_escalier_or_appartement:
+                    # "APPARTEMENT VAL D'ILLAZ"
+                    # lib
+                    return self.assign_lib_use_case.execute(voie_compl)
+                else:
+                    # "IMMEUBLE VAL D'ILLAZ"
+                    # 1er type + lib
+                    return self.assign_type_lib_use_case.execute(voie_compl, first_type)
 
         elif second_type.is_complement:
-            # 'VC  LDT LA PALUN CTE CENTRALE'
-            # 1er type lib
+            # 'VC  PAVILLON LA PALUN CTE CENTRALE'
+            # 1er type + lib
             return self.assign_type_lib_use_case.execute(voie_compl, first_type)

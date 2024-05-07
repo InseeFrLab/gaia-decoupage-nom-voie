@@ -40,7 +40,6 @@ class NewSpellingForCodeUseCase:
         {"CODE": "ILOT", "LIBELLE": "ILO"},
         {"CODE": "QUA", "LIBELLE": "QRT"},
         {"CODE": "RD", "LIBELLE": "RTE DEPARTEMENTALE"},
-        # {"CODE": "RD", "LIBELLE": "ROUTE DEPARTEMENTALE"},
         {"CODE": "RD", "LIBELLE": "RTE D"},
         {"CODE": "RD", "LIBELLE": "ROUTE D"},
         {"CODE": "ZAD", "LIBELLE": "ZONE DAMENAGEMENT DIFFERE"},
@@ -51,9 +50,8 @@ class NewSpellingForCodeUseCase:
         {"CODE": "HLM", "LIBELLE": "HABITATION A LOYER MODERE"},
         {"CODE": "VGE", "LIBELLE": "VLGE"},
         {"CODE": "CCAL", "LIBELLE": "CCIAL"},
-        {"CODE": "IMM", "LIBELLE": "IM"},
+        # {"CODE": "IMM", "LIBELLE": "IM"},
         {"CODE": "RN", "LIBELLE": "RTE NATIONALE"},
-        # {"CODE": "RN", "LIBELLE": "NATIONALE"},
         {"CODE": "RN", "LIBELLE": "RTE N"},
         {"CODE": "RN", "LIBELLE": "ROUTE N"},
     ]

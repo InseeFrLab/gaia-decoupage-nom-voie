@@ -5,10 +5,12 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 class ComplementFinderUseCase:
     # TYPES_COMPLEMENT_0 = ["IMM", "IMMEUBLE", "BLOC", "BAT", "BATIMENT"]
-    TYPES_COMPLEMENT_0 = ["BLOC", "ESC", "APPARTEMENT", "ESCALIER", "APRT"]
+    TYPES_COMPLEMENT_0 = ["PAVILLON", "IMM", "IMMEUBLE", "BAT", "BATIMENT", "BLOC", "ESC", "APPARTEMENT", "ESCALIER", "APRT"]
 
+    TYPES_APPART_ESC = ["BLOC", "ESC", "APPARTEMENT", "ESCALIER", "APRT"]
+
+    TYPES_COMPLEMENT_1_2 = ["PAVILLON", "PAV", "LDT", "IMM", "IM", "IMMEUBLE", "BAT", "BATIMENT", "BLOC", "ESC", "APPARTEMENT", "ESCALIER", "APRT"]
     # TYPES_COMPLEMENT_1_2 = ["PAVILLON", "PAV", "LDT", "IMM", "IM", "IMMEUBLE", "BLOC", "BAT", "BATIMENT"]
-    TYPES_COMPLEMENT_1_2 = TYPES_COMPLEMENT_0
 
     TYPES_COMPLEMENT_IMMEUBLE = [
         "HLM",

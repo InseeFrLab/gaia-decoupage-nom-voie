@@ -36,13 +36,18 @@ class ComplTypeInFirstOrMiddlePosUseCase:
                 # compl + 2e type + lib
                 return self.assign_compl_type_lib_use_case.execute(voie_compl, second_type)
             else:
-                # 'IMM LE LAC DU LOU'
-                # lib
-                return self.assign_lib_use_case.execute(voie_compl)
+                if first_type.is_escalier_or_appartement:
+                    # 'APPARTEMENT LE LAC DU LOU'
+                    # lib
+                    return self.assign_lib_use_case.execute(voie_compl)
+                else:
+                    # 'IMM LE LAC DU LOU'
+                    # 1er type + lib
+                    return self.assign_type_lib_use_case.execute(voie_compl, first_type)
 
         elif second_type.is_complement:
             if not second_type.has_adj_det_before:
-                #  'HLM LES CHARTREUX BAT B2'
+                # 'HLM LES CHARTREUX BAT B2'
                 # 1er type + lib + compl
                 return self.assign_type_lib_compl_use_case.execute(voie_compl, first_type, second_type)
             else:

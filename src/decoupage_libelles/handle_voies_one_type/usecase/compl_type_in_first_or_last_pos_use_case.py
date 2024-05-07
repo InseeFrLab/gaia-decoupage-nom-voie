@@ -21,9 +21,14 @@ class ComplTypeInFirstOrLastPosUseCase:
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 2)
 
         if first_type.is_complement:
-            # 'IMM LE PARC'
-            # lib
-            return self.assign_lib_use_case.execute(voie_compl)
+            if first_type.is_escalier_or_appartement:
+                # 'APPARTEMENT LE PARC'
+                # lib
+                return self.assign_lib_use_case.execute(voie_compl)
+            else:
+                # 'IMM LE PARC'
+                # 1er type + lib
+                return self.assign_type_lib_use_case.execute(voie_compl, first_type)
 
         elif second_type.is_complement:
             # 'IMP DU PAVILLON'

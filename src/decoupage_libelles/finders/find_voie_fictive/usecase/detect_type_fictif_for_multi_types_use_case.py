@@ -28,6 +28,6 @@ class DetectTypeFictifForMultiTypesUseCase:
                                 elt_fictif = elt_fictif.split(" ")
                                 one_word_label_fictif = True if len(elt_fictif) == 1 else False
                                 has_type_fictif_in_last_pos = True if not type_fictif.type_after else False
-                                if one_word_label_fictif and elt_fictif[0] in liste_fictive or one_word_label_fictif and elt_fictif[0] in ["L", "D", "A"] and has_type_fictif_in_last_pos:
+                                if one_word_label_fictif and elt_fictif[0] in liste_fictive or one_word_label_fictif and elt_fictif[0] in ["L", "D"] and has_type_fictif_in_last_pos:
                                     return voie
         return None

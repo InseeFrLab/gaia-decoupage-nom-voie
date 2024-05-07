@@ -11,5 +11,6 @@ class TypeIsComplementaireUseCase:
             types_compl = ComplementFinderUseCase.TYPES_COMPLEMENT_1_2
 
         information_on_type_ordered.is_complement = True if information_on_type_ordered.type_name in types_compl else False
+        information_on_type_ordered.is_escalier_or_appartement = True if information_on_type_ordered.type_name in ComplementFinderUseCase.TYPES_APPART_ESC else False
 
         return information_on_type_ordered

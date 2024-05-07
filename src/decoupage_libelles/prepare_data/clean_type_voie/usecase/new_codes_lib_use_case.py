@@ -61,9 +61,9 @@ class NewCodesLibUseCase:
         {"CODE": "RNG", "LIBELLE": "RANGEE"},
         {"CODE": "STA", "LIBELLE": "STATION"},
         {"CODE": "VR", "LIBELLE": "VIEILLE RUE"},
-        {"CODE": "BAT", "LIBELLE": "BATIMENT"},
-        {"CODE": "PAV", "LIBELLE": "PAVILLON"},
-        {"CODE": "IMM", "LIBELLE": "IMMEUBLE"},
+        # {"CODE": "BAT", "LIBELLE": "BATIMENT"},
+        # {"CODE": "PAV", "LIBELLE": "PAVILLON"},
+        # {"CODE": "IMM", "LIBELLE": "IMMEUBLE"},
         {"CODE": "GRC", "LIBELLE": "GRAND CLOS"},
         {"CODE": "RN", "LIBELLE": "ROUTE NATIONALE"},
     ]
