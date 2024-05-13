@@ -19,8 +19,9 @@ class KeepTypesWithoutArticleAdjBeforeUseCase:
         for key, (position_start, __) in voie.types_and_positions.items():
             if position_start > 0:
                 index_word_before = position_start - 1
-                word_before = voie.label_postag[index_word_before]
-                if word_before in PostagBeforeTypeUseCase.POSTAG:
+                postag_before = voie.label_postag[index_word_before]
+                word_before = voie.label_preproc[index_word_before]
+                if postag_before in PostagBeforeTypeUseCase.POSTAG and word_before != "A" or word_before in ["DIT", "DITE"]:
                     del types_and_positions[key]
 
         voie.types_and_positions = types_and_positions

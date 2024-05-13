@@ -15,7 +15,6 @@ class NewCodesLibUseCase:
         {"CODE": "PAEC", "LIBELLE": "PARC D ACTIVITES ECONOMIQUES"},
         {"CODE": "ZAR", "LIBELLE": "ZONE ARTISANALE"},
         {"CODE": "GPL", "LIBELLE": "GRAND PLACE"},
-        {"CODE": "LD", "LIBELLE": "LIEU DIT"},
         {"CODE": "ABE", "LIBELLE": "ABBAYE"},
         {"CODE": "ANSE", "LIBELLE": "ANSE"},
         {"CODE": "AR", "LIBELLE": "ANCIENNE RUE"},
@@ -64,6 +63,7 @@ class NewCodesLibUseCase:
         # {"CODE": "BAT", "LIBELLE": "BATIMENT"},
         # {"CODE": "PAV", "LIBELLE": "PAVILLON"},
         # {"CODE": "IMM", "LIBELLE": "IMMEUBLE"},
+        {"CODE": "LD", "LIBELLE": "LIEU DIT"},
         {"CODE": "GRC", "LIBELLE": "GRAND CLOS"},
         {"CODE": "RN", "LIBELLE": "ROUTE NATIONALE"},
     ]

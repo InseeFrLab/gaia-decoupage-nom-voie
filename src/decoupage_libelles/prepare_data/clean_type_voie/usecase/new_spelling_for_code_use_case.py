@@ -40,8 +40,8 @@ class NewSpellingForCodeUseCase:
         {"CODE": "ILOT", "LIBELLE": "ILO"},
         {"CODE": "QUA", "LIBELLE": "QRT"},
         {"CODE": "RD", "LIBELLE": "RTE DEPARTEMENTALE"},
-        {"CODE": "RD", "LIBELLE": "RTE D"},
-        {"CODE": "RD", "LIBELLE": "ROUTE D"},
+        # {"CODE": "RD", "LIBELLE": "RTE D"},
+        # {"CODE": "RD", "LIBELLE": "ROUTE D"},
         {"CODE": "ZAD", "LIBELLE": "ZONE DAMENAGEMENT DIFFERE"},
         {"CODE": "FG", "LIBELLE": "FDG"},
         {"CODE": "ZAC", "LIBELLE": "ZONE DAMENAGEMENT CONCRETE"},
@@ -52,8 +52,11 @@ class NewSpellingForCodeUseCase:
         {"CODE": "CCAL", "LIBELLE": "CCIAL"},
         # {"CODE": "IMM", "LIBELLE": "IM"},
         {"CODE": "RN", "LIBELLE": "RTE NATIONALE"},
-        {"CODE": "RN", "LIBELLE": "RTE N"},
-        {"CODE": "RN", "LIBELLE": "ROUTE N"},
+        # {"CODE": "RN", "LIBELLE": "RTE N"},
+        # {"CODE": "RN", "LIBELLE": "ROUTE N"},
+        {"CODE": "CLOS", "LIBELLE": "CLS"},
+        {"CODE": "CR", "LIBELLE": "C R"},
+        {"CODE": "MLN", "LIBELLE": "MOUL"},
     ]
 
     def __init__(

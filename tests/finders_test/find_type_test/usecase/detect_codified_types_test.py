@@ -19,6 +19,5 @@ def test_execute_with_empty_type_data():
     )
     # When
     res = use_case().execute(type_finder_object)
-    print(res)
     # Then
     assert res == type_finder_object

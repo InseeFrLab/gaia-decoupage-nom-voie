@@ -64,5 +64,4 @@ def test_e():
     ).execute(voies)
     # Then
     generate_information_on_lib_use_case.execute.assert_called()
-    print(res)
     assert res == [expeced_res]

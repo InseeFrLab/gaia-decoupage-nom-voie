@@ -42,9 +42,8 @@ class TypeVoieDecoupageLauncher:
 
         voies_0 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 0]
         voies_1 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 1]
-        voies_2 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 2]
-        voies_3_and_more = [voie for voie in voies_prepared if len(voie.types_and_positions) >= 3]
-
+        voies_2_and_more = [voie for voie in voies_prepared if len(voie.types_and_positions) >= 2]
+        # voies_3_and_more = [voie for voie in voies_prepared if len(voie.types_and_positions) >= 3]
         logging.info("Preprocessing fini")
 
         logging.info("Algorithme de découpage de libellés de voie")
@@ -63,16 +62,10 @@ class TypeVoieDecoupageLauncher:
             voies_processed += voies_proc_1
         logging.info("Done")
 
-        logging.info("Processing des voies avec deux types détectés")
-        if voies_2:
-            voies_proc_2 = self.two_types_voies_handler_use_case.execute(voies_2)
-            voies_processed += voies_proc_2
-        logging.info("Done")
-
-        logging.info("Processing des voies avec trois types détectés ou plus")
-        if voies_3_and_more:
-            voies_proc_3_and_more = self.three_types_and_more_voies_handler_use_case.execute(voies_3_and_more)
-            voies_processed += voies_proc_3_and_more
+        logging.info("Processing des voies avec deux types détectés ou plus")
+        if voies_2_and_more:
+            voies_proc_2_and_more = self.three_types_and_more_voies_handler_use_case.execute(voies_2_and_more)
+            voies_processed += voies_proc_2_and_more
         logging.info("Done")
 
         return voies_processed

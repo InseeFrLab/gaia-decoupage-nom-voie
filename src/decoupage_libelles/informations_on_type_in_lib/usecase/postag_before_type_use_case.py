@@ -30,6 +30,8 @@ class PostagBeforeTypeUseCase:
             postag = infovoie.label_postag[information_on_type_ordered.position_start - 1]
             information_on_type_ordered.postag_before = postag
 
-            information_on_type_ordered.has_adj_det_before = True if postag in PostagBeforeTypeUseCase.POSTAG else False
+            information_on_type_ordered.has_adj_det_before = (
+                True if postag in PostagBeforeTypeUseCase.POSTAG and information_on_type_ordered.word_before != "A" or information_on_type_ordered.word_before in ["DIT", "DITE"] else False
+            )
 
         return information_on_type_ordered
