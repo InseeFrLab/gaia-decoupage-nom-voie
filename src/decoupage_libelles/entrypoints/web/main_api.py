@@ -5,6 +5,8 @@ import logging
 from typing import List, Dict
 from decoupage_libelles.config.type_voie_decoupage_launcher import TypeVoieDecoupageLauncher
 from dataclasses import dataclass
+from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
+from decoupage_libelles.prepare_data.ponctuation.usecase.ponctuation_preprocessor_use_case import PonctuationPreprocessorUseCase
 
 
 @dataclass
@@ -37,6 +39,18 @@ def process(voies_data) -> List[Dict[str, Dict[str, str]]]:
     return voies_processed_dict
 
 
+def process_preproc(voies_data) -> List[Dict[str, Dict[str, str]]]:
+    ponctuation_preprocessor_use_case: PonctuationPreprocessorUseCase = PonctuationPreprocessorUseCase()
+    list_labels_voies = list(set(voies_data.list_labels_voies))
+    voies_preproc = []
+    for libelle in list_labels_voies:
+        lib_without_preprocessed_ponctuation = InfoVoie(label_origin=libelle)
+        lib_with_preprocessed_ponctuation = ponctuation_preprocessor_use_case.execute(lib_without_preprocessed_ponctuation)
+        libelle_preproc = (" ").join(lib_with_preprocessed_ponctuation.label_preproc) + (" ") + lib_with_preprocessed_ponctuation.complement
+        voies_preproc.append({libelle: libelle_preproc})
+    return voies_preproc
+
+
 app = FastAPI()
 
 
@@ -60,3 +74,12 @@ async def root():
 )
 async def analyse_libelles_voies(voies_data: VoiesData):
     return {"reponse": process(voies_data)}
+
+
+@app.post(
+    "/ponctuation-preprocessing-adresse",
+    summary="Nettoye la ponctuation au sein des adresses",
+    description="Cette route permet de nettoyer la ponctuation au sein des adresses",
+)
+async def preproc_libelles_voies(voies_data: VoiesData):
+    return {"reponse": process_preproc(voies_data)}
