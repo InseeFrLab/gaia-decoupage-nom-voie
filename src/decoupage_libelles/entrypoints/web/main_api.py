@@ -47,8 +47,9 @@ def process_preproc(voies_data) -> List[Dict[str, Dict[str, str]]]:
         lib_without_preprocessed_ponctuation = InfoVoie(label_origin=libelle)
         lib_with_preprocessed_ponctuation = ponctuation_preprocessor_use_case.execute(lib_without_preprocessed_ponctuation)
         libelle_preproc = (" ").join(lib_with_preprocessed_ponctuation.label_preproc)
+        libelle_preproc = libelle_preproc.lower()
         if lib_with_preprocessed_ponctuation.complement:
-            libelle_preproc += (" ") + lib_with_preprocessed_ponctuation.complement
+            libelle_preproc += (" ") + lib_with_preprocessed_ponctuation.complement.lower()
         voies_preproc.append({libelle: libelle_preproc})
     return voies_preproc
 
