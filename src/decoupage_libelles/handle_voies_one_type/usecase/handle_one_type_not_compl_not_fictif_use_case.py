@@ -32,10 +32,15 @@ class HandleOneTypeNotComplNotFictifUseCase:
         self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=False)
 
         if voie.has_type_in_first_pos:
-            # 1er type + lib
-            # 'CHE DES SEMAPHORES'
             first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
-            voie_treated = self.assign_type_lib_use_case.execute(voie, first_type)
+            if voie.has_type_in_last_pos:
+                # lib
+                # "GRAND RUE"
+                voie_treated = self.assign_lib_use_case.execute(voie, first_type)
+            else:
+                # 1er type + lib
+                # 'CHE DES SEMAPHORES'
+                voie_treated = self.assign_type_lib_use_case.execute(voie, first_type)
 
         else:
             voie_treated = self.type_long_not_first_pos_use_case.execute(voie)
