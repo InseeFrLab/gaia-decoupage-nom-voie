@@ -6,20 +6,20 @@ class SeparateComplementaryPartUseCase:
     def execute(self, voie: InfoVoie) -> InfoVoie:
         voie_ascii_folded = unidecode(voie.label_origin)
         voie_upper = voie_ascii_folded.upper()
-        split_on_underscore = voie_upper.split(" - ")
-        split_hashtag = voie_upper.split("#")
+        # split_on_underscore = voie_upper.split(" - ")
+        # split_hashtag = voie_upper.split("#")
 
-        if len(split_on_underscore) > 1:  # 'R DES NOYERS - SITE-BEAUPLAN'
-            voie.label_raw = split_on_underscore[0]
-            voie.complement = split_on_underscore[1]
+        # if len(split_on_underscore) > 1:  # 'R DES NOYERS - SITE-BEAUPLAN'
+        #     voie.label_raw = split_on_underscore[0]
+        #     voie.complement = split_on_underscore[1]
 
-        if voie_upper.count("#") == 2:  # 'R DU VAL DE SEVRE #49179#'
-            voie.label_raw = split_hashtag[0]
-            voie.complement = split_hashtag[1]
+        # if voie_upper.count("#") == 2:  # 'R DU VAL DE SEVRE #49179#'
+        #     voie.label_raw = split_hashtag[0]
+        #     voie.complement = split_hashtag[1]
 
-        if "(" in voie_upper and ")" in voie_upper and voie_upper.index("(") < voie_upper.index(")"):  # 'R DES NOYERS (SITE-BEAUPLAN)'
-            voie.label_raw = voie_upper.split("(")[0].strip()
-            voie.complement = voie_upper.split("(")[1].split(")")[0].strip()
+        # if "(" in voie_upper and ")" in voie_upper and voie_upper.index("(") < voie_upper.index(")"):  # 'R DES NOYERS (SITE-BEAUPLAN)'
+        #     voie.label_raw = voie_upper.split("(")[0].strip()
+        #     voie.complement = voie_upper.split("(")[1].split(")")[0].strip()
 
         if not voie.label_raw:
             voie.label_raw = voie_upper
