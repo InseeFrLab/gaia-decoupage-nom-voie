@@ -6,8 +6,7 @@ class FindPositionOfWordInSentenceListUseCase:
         start = 0
         for i, word in enumerate(sentence_list):
             if start == position_of_first_letter_of_word:
-                position_word_in_sentence_list = i
-                break
+                return i
             else:
                 start += len(word) + 1
-        return position_word_in_sentence_list
+        return None
