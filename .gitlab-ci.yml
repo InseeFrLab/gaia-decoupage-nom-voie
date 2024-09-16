@@ -1,8 +1,8 @@
 variables:
   PYTHON_VERSION: "3.11"
   POETRY_VERSION: "1.7.1"
-  HTTP_PROXY: "http://proxy-app.insee.fr:3128"
-  HTTPS_PROXY: "http://proxy-app.insee.fr:3128"
+  HTTP_PROXY: "http://proxy-app.http.insee.fr:3128"
+  HTTPS_PROXY: "http://proxy-app.http.insee.fr:3128"
   NO_PROXY: ".insee.fr,.insee.eu,.insee.intra,localhost,insee.test"
   NEXUS_URL: "https://nexus.insee.fr"
   NEXUS_HOST: "nexus.insee.fr"
