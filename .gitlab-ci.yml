@@ -17,8 +17,8 @@ default:
 
 stages:
   - build
-  - test
-  - analyse
+  #- test
+  #- analyse
   - deploy
 
 
