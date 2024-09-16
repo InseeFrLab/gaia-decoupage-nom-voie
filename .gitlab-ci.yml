@@ -17,8 +17,8 @@ default:
 
 stages:
   - build
-  #- test
-  #- analyse
+  - test
+  - analyse
   - deploy
 
 
@@ -85,6 +85,7 @@ test:
   script:
     - poetry install --no-interaction --with dev
     - poetry run pytest
+  allow_failure: true
 
 coverage:
   image: python:$PYTHON_VERSION
@@ -99,6 +100,7 @@ coverage:
     paths:
       - coverage.xml
     expire_in: 1 week
+  allow_failure: true
 
 sonar:
   stage: deploy
@@ -155,4 +157,4 @@ deploy-nexus:
     - build
     - test
     - flake
-  when: manual
+  #when: manual
