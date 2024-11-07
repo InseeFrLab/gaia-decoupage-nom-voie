@@ -42,9 +42,3 @@ def preprocess_ponctuation_in_list_lib(list_queries: List[str]) -> List[Dict[str
         queries_raw_preproc.append({query_lib: libelle_preproc.lower()})
 
     return queries_raw_preproc
-
-
-#########
-# Exemple
-#########
-preprocess_ponctuation_in_list_lib(["rue d'acueil"])
