@@ -4,13 +4,11 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 
 
 class ComplementFinderUseCase:
-    # TYPES_COMPLEMENT_0 = ["IMM", "IMMEUBLE", "BLOC", "BAT", "BATIMENT"]
-    TYPES_COMPLEMENT_0 = ["PAVILLON", "IMM", "IMMEUBLE", "BAT", "BATIMENT", "BLOC", "ESC", "APPARTEMENT", "ESCALIER", "APRT"]
+    TYPES_COMPLEMENT_0 = ["PAVILLON", "IMMEUBLE", "BATIMENT", "BLOC", "APPARTEMENT", "ESCALIER", "LOGEMENT", "ENTREE"]
 
-    TYPES_APPART_ESC = ["BLOC", "ESC", "APPARTEMENT", "ESCALIER", "APRT"]
+    TYPES_APPART_ESC = ["BLOC", "APPARTEMENT", "ESCALIER"]
 
-    TYPES_COMPLEMENT_1_2 = ["PAVILLON", "PAV", "IMM", "IM", "IMMEUBLE", "BAT", "BATIMENT", "BLOC", "ESC", "APPARTEMENT", "ESCALIER", "APRT"]
-    # TYPES_COMPLEMENT_1_2 = ["PAVILLON", "PAV", "LDT", "IMM", "IM", "IMMEUBLE", "BLOC", "BAT", "BATIMENT"]
+    TYPES_COMPLEMENT_1_2 = ["PAVILLON", "IM", "IMMEUBLE", "BATIMENT", "BLOC", "APPARTEMENT", "ESCALIER", "LOGEMENT", "ENTREE"]
 
     TYPES_COMPLEMENT_IMMEUBLE = [
         "HLM",
@@ -33,7 +31,7 @@ class ComplementFinderUseCase:
         "ESPACE",
     ]
 
-    ORTHOGRAPHES_IMMEUBLE = ["IM", "IMM", "IMMEUBLE"]
+    ORTHOGRAPHES_IMMEUBLE = ["IM", "IMMEUBLE"]
 
     def execute(self, infovoie: InfoVoie, types_complement: List[str]) -> InfoVoie:
         for type_compl in types_complement:  # parcours de la liste de types "complément"
