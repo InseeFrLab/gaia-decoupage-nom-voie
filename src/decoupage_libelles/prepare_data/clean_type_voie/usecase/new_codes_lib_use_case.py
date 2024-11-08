@@ -8,7 +8,7 @@ class NewCodesLibUseCase:
         {"CODE": "APL", "LIBELLE": "ANCIENNE PLACE"},
         {"CODE": "ANV", "LIBELLE": "ANCIENNE VOIE"},
         {"CODE": "GAV", "LIBELLE": "GRANDE AVENUE"},
-        {"CODE": "PTS", "LIBELLE": "PETIT SENTIER"},
+        {"CODE": "PTSEN", "LIBELLE": "PETIT SENTIER"},
         {"CODE": "AERP", "LIBELLE": "AEROPORT"},
         {"CODE": "RD", "LIBELLE": "ROUTE DEPARTEMENTALE"},
         {"CODE": "HOT", "LIBELLE": "HOTEL"},
