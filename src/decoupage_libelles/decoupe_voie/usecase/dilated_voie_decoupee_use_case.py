@@ -19,6 +19,7 @@ class DilatedVoieDecoupeeUseCase:
 
     DILATATION_NOM_VOIE = {
         "GAL": "GENERAL",
+        "PR": "PROFESSEUR",
         "PT": "PETIT",
         "PTE": "PETITE",
     }
