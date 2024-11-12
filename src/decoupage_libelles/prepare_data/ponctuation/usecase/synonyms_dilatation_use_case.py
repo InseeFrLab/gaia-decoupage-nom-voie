@@ -18,6 +18,7 @@ class SynonymsDilatationUseCase:
         "GDE ALLEE":"GRANDE ALLEE",
         "GDE AV":"GRANDE AVENUE",
         "GRAND RUE":"GRANDE RUE",
+        "GD RUE":"GRANDE RUE",
         "GDE RUE":"GRANDE RUE",
         "GR RUE":"GRANDE RUE",
         "HABITATION A LOYER MODERE":"HLM",

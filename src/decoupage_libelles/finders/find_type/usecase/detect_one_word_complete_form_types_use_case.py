@@ -7,8 +7,6 @@ class DetectOneWordCompleteFormTypesUseCase:
         for pos in pos_type:
             positions = (pos, pos)
             types_detected = [type_lib for type_lib, __ in type_finder_object.voie_big.types_and_positions.keys()]
-            if type_detect not in types_detected:
-                type_finder_object.voie_big.types_and_positions[(type_detect, 1)] = positions
-            else:
-                type_finder_object.voie_big.types_and_positions[(type_detect, 2)] = positions
+            position_index = 1 if type_detect not in types_detected else 2
+            type_finder_object.voie_big.types_and_positions[(type_detect, position_index)] = positions
         return type_finder_object

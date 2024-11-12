@@ -28,7 +28,7 @@ class TypeVoieDecoupageLauncher:
         self.two_types_voies_handler_use_case: TwoTypesVoiesHandlerUseCase = two_types_voies_handler_use_case
         self.three_types_and_more_voies_handler_use_case: ThreeTypesAndMoreVoiesHandlerUseCase = three_types_and_more_voies_handler_use_case
 
-    def execute(self, voies_data) -> List[VoieDecoupee]:
+    def execute(self, voies_data: List[str]) -> List[VoieDecoupee]:
         logging.info("Préparation des données")
 
         logging.info("Preprocessing des données 'types de voie' issues de Majic")
