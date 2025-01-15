@@ -23,7 +23,7 @@ class ComplTwoTypesLongOrAggloUseCase:
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 1)
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 2)
         third_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 3)
-        print(voie_compl)
+
         if first_type.is_agglomerant and second_type.is_longitudinal:
             # 'HLM AV KLEBER BAT DESCARTES'
             # compl + 2e type + lib + 3e type compl

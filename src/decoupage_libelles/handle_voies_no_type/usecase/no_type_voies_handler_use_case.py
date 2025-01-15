@@ -1,5 +1,4 @@
 from typing import List
-from tqdm import tqdm
 import logging
 
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
@@ -25,11 +24,11 @@ class NoTypeVoiesHandlerUseCase:
         logging.info("Gestion des voies avec complément")
         voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_0)
         voies_treated = []
-        for voie_compl in tqdm(voies_complement):
+        for voie_compl in voies_complement:
             voies_treated.append(self.handle_no_type_complement_use_case.execute(voie_compl))
 
         logging.info("Gestion du reste des voies")
-        for voie in tqdm(voies):
+        for voie in voies:
             # 'LES HARDONNIERES'
             # lib
             voies_treated.append(self.assign_lib_use_case.execute(voie))

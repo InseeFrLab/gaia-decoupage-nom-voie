@@ -14,6 +14,10 @@ class AssignTypeLibUseCase:
         label_assigned = self.get_words_between_use_case.execute(infovoie, type_principal.position_end + 1)
 
         voiedecoupee = VoieDecoupee(label_origin=infovoie.label_origin, type_assigned=type_principal.type_name, label_assigned=label_assigned, compl_assigned=" ", compl2=infovoie.complement)
-        voiedecoupee = self.dilated_voie_decoupee_use_case.execute(voiedecoupee)
+        
+        try:
+            voiedecoupee = self.dilated_voie_decoupee_use_case.execute(voiedecoupee)
+        except:
+            print(voiedecoupee)
 
         return voiedecoupee

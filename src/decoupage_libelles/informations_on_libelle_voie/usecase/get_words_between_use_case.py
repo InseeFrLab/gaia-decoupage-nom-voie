@@ -10,4 +10,4 @@ class GetWordsBetweenUseCase:
         elif not position_end and len(infovoie.label_preproc) > position_start:
             return (" ").join(infovoie.label_preproc[position_start:])
         else:
-            return None
+            return ""

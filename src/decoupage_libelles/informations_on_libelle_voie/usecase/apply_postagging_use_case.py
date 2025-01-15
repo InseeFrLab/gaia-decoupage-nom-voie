@@ -8,10 +8,9 @@ class ApplyPostaggingUseCase:
 
     def execute(self, infovoie: InfoVoie) -> InfoVoie:
         if not infovoie.label_postag:
-            texte = (" ").join(infovoie.label_preproc).lower()
+            texte = " ".join(infovoie.label_preproc).lower()
             doc = self.nlp_model_execution.execute(texte)
-            texte_tokense = []
-            for word in doc:
-                texte_tokense.append(word.pos_)
-            infovoie.label_postag = texte_tokense
+            
+            # Utiliser une compréhension de liste pour extraire les pos_
+            infovoie.label_postag = [word.pos_ for word in doc]
         return infovoie

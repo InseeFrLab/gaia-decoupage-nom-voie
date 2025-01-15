@@ -1,5 +1,4 @@
 from typing import List
-from tqdm import tqdm
 import logging
 
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
@@ -42,7 +41,7 @@ class TwoTypesVoiesHandlerUseCase:
         logging.info("Gestion des voies avec complément")
         voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_1_2)
         voies_treated = []
-        for voie_compl in tqdm(voies_complement):
+        for voie_compl in voies_complement:
             voie_treated, voie_to_treat_two_types = self.handle_two_types_complement_use_case.execute(voie_compl)
             if voie_treated:
                 voies_treated.append(voie_treated)
@@ -51,10 +50,10 @@ class TwoTypesVoiesHandlerUseCase:
 
         logging.info("Gestion des voies fictives")
         voies_fictives, voies = self.apply_voie_fictive_finder_on_voies_use_case.execute(voies, VoieFictiveFinderUseCase.VOIES_FICTIVES_2)
-        for voie_fictive in tqdm(voies_fictives):
+        for voie_fictive in voies_fictives:
             voies_treated.append(self.handle_two_types_voie_fictive_use_case.execute(voie_fictive))
 
-        for voie in tqdm(voies):
+        for voie in voies:
             voie_treated = None
             if voie.has_type_in_first_pos:
                 logging.info("Gestion des voies avec un type en première position")

@@ -1,5 +1,4 @@
 from typing import List, Union
-from tqdm import tqdm
 
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
 from decoupage_libelles.finders.find_voie_fictive.usecase.voie_fictive_finder_use_case import VoieFictiveFinderUseCase
@@ -16,7 +15,7 @@ class ApplyVoieFictiveFinderOnVoiesUseCase:
     ) -> Union[List[InfoVoie], List[InfoVoie]]:
         list_object_voies_fictives = []
         new_list_object_voies = list_object_voies[:]
-        for voie in tqdm(list_object_voies):
+        for voie in list_object_voies:
             new_voie = self.voie_fictive_finder_use_case.execute(voie, list_type_to_detect)
             if new_voie:
                 list_object_voies_fictives.append(new_voie)

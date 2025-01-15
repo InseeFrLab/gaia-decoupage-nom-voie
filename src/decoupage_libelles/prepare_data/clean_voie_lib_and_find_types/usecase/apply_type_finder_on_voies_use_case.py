@@ -1,6 +1,5 @@
 from typing import List
 import pandas as pd
-from tqdm import tqdm
 
 from decoupage_libelles.finders.find_type.usecase.type_finder_use_case import TypeFinderUseCase
 from decoupage_libelles.finders.find_type.usecase.generate_type_finder_utils_use_case import GenerateTypeFinderUtilsUseCase
@@ -23,7 +22,7 @@ class ApplyTypeFinderOnVoiesUseCase:
         self.generate_type_finder_utils_use_case.execute(type_data)
 
         voies_data_detect_types = []
-        for voie in tqdm(voies_data):
+        for voie in voies_data:
             voie_obj = TypeFinderObject(voie, type_data)
             new_voie = self.type_finder_use_case.execute(voie_obj)
             voies_data_detect_types.append(new_voie)

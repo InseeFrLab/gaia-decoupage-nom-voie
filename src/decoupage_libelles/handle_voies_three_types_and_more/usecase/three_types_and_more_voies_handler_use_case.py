@@ -1,5 +1,4 @@
 from typing import List
-from tqdm import tqdm
 import logging
 
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
@@ -41,7 +40,7 @@ class ThreeTypesAndMoreVoiesHandlerUseCase:
         voies_1_long_agglo: List[InfoVoie] = []
         voies_2_long_agglo: List[InfoVoie] = []
 
-        for voie in tqdm(voies):
+        for voie in voies:
             voie = self.keep_types_without_article_adj_before_use_case.execute(voie)
             voie = self.generate_information_on_lib_use_case.execute(voie)
 

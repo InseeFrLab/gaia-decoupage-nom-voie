@@ -1,7 +1,7 @@
 import spacy
 from decoupage_libelles.config.settings_configuration import settings
 import logging
-
+import torch
 
 class NLPModelExecution:
     def execute(self, texte):
@@ -21,5 +21,12 @@ class NLPModelSingleton:
     @staticmethod
     def _load_model():
         logging.info("Chargement du modèle SpaCy pour le postagging")
-        # Code pour charger le modèle NLP
-        return spacy.load(settings.chemin_nlp_modele)
+        chemin_modele = settings.chemin_nlp_modele
+        try:
+            if chemin_modele.endswith('.pt') or chemin_modele.endswith('.pth'):
+                model_state_dict = torch.load(chemin_modele, map_location='cpu', weights_only=True)
+            else:
+                return spacy.load(chemin_modele)
+        except Exception as e:
+            logging.error(f"Erreur lors du chargement du modèle : {e}")
+            raise
