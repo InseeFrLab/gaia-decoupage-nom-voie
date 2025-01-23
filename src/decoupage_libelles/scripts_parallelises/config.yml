@@ -1,0 +1,5 @@
+s3_bucket: "travail/projet-ml-moteur-identification-gaia/confidentiel/personnel_non_sensible"
+input_path: "voies_01.parquet"
+sep: ","
+encodeur: "utf-8"
+var_name_nom_voie: "nom_voie_complet"
