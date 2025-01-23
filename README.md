@@ -3,7 +3,7 @@
 ## Getting started
 
 Dans son namespace sur LS, ouvrir un service vs-python en paramétrant les ressources de cette façon : 
-![](gaia-decoupage-libelles-voies/data/parametrages_vs_code_decoupage_parallele.png "Paramétrages des ressources du service LS3 vscode")
+![](data/parametrages_vs_code_decoupage_parallele.png "Paramétrages des ressources du service LS3 vscode")
 
 Lancer dans un terminal bash : 
 ```{bash}
