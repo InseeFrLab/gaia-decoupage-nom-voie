@@ -3,11 +3,12 @@
 ## Getting started
 
 Dans son namespace sur LS, ouvrir un service vs-python en paramétrant les ressources de cette façon : 
-![](data/vers/parametrages_vs_code_decoupage_parallele.png "Paramétrages des ressources du service LS3 vscode")
+![](gaia-decoupage-libelles-voies/data/parametrages_vs_code_decoupage_parallele.png "Paramétrages des ressources du service LS3 vscode")
 
 Lancer dans un terminal bash : 
 ```{bash}
 git clone https://gitlab.insee.fr/geographie/gaia/gaia-decoupage-libelles-voies.git
+cd gaia-decoupage-libelles-voies/
 source ./setup.sh
 ```
 Il faudra se munir de son identifiant GitLab et de son token pour pouvoir cloner le projet.
@@ -15,7 +16,7 @@ Il faudra se munir de son identifiant GitLab et de son token pour pouvoir cloner
 
 ## Lancer le traitement d'un fichier
 
-Placer le fichier dans l'espace de stockage s3, et configurer le fichier decoupage_libelles/scripts_parallelises/config.yml :  
+Placer le fichier dans l'espace de stockage s3, et configurer le fichier src/decoupage_libelles/scripts_parallelises/config.yml :  
 
 - s3_bucket: Dossier où le fichier à traiter se trouve. Ex : "travail/projet-ml-moteur-identification-gaia/confidentiel/personnel_non_sensible".  
 - input_path: Nom du fichier. Ex : "voies_01.csv".  
@@ -29,3 +30,5 @@ python decoupage_libelles/scripts_parallelises/main.py
 ```
 
 Le fichier traité sera enregistré dans le même dossier avec le même format et le même nom de fichier suivi de "_parse".  
+
+Pour livrer un fichier traité en prod, le placer dans un des dossiers "Livraison" prévu à cet effet sur applishare : "\\pd_as_ge_d1_50\ge_data_pd\gaia_pd".
