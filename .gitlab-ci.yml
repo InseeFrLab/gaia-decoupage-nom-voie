@@ -45,7 +45,7 @@ build:
       # Définition du dépôt contenant les dépendances
     - poetry source add nexus ${DEPOT_DEPENDANCES_INDEX} --priority=primary
       # Modification de la priorité du dépôt par défaut
-    - poetry source add --priority=supplemental PyPI
+    #- poetry source add --priority=supplemental PyPI
       # Vérification de la configuration (les commandes poetry source écrivent dans pyproject.toml)
     - cat pyproject.toml
       # Installation des dépendances
