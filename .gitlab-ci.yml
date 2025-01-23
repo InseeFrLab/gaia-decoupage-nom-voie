@@ -49,7 +49,7 @@ build:
       # Vérification de la configuration (les commandes poetry source écrivent dans pyproject.toml)
     - cat pyproject.toml
       # Installation des dépendances
-    - poetry install --no-interaction
+    - PYTHONWARNINGS="ignore:Unverified HTTPS request" poetry install --no-interaction
     - poetry add poetry-plugin-export
     - poetry config warnings.export false
       # Génération de requirements.txt
