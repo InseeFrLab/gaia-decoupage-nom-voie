@@ -1,4 +1,4 @@
-s3_bucket: "s3://projet-gaia/decoupage"
+s3_bucket: "projet-gaia/decoupage"
 input_path: "voies.parquet"
 sep: ","
 encodeur: "utf-8"
