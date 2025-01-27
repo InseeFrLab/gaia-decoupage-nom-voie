@@ -71,7 +71,7 @@ def process_chunk(chunk):
 def save_dataframes(dfs, file_type):
     """Sauvegarder les DataFrames depuis la queue."""
     fs = s3fs.S3FileSystem(
-        client_kwargs={'endpoint_url': 'https://'+'minio.datascience.kube.insee.fr'},
+        client_kwargs={'endpoint_url': 'https://'+'minio.lab.sspcloud.fr'},
         key=os.environ["AWS_ACCESS_KEY_ID"],
         secret=os.environ["AWS_SECRET_ACCESS_KEY"],
         token=os.environ["AWS_SESSION_TOKEN"])
@@ -133,7 +133,7 @@ if __name__ == "__main__":  # Variables globales
     # Configuration S3
     global fs
     fs = s3fs.S3FileSystem(
-        client_kwargs={'endpoint_url': 'https://'+'minio.datascience.kube.insee.fr'},
+        client_kwargs={'endpoint_url': 'https://'+'minio.lab.sspcloud.fr'},
         key=os.environ["AWS_ACCESS_KEY_ID"],
         secret=os.environ["AWS_SECRET_ACCESS_KEY"],
         token=os.environ["AWS_SESSION_TOKEN"])

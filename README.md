@@ -2,13 +2,13 @@
 
 ## Getting started
 
-Dans son namespace sur LS, ouvrir un service vs-python en paramétrant les ressources de cette façon : 
-![](data/parametrages_vs_code_decoupage_parallele.png "Paramétrages des ressources du service LS3 vscode")
+Dans son namespace sur le datalab, ouvrir un service vs-python en paramétrant les ressources de cette façon : 
+![](data/parametrages_vs_code_decoupage_parallele.png "Paramétrages des ressources du service vscode")
 
 Lancer dans un terminal bash : 
 ```{bash}
-git clone https://gitlab.insee.fr/geographie/gaia/gaia-decoupage-libelles-voies.git
-cd gaia-decoupage-libelles-voies/
+git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
+cd gaia-decoupage/
 source ./setup.sh
 ```
 Il faudra se munir de son identifiant GitLab et de son token pour pouvoir cloner le projet.
