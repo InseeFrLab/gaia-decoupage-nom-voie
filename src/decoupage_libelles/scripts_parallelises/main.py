@@ -118,6 +118,9 @@ def process_file_in_chunks(input_file, chunk_size, sep, encodeur, file_type):
             parquet_file = pq.ParquetFile(f)
             for i, batch in tqdm(enumerate(parquet_file.iter_batches(batch_size=chunk_size)), desc="Parsing des voies", unit="chunk"):
                 chunk = batch.to_pandas()
+                chunk["nom_voie_complet"] = (
+                    chunk["id_type_voie"].fillna('') + ' ' + chunk["nom_voie_norm"].fillna('')
+                )
                 results.append((chunk, partition_id))
                 partition_id += 1
 
@@ -140,12 +143,12 @@ if __name__ == "__main__":  # Variables globales
 
     s3_bucket = config['s3_bucket']
     input_path = config['input_path']
-    input_file = f"s3://{s3_bucket}/{input_path}"
     sep = config["sep"]  # Séparateur CSV
     encodeur = config["encodeur"]
-    file_type = input_file.split(".")[1]
     global var_name_nom_voie
     var_name_nom_voie = config['var_name_nom_voie']
+    input_file = f"s3://{s3_bucket}/{input_path}"
+    file_type = input_file.split(".")[1]
     global output_file
     output_file = input_file.split(".")[0] + "_parse." + input_file.split(".")[1]
     chunk_size = 1000  # Taille des paquets à traiter
