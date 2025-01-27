@@ -1,17 +1,19 @@
 variables:
   PYTHON_VERSION: "3.11"
   POETRY_VERSION: "1.7.1"
-  HTTP_PROXY: "http://proxy-app.http.insee.fr:3128"
-  HTTPS_PROXY: "http://proxy-app.http.insee.fr:3128"
+  HTTP_PROXY: http://proxy-app.insee.fr:3128
+  HTTPS_PROXY: http://proxy-app.insee.fr:3128
   NO_PROXY: ".insee.fr,.insee.eu,.insee.intra,localhost,insee.test"
   NEXUS_URL: "https://nexus.insee.fr"
   NEXUS_HOST: "nexus.insee.fr"
   DEPOT_DEPENDANCES: "https://nexus.insee.fr/repository/pypi-proxy/pypi"
   DEPOT_DEPENDANCES_INDEX: "https://nexus.insee.fr/repository/pypi-proxy/simple/"
-  DEPOT_LIVRAISON: "https://nexus.insee.fr/repository/pypi-internal/"
-
+  DEPOT_LIVRAISON_VERSION: "https://nexus.insee.fr/repository/pypi-internal/"
+  DEPOT_LIVRAISON_HP: "https://nexus.insee.fr/repository/pypi-snapshot-internal/"
+  PYTHONWARNINGS: "ignore:Unverified HTTPS request"
 
 default:
+  image: python:${PYTHON_VERSION}
   tags:
     - docker
 
@@ -21,10 +23,9 @@ stages:
   - analyse
   - deploy
 
-
 .default_configuration: &default_configuration
     # Mise à jour de pip
-  - pip install --upgrade pip
+  #- pip install --upgrade pip
     # Configure pip pour faire confiance au serveur d'hébergement 
   - pip config set global.trusted-host ${NEXUS_HOST} 
     # Configure pip pour rechercher les dépendances dans le dépot ${DEPOT_DEPENDANCES} (dépréciée)
@@ -37,7 +38,6 @@ stages:
   - poetry config certificates.nexus.cert false
 
 build:
-  image: python:$PYTHON_VERSION
   stage: build
   before_script:
     - *default_configuration
@@ -72,23 +72,20 @@ pages:
   before_script:
     - npm install --global retypeapp
   script:
-    - 'retype build --override "{ \"url\": \"$CI_PAGES_URL\" }" --output $CI_PROJECT_DIR/public'
+    - 'retype build --override "{ \"url\": \"${CI_PAGES_URL}\" }" --output ${CI_PROJECT_DIR}/public'
   artifacts:
     paths:
       - public
 
 test:
-  image: python:$PYTHON_VERSION
   stage: test
   before_script:
     - *default_configuration
   script:
     - poetry install --no-interaction --with dev
     - poetry run pytest
-  allow_failure: true
 
 coverage:
-  image: python:$PYTHON_VERSION
   stage: analyse
   before_script:
     - *default_configuration
@@ -100,7 +97,6 @@ coverage:
     paths:
       - coverage.xml
     expire_in: 1 week
-  allow_failure: true
 
 sonar:
   stage: deploy
@@ -122,37 +118,32 @@ sonar:
     - coverage
   script:
     - curl -k https://nexus.insee.fr/repository/certs/insee/insee.ts -o /tmp/insee.ts
-    - export SONAR_SCANNER_OPTS="-Djavax.net.ssl.trustStore=/tmp/insee.ts"
-    - sonar-scanner -X -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.login="${SONAR_TOKEN}" -Dsonar.projectName="${PROJECT_NAME}" -Dsonar.qualitygate.wait=true -Dsonar.language="py" -Dsonar.python.version="3.11" -Dsonar.sources="${SOURCE_FOLDER}" -Dsonar.exclusions="${EXCLUSIONS}" -Dsonar.python.coverage.reportPaths="${COVERAGE_REPORT}" -Dsonar.projectKey="${PROJECT_KEY}" -Djavax.net.ssl.trustStore="/tmp/insee.ts"
-  allow_failure: true
-
+    - echo | openssl s_client -showcerts -servername sonar.insee.fr -connect sonar.insee.fr:443 2>/dev/null | openssl x509 -outform PEM > sonar_insee_cert.pem
+    - keytool -import -alias sonar-insee -file sonar_insee_cert.pem -keystore /tmp/insee.ts -storepass changeit -noprompt
+    - export SONAR_SCANNER_OPTS="-Djavax.net.ssl.trustStore=/tmp/insee.ts -Djavax.net.ssl.trustStorePassword=changeit"
+    - sonar-scanner -X -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.login="${SONAR_TOKEN}" -Dsonar.projectName="${PROJECT_NAME}" -Dsonar.qualitygate.wait=true -Dsonar.language="py" -Dsonar.python.version="3.11" -Dsonar.sources="${SOURCE_FOLDER}" -Dsonar.exclusions="${EXCLUSIONS}" -Dsonar.python.coverage.reportPaths="${COVERAGE_REPORT}" -Dsonar.projectKey="${PROJECT_KEY}" -Djavax.net.ssl.trustStore="/tmp/insee.ts" -Djavax.net.ssl.trustStorePassword=changeit
 black:
-  image: python:$PYTHON_VERSION
   stage: analyse
   before_script:
     - *default_configuration
   script:
     - poetry install --no-interaction --with dev
     - poetry run black --check --verbose .
-  allow_failure: true
 
 flake:
-  image: python:$PYTHON_VERSION
   stage: analyse
   before_script:
     - *default_configuration
   script:
     - poetry install --no-interaction --with dev
     - poetry run flake8
-  allow_failure: true
 
 deploy-nexus:
   stage: deploy
-  image: python:$PYTHON_VERSION
   before_script:
     - *default_configuration
   script:
-    - poetry config repositories.nexus ${DEPOT_LIVRAISON}
+    - poetry config repositories.nexus ${DEPOT_LIVRAISON_VERSION}
     - poetry config --unset http-basic.nexus
     - poetry install
     - poetry -v publish -r nexus
@@ -160,4 +151,4 @@ deploy-nexus:
     - build
     - test
     - flake
-  #when: manual
+  when: manual
