@@ -5,11 +5,15 @@ import pandas as pd
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 import s3fs
+import warnings
 import yaml
 from yaml.loader import SafeLoader
 import pyarrow.parquet as pq
 from fastapi.testclient import TestClient
 from decoupage_libelles.entrypoints.web.main_api import app, initialize_api
+
+
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 def initialize_client():
