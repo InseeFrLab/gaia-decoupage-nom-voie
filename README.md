@@ -2,7 +2,7 @@
 
 ## Getting started
 
-Dans son namespace sur le datalab, ouvrir un service vs-python en paramétrant les ressources de cette façon : 
+Dans son namespace sur le DataLab, ouvrir un service vs-python en paramétrant les ressources de cette façon : 
 ![](data/parametrages_vs_code_decoupage_parallele.png "Paramétrages des ressources du service vscode")
 
 Lancer dans un terminal bash : 
@@ -16,7 +16,7 @@ Il faudra se munir de son identifiant GitLab et de son token pour pouvoir cloner
 
 ## Lancer le traitement d'un fichier
 
-Placer le fichier dans l'espace de stockage s3, et configurer le fichier src/decoupage_libelles/scripts_parallelises/config.yml :  
+Placer le fichier dans l'espace de stockage S3, et configurer le fichier src/decoupage_libelles/scripts_parallelises/config.yml :  
 
 - s3_bucket: Dossier où le fichier à traiter se trouve. Ex : "travail/projet-ml-moteur-identification-gaia/confidentiel/personnel_non_sensible".  
 - input_path: Nom du fichier. Ex : "voies_01.csv".  
@@ -29,6 +29,6 @@ Dans le terminal bash, lancer :
 python decoupage_libelles/scripts_parallelises/main.py
 ```
 
-Le fichier traité sera enregistré dans le même dossier avec le même format et le même nom de fichier suivi de "_parse".  
+Le fichier traité sera enregistré dans le même dossier avec le même format et le même nom de fichier suivi de "_parsed".  
 
 Pour livrer un fichier traité en prod, le placer dans un des dossiers "Livraison" prévu à cet effet sur applishare : "\\pd_as_ge_d1_50\ge_data_pd\gaia_pd".

@@ -20,9 +20,6 @@ def initialize_client():
 
 def process_chunk(chunk):
     """Traite un chunk de données avec l'API FastAPI."""
-    chunk["nom_voie_complet"] = (
-        chunk["id_type_voie"].fillna('') + ' ' + chunk["nom_voie_norm"].fillna('')
-    )
     if chunk[var_name_nom_voie].notna().sum() == 0:
         return chunk
 
