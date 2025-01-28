@@ -5,11 +5,15 @@ import pandas as pd
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 import s3fs
+import warnings
 import yaml
 from yaml.loader import SafeLoader
 import pyarrow.parquet as pq
 from fastapi.testclient import TestClient
 from decoupage_libelles.entrypoints.web.main_api import app, initialize_api
+
+
+warnings.filterwarnings("ignore", category=FutureWarning)
 
 
 def initialize_client():
@@ -20,6 +24,9 @@ def initialize_client():
 
 def process_chunk(chunk):
     """Traite un chunk de données avec l'API FastAPI."""
+    chunk["nomVoieComplet"] = (
+        chunk["type_voie"].fillna('') + ' ' + chunk["nom_voie"].fillna('')
+    )
     if chunk[var_name_nom_voie].notna().sum() == 0:
         return chunk
 
