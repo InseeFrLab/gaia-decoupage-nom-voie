@@ -21,7 +21,8 @@ settings = Dynaconf(
     ],
 )
 settings.chemin_nlp_modele = "../data/fr_dep_news_trf-3.7.0/fr_dep_news_trf/fr_dep_news_trf-3.7.0/"
-settings.chemin_types_voies_majic = "../data/type_voie_majic.csv"
+settings.chemin_type_voie = "../data/type_voie.csv"
+settings.chemin_code2lib = "../data/code2lib.json"
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
 # `settings_files` = Load these files in the order.

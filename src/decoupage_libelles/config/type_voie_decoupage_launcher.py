@@ -1,27 +1,27 @@
 import logging
 from typing import List
+import pandas as pd
+import json
 
 from decoupage_libelles.decoupe_voie.model.voie_decoupee import VoieDecoupee
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
-from decoupage_libelles.prepare_data.clean_type_voie.usecase.type_voie_majic_preprocessor_use_case import TypeVoieMajicPreprocessorUseCase
 from decoupage_libelles.prepare_data.clean_voie_lib_and_find_types.usecase.voie_lib_preprocessor_use_case import VoieLibPreprocessorUseCase
 from decoupage_libelles.handle_voies_no_type.usecase.no_type_voies_handler_use_case import NoTypeVoiesHandlerUseCase
 from decoupage_libelles.handle_voies_one_type.usecase.one_type_voies_handler_use_case import OneTypeVoiesHandlerUseCase
 from decoupage_libelles.handle_voies_two_types.usecase.two_types_voies_handler_use_case import TwoTypesVoiesHandlerUseCase
 from decoupage_libelles.handle_voies_three_types_and_more.usecase.three_types_and_more_voies_handler_use_case import ThreeTypesAndMoreVoiesHandlerUseCase
+from decoupage_libelles.config.settings_configuration import settings
 
 
 class TypeVoieDecoupageLauncher:
     def __init__(
         self,
-        type_voie_majic_preprocessor_use_case: TypeVoieMajicPreprocessorUseCase = TypeVoieMajicPreprocessorUseCase(),
         voie_lib_preprocessor_use_case: VoieLibPreprocessorUseCase = VoieLibPreprocessorUseCase(),
         no_type_voies_handler_use_case: NoTypeVoiesHandlerUseCase = NoTypeVoiesHandlerUseCase(),
         one_type_voies_handler_use_case: OneTypeVoiesHandlerUseCase = OneTypeVoiesHandlerUseCase(),
         two_types_voies_handler_use_case: TwoTypesVoiesHandlerUseCase = TwoTypesVoiesHandlerUseCase(),
         three_types_and_more_voies_handler_use_case: ThreeTypesAndMoreVoiesHandlerUseCase = ThreeTypesAndMoreVoiesHandlerUseCase(),
     ):
-        self.type_voie_majic_preprocessor_use_case: TypeVoieMajicPreprocessorUseCase = type_voie_majic_preprocessor_use_case
         self.voie_lib_preprocessor_use_case: VoieLibPreprocessorUseCase = voie_lib_preprocessor_use_case
         self.no_type_voies_handler_use_case: NoTypeVoiesHandlerUseCase = no_type_voies_handler_use_case
         self.one_type_voies_handler_use_case: OneTypeVoiesHandlerUseCase = one_type_voies_handler_use_case
@@ -31,8 +31,10 @@ class TypeVoieDecoupageLauncher:
     def execute(self, voies_data: List[str]) -> List[VoieDecoupee]:
         logging.info("Préparation des données")
 
-        logging.info("Preprocessing des données 'types de voie' issues de Majic")
-        type_voie_df, code2lib = self.type_voie_majic_preprocessor_use_case.execute()
+        logging.info("Récuperation des données 'types de voie'")
+        type_voie_df = pd.read_csv(settings.chemin_type_voie)
+        with open(settings.chemin_code2lib, "r", encoding="utf-8") as f:
+            code2lib = json.load(f) 
         logging.info("Done")
 
         logging.info("Preprocessing des libellés de voie donnés en entrée")

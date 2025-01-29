@@ -69,6 +69,11 @@ initialize_api()
 async def root():
     return RedirectResponse(url="/docs")
 
+@app.get("/clear-cache")
+async def clear_cache():
+    global type_voie_decoupage_launcher
+    type_voie_decoupage_launcher = TypeVoieDecoupageLauncher()  # Réinstanciation
+    return {"message": "Cache vidé"}
 
 @app.post(
     "/analyse-libelles-voies",
