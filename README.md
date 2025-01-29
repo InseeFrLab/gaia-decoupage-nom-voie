@@ -25,7 +25,7 @@ source ./setup-datalab.sh
 
 ## Lancer le traitement d'un fichier
 
-Placer le fichier dans l'espace de stockage s3, et configurer le fichier src/decoupage_libelles/scripts_parallelises/config.yml :  
+Placer le fichier dans l'espace de stockage S3, et configurer le fichier src/decoupage_libelles/scripts_parallelises/config.yml :  
 
 - directory_path: Dossier où le fichier à traiter se trouve. Ex : "travail/projet-ml-moteur-identification-gaia/confidentiel/personnel_non_sensible".  
 - input_path: Nom du fichier. Ex : "voies_01.csv".  
