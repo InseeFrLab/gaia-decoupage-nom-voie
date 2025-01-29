@@ -19,6 +19,6 @@ class DetectMultiWordsCompleteFormTypesUseCase:
             pos_type = self.find_position_of_word_in_sentence_list_use_case.execute(type_finder_object.voie_sep, pos)
             types_detected = [type_lib for type_lib, __ in type_finder_object.voie_big.types_and_positions.keys()]
             position_index = 1 if type_detect not in types_detected else 2
-            if pos_type:
+            if pos_type is not None:
                 type_finder_object.voie_big.types_and_positions[(type_detect, position_index)] = (pos_type, pos_type + nb_words_in_type - 1)
         return type_finder_object
