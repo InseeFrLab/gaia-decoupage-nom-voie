@@ -32,18 +32,20 @@ def process_chunk(chunk):
 
     data = chunk[var_name_nom_voie].dropna().tolist()
     list_labels_voies = {"list_labels_voies": data}
-
+    print(list_labels_voies)
+    client.get("/clear-cache")
     response = client.post("/analyse-libelles-voies", json=list_labels_voies)
     if response.status_code != 200:
         print(f"Erreur API : {response.status_code}")
         return chunk
 
     dict_reponse = response.json()["reponse"]
+    print(dict_reponse)
     rows = [
         {"origin": key, **value} for item in dict_reponse for key, value in item.items()
     ]
     df_response = pd.DataFrame(rows)
-
+    print(df_response)
     # Joindre les résultats au chunk d'origine
     df_response.rename(columns={"origin": var_name_nom_voie}, inplace=True)
     merged_df = chunk.merge(df_response, on=var_name_nom_voie, how="left")
@@ -64,6 +66,8 @@ def save_to_s3(df, file_type, output_file):
             df.to_csv(f, index=False)
         elif file_type == "parquet":
             df.to_parquet(f, engine="pyarrow", index=False)
+
+    print(f"Le résultat est enregistré ici {output_file}")
 
 
 def process_file(input_file, chunk_size, file_type, num_threads):

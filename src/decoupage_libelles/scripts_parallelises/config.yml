@@ -1,5 +1,5 @@
 s3_bucket: "projet-gaia/decoupage"
-input_path: "voies.parquet"
+input_path: "test_decoupe.csv"
 sep: ","
 encodeur: "utf-8"
-var_name_nom_voie: "nom_voie_complet"
+var_name_nom_voie: "nomVoieComplet"
