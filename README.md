@@ -7,7 +7,7 @@ Dans son namespace sur LS3 ou Datalab, ouvrir un service vs-python en paramétra
 
 Pour utiliser ce code en local (non recommandé), il faudra aller récupérer le dossier contenant le modèle spacy et le mettre dans le dossier data du code. Ce dossier se trouver sur le s3 du Datalab ou LS3 : s3/projet-gaia/fr_dep_news_trf-3.7.0.zip ou s3/travail/projet-ml-moteur-identification-gaia/open_data/fr_dep_news_trf-3.7.0.zip.  
 
-Il faudra se munir de son identifiant GitLab et de son token pour pouvoir cloner le projet.  
+Il faudra se munir de son identifiant GitLab et de son token (associé au projet en question) pour pouvoir cloner le projet.  
 
 ### Sur LS3
 Lancer dans un terminal bash : 
@@ -20,7 +20,7 @@ source ./setup-ls3.sh
 ### Sur Datalab
 Lancer dans un terminal bash : 
 ```{bash}
-git clone https://gitlab.insee.fr/geographie/gaia/gaia-decoupage-libelles-voies.git
+git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
 cd gaia-decoupage-libelles-voies/
 source ./setup-datalab.sh
 ```
