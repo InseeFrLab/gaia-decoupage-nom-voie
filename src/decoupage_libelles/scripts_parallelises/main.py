@@ -140,7 +140,7 @@ if __name__ == "__main__":
         fs = cred_s3(plateform)
         input_file = f"s3://{config['directory_path']}/{config['input_path']}"
     elif plateform == "local":
-        input_file = f"s3://{config['directory_path']}/{config['input_path']}"
+        input_file = f"{config['directory_path']}/{config['input_path']}"
     else:
         raise ValueError(f"La plateforme fournie '{plateform}' n'est pas reconnue.")
 
@@ -148,7 +148,9 @@ if __name__ == "__main__":
     vars_names_nom_voie = config["vars_names_nom_voie"]
     chunk_size = 10_000
     file_type = input_file.split(".")[-1]
-    num_threads = 20
+
+    # Nombre de threads
+    num_threads = 20 if plateform == "datalab" else 4
 
     # Initialisation
     initialize_api()
