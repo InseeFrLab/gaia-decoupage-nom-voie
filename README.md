@@ -5,6 +5,8 @@
 Dans son namespace sur LS3 ou Datalab, ouvrir un service vs-python en paramétrant les ressources de cette façon : 
 ![](data/parametrages_vs_code_decoupage_parallele.png "Paramétrages des ressources du service vscode")  
 
+Pour utiliser ce code en local (non recommandé), il faudra aller récupérer le dossier contenant le modèle spacy et le mettre dans le dossier data du code. Ce dossier se trouver sur le s3 du Datalab ou LS3 : s3/projet-gaia/fr_dep_news_trf-3.7.0.zip ou s3/travail/projet-ml-moteur-identification-gaia/open_data/fr_dep_news_trf-3.7.0.zip.  
+
 Il faudra se munir de son identifiant GitLab et de son token pour pouvoir cloner le projet.  
 
 ### Sur LS3
@@ -23,6 +25,8 @@ cd gaia-decoupage-libelles-voies/
 source ./setup-datalab.sh
 ```
 
+En local, lancer l'un des deux scripts, il y aura une erreur pour le "mc cp" qui n'aura pas d'incidence.  
+
 ## Lancer le traitement d'un fichier
 
 Placer le fichier dans l'espace de stockage S3, et configurer le fichier src/decoupage_libelles/scripts_parallelises/config.yml :  
@@ -32,7 +36,7 @@ Placer le fichier dans l'espace de stockage S3, et configurer le fichier src/dec
 - sep: Si c'est un fichier csv, préciser le séparateur. Ex : ",". Si c'est un parquet, mettre "".  
 - encodeur: Si c'est un fichier csv, préciser l'encodeur. Ex : "utf-8". Si c'est un parquet, mettre "".  
 - vars_names_nom_voie: Liste de(s) nom(s) de(s) la variable(s) dans laquelle on va extraire le type de voie. Ex : ["nom_voie_complet"] . S'il y a plusieurs à concaténer avec un espace entre chaque, les spécifier dans l'ordre. Ex : ["id_type_voie", "nom_voie_norm"]
-- plateform: "ls3", "datalab" ou "local" en fonction de si vous êtes sur LS3, Datalab ou en local (déconseillé d'être en local).  
+- plateform: "ls3", "datalab" ou "local" en fonction de si vous êtes sur LS3, Datalab ou en local.  
 
 Dans le terminal bash, lancer :  
 ```{bash}
