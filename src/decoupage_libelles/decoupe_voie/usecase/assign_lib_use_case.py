@@ -12,7 +12,7 @@ class AssignLibUseCase:
         infovoie: InfoVoie,
     ) -> VoieDecoupee:
         label_assigned = (" ").join(infovoie.label_preproc) if infovoie.label_preproc else ""
-        voiedecoupee = VoieDecoupee(label_origin=infovoie.label_origin, type_assigned=" ", label_assigned=label_assigned, compl_assigned=" ", compl2=infovoie.complement)
+        voiedecoupee = VoieDecoupee(label_origin=infovoie.label_origin, type_assigned="", label_assigned=label_assigned, compl_assigned="", compl2=infovoie.complement)
         voiedecoupee = self.dilated_voie_decoupee_use_case.execute(voiedecoupee)
 
         return voiedecoupee

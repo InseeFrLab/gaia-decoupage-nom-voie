@@ -10,7 +10,7 @@ class ApplyPostaggingUseCase:
         if not infovoie.label_postag:
             texte = " ".join(infovoie.label_preproc).lower()
             doc = self.nlp_model_execution.execute(texte)
-            
+
             # Utiliser une compréhension de liste pour extraire les pos_
             infovoie.label_postag = [word.pos_ for word in doc]
         return infovoie

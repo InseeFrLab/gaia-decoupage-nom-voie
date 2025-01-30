@@ -7,6 +7,7 @@ from decoupage_libelles.decoupe_voie.usecase.assign_compl_type_lib_use_case impo
 from decoupage_libelles.decoupe_voie.usecase.assign_type_lib_use_case import AssignTypeLibUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_lib_use_case import AssignLibUseCase
 from decoupage_libelles.finders.find_voie_fictive.usecase.voie_fictive_finder_use_case import VoieFictiveFinderUseCase
+from decoupage_libelles.prepare_data.clean_voie_lib_and_find_types.usecase.suppress_article_in_first_place_use_case import SuppressArticleInFirstPlaceUseCase
 
 
 class HandleNoTypeComplUseCase:
@@ -18,6 +19,7 @@ class HandleNoTypeComplUseCase:
         assign_type_lib_use_case: AssignTypeLibUseCase = AssignTypeLibUseCase(),
         assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = AssignComplTypeLibUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
+        suppress_article_in_first_place_use_case: SuppressArticleInFirstPlaceUseCase = SuppressArticleInFirstPlaceUseCase(),
     ):
         self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
@@ -25,8 +27,10 @@ class HandleNoTypeComplUseCase:
         self.assign_type_lib_use_case: AssignTypeLibUseCase = assign_type_lib_use_case
         self.assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = assign_compl_type_lib_use_case
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
+        self.suppress_article_in_first_place_use_case: SuppressArticleInFirstPlaceUseCase = suppress_article_in_first_place_use_case
 
     def execute(self, voie_compl: InfoVoie) -> VoieDecoupee:
+        self.suppress_article_in_first_place_use_case.execute(voie_compl)
         self.generate_information_on_lib_use_case.execute(voie_compl, apply_nlp_model=True)
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 1)
         if first_type.is_in_middle_position and not first_type.has_adj_det_before:

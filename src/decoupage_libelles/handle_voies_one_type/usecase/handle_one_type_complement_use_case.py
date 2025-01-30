@@ -5,6 +5,7 @@ from decoupage_libelles.informations_on_libelle_voie.usecase.generate_informatio
 from decoupage_libelles.handle_voies_one_type.usecase.compl_type_in_first_or_second_pos_use_case import ComplTypeInFirstOrSecondPosUseCase
 from decoupage_libelles.handle_voies_one_type.usecase.compl_type_in_first_or_middle_pos_use_case import ComplTypeInFirstOrMiddlePosUseCase
 from decoupage_libelles.handle_voies_one_type.usecase.compl_type_in_first_or_last_pos_use_case import ComplTypeInFirstOrLastPosUseCase
+from decoupage_libelles.prepare_data.clean_voie_lib_and_find_types.usecase.suppress_article_in_first_place_use_case import SuppressArticleInFirstPlaceUseCase
 
 
 class HandleOneTypeComplUseCase:
@@ -15,14 +16,17 @@ class HandleOneTypeComplUseCase:
         compl_type_in_first_or_last_pos_use_case: ComplTypeInFirstOrLastPosUseCase = ComplTypeInFirstOrLastPosUseCase(),
         generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = GenerateInformationOnLibUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
+        suppress_article_in_first_place_use_case: SuppressArticleInFirstPlaceUseCase = SuppressArticleInFirstPlaceUseCase(),
     ):
         self.compl_type_in_first_or_second_pos_use_case: ComplTypeInFirstOrSecondPosUseCase = compl_type_in_first_or_second_pos_use_case
         self.compl_type_in_first_or_middle_pos_use_case: ComplTypeInFirstOrMiddlePosUseCase = compl_type_in_first_or_middle_pos_use_case
         self.compl_type_in_first_or_last_pos_use_case: ComplTypeInFirstOrLastPosUseCase = compl_type_in_first_or_last_pos_use_case
         self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
+        self.suppress_article_in_first_place_use_case: SuppressArticleInFirstPlaceUseCase = suppress_article_in_first_place_use_case
 
     def execute(self, voie_compl: InfoVoie) -> VoieDecoupee:
+        self.suppress_article_in_first_place_use_case.execute(voie_compl)
         self.generate_information_on_lib_use_case.execute(voie_compl, apply_nlp_model=False)
 
         if voie_compl.has_type_in_first_pos:
@@ -36,6 +40,6 @@ class HandleOneTypeComplUseCase:
                 return self.compl_type_in_first_or_middle_pos_use_case.execute(voie_compl)
 
         else:
-            # 'LE PAVILLON DE LA FORET'
+            # 'BEAU PAVILLON DE LA FORET'
             # lib
             return self.assign_lib_use_case.execute(voie_compl)

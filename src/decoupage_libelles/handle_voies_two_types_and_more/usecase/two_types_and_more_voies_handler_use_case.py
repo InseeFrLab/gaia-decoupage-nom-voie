@@ -9,11 +9,12 @@ from decoupage_libelles.informations_on_libelle_voie.usecase.generate_informatio
 from decoupage_libelles.informations_on_type_in_lib.usecase.generate_information_on_type_ordered_use_case import GenerateInformationOnTypeOrderedUseCase
 from decoupage_libelles.handle_voies_one_type.usecase.one_type_voies_handler_use_case import OneTypeVoiesHandlerUseCase
 from decoupage_libelles.handle_voies_two_types.usecase.two_types_voies_handler_use_case import TwoTypesVoiesHandlerUseCase
-from decoupage_libelles.handle_voies_three_types_and_more.usecase.keep_types_without_article_adj_before_use_case import KeepTypesWithoutArticleAdjBeforeUseCase
+from decoupage_libelles.handle_voies_two_types_and_more.usecase.keep_types_without_article_adj_before_use_case import KeepTypesWithoutArticleAdjBeforeUseCase
 from decoupage_libelles.informations_on_type_in_lib.usecase.type_is_longitudinal_or_agglomerant_use_case import TypeIsLongitudinalOrAgglomerantUseCase
+from decoupage_libelles.prepare_data.clean_voie_lib_and_find_types.usecase.suppress_article_in_first_place_use_case import SuppressArticleInFirstPlaceUseCase
 
 
-class ThreeTypesAndMoreVoiesHandlerUseCase:
+class TwoTypesAndMoreVoiesHandlerUseCase:
     def __init__(
         self,
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
@@ -23,6 +24,7 @@ class ThreeTypesAndMoreVoiesHandlerUseCase:
         one_type_voies_handler_use_case: OneTypeVoiesHandlerUseCase = OneTypeVoiesHandlerUseCase(),
         two_types_voies_handler_use_case: TwoTypesVoiesHandlerUseCase = TwoTypesVoiesHandlerUseCase(),
         keep_types_without_article_adj_before_use_case: KeepTypesWithoutArticleAdjBeforeUseCase = KeepTypesWithoutArticleAdjBeforeUseCase(),
+        suppress_article_in_first_place_use_case: SuppressArticleInFirstPlaceUseCase = SuppressArticleInFirstPlaceUseCase(),
     ):
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
         self.assign_type_lib_use_case: AssignTypeLibUseCase = assign_type_lib_use_case
@@ -31,6 +33,7 @@ class ThreeTypesAndMoreVoiesHandlerUseCase:
         self.one_type_voies_handler_use_case: OneTypeVoiesHandlerUseCase = one_type_voies_handler_use_case
         self.two_types_voies_handler_use_case: TwoTypesVoiesHandlerUseCase = two_types_voies_handler_use_case
         self.keep_types_without_article_adj_before_use_case: KeepTypesWithoutArticleAdjBeforeUseCase = keep_types_without_article_adj_before_use_case
+        self.suppress_article_in_first_place_use_case: SuppressArticleInFirstPlaceUseCase = suppress_article_in_first_place_use_case
 
     def execute(self, voies: List[InfoVoie]) -> List[VoieDecoupee]:
         voies = [voie for voie in voies if len(voie.types_and_positions) >= 2]
@@ -41,6 +44,8 @@ class ThreeTypesAndMoreVoiesHandlerUseCase:
         voies_2_long_agglo: List[InfoVoie] = []
 
         for voie in voies:
+            voie = self.suppress_article_in_first_place_use_case.execute(voie)
+            voie = self.generate_information_on_lib_use_case.execute(voie)
             voie = self.keep_types_without_article_adj_before_use_case.execute(voie)
             voie = self.generate_information_on_lib_use_case.execute(voie)
 
