@@ -65,7 +65,7 @@ def save_to_s3(df, file_type, output_file):
 def local_save(df, file_type, output_file):
     """Sauvegarde le DataFrame final en local."""
     if file_type == "csv":
-        df.to_csv(output_file, index=False)
+        df.to_csv(output_file, index=False, sep=sep, encoding=encodeur)
     elif file_type == "parquet":
         df.to_parquet(output_file, engine="pyarrow", index=False)
     else:
@@ -79,7 +79,7 @@ def process_file_s3(input_file, chunk_size, file_type, num_threads):
     results = []
     with fs.open(input_file, "rb") as f:
         if file_type == "csv":
-            reader = pd.read_csv(f, chunksize=chunk_size, dtype=str)
+            reader = pd.read_csv(f, chunksize=chunk_size, dtype=str, sep=sep, encoding=encodeur)
         elif file_type == "parquet":
             parquet_file = pq.ParquetFile(f)
             reader = parquet_file.iter_batches(batch_size=chunk_size)
@@ -133,7 +133,9 @@ if __name__ == "__main__":
         config = yaml.load(f, Loader=SafeLoader)
 
     # Variables globales
-    global vars_names_nom_voie, output_file, plateform
+    global vars_names_nom_voie, output_file, plateform, sep, encodeur
+    sep = config["sep"]
+    encodeur = config["encodeur"]
     plateform = config['plateform']
     if plateform in ['ls3', 'datalab']:
         global fs
