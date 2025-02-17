@@ -90,4 +90,13 @@ Voilà, votre fichier dézippé est bien sur le s3. Vous pouvez lancer un décou
 
 ## Arrêter un traitement en cours
 
+### Sur LS3
+
 Dans le terminal, appuyer sur ctrl+Z. Cela peut prendre quelques minutes à s'arrêter, vous saurez que le traitement a été stoppé lorsque vous pourrez réécrire normalement dans le terminal.
+
+### Sur le Datalab
+
+- Copier le numéro qui s'affiche dans le terminal suite au lancement du traitement. Exemple : `[1] 8371`  
+- Lancer dans le terminal `kill 8371` pour stopper le traitement.  
+- Suppimer le fichier nohup.txt : `rm nohup.txt`.  
+

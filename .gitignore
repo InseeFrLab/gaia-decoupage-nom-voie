@@ -11,3 +11,4 @@ coverage.xml
 requirements-dev.txt
 data/fr_dep_news_trf-3.7.0/
 */venv
+nohup.txt
