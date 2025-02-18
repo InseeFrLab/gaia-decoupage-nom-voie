@@ -2,10 +2,8 @@
 
 ## Getting started
 
-Dans son namespace sur LS3 ou Datalab, ouvrir un service vs-python en paramétrant les ressources de cette façon : 
+Dans son namespace sur Datalab ou LS3, ouvrir un service vs-python en paramétrant les ressources de cette façon : 
 ![](data/parametrages_vs_code_decoupage_parallele.png "Paramétrages des ressources du service vscode")  
-
-Pour utiliser ce code en local (non recommandé), il faudra aller récupérer le dossier contenant le modèle spacy et le mettre dans le dossier data du code. Ce dossier se trouver sur le s3 du Datalab ou LS3 : s3/projet-gaia/fr_dep_news_trf-3.7.0.zip ou s3/travail/projet-ml-moteur-identification-gaia/open_data/fr_dep_news_trf-3.7.0.zip.  
 
 Il faudra se munir de son identifiant GitLab et de son token (associé au projet en question) pour pouvoir cloner le projet.  
 
@@ -17,7 +15,7 @@ cd gaia-decoupage-libelles-voies/
 source ./setup-ls3.sh
 ```
 
-### Sur Datalab
+### Sur Datalab ou en local
 Lancer dans un terminal bash : 
 ```{bash}
 git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
@@ -25,7 +23,7 @@ cd gaia-decoupage/
 source ./setup-datalab.sh
 ```
 
-En local, lancer l'un des deux scripts, il y aura une erreur pour le "mc cp" qui n'aura pas d'incidence.  
+Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichiers sur votre ordinateur en local.
 
 ## Lancer le traitement d'un fichier
 
