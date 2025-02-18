@@ -23,7 +23,7 @@ cd gaia-decoupage/
 source ./setup-datalab.sh
 ```
 
-Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichiers sur votre ordinateur en local.
+Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichiers sur votre ordinateur en local.  
 
 ## Lancer le traitement d'un fichier
 
