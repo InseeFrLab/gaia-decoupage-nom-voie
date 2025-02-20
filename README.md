@@ -7,34 +7,32 @@ Dans son namespace sur Datalab ou LS3, ouvrir un service vs-python en paramétra
 
 Il faudra se munir de son identifiant GitLab et de son token (associé au projet en question) pour pouvoir cloner le projet.  
 
-Lancer dans un terminal bash : 
+Dans un terminal bash :  
+
+### Sur LS3
 ```{bash}
 git clone https://gitlab.insee.fr/geographie/gaia/gaia-decoupage-libelles-voies.git
 cd gaia-decoupage-libelles-voies/
-```
-
-- Sur LS3  
-    ```{bash}
-    mc cp s3/travail/projet-ml-moteur-identification-gaia/open_data/fr_dep_news_trf-3.7.0.zip data/
-    ```
-
-- Sur Datalab  
-    ```{bash}
-    wget -P data/ https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
-    ```
-
-- En local  
-    Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichiers sur votre ordinateur en local.  
-    ```{bash}
-    curl -o data/fr_dep_news_trf-3.7.0.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
-    ```
-
-Puis pour finir :
-
-```{bash}
+mc cp s3/travail/projet-ml-moteur-identification-gaia/open_data/fr_dep_news_trf-3.7.0.zip data/
 source ./setup.sh
 ```
 
+### Sur Datalab
+```{bash}
+git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
+cd gaia-decoupage/
+wget -P data/ https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
+source ./setup.sh
+```
+
+### En local
+Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichiers sur votre ordinateur en local.  
+```{bash}
+git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
+cd gaia-decoupage/
+curl -o data/fr_dep_news_trf-3.7.0.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
+source ./setup.sh
+```
 
 ## Lancer le traitement d'un fichier
 
