@@ -9,12 +9,11 @@ from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoV
 from decoupage_libelles.prepare_data.ponctuation.usecase.ponctuation_preprocessor_use_case import PonctuationPreprocessorUseCase
 
 
-@dataclass
 class VoiesData(BaseModel):
     list_labels_voies: List[str] = Field(
         ...,
         example=[
-            "rue Hoche",
+            "Hoche rue",
             "Residence Soleil Rue des cerisiers",
         ],
     )
