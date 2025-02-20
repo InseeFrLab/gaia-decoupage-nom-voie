@@ -39,7 +39,7 @@ class HandleOneTypeNotComplNotFictifUseCase:
             if voie.has_type_in_last_pos:
                 # lib + 1 er type
                 # "GRAND RUE"
-                voie_treated = self.assign_lib_type_use_case.execute(voie, first_type)
+                voie_treated = self.assign_lib_type_use_case.execute(voie)
             else:
                 # 1er type + lib
                 # 'CHE DES SEMAPHORES'
