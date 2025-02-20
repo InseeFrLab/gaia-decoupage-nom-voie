@@ -7,23 +7,34 @@ Dans son namespace sur Datalab ou LS3, ouvrir un service vs-python en paramétra
 
 Il faudra se munir de son identifiant GitLab et de son token (associé au projet en question) pour pouvoir cloner le projet.  
 
-### Sur LS3
 Lancer dans un terminal bash : 
 ```{bash}
 git clone https://gitlab.insee.fr/geographie/gaia/gaia-decoupage-libelles-voies.git
 cd gaia-decoupage-libelles-voies/
-source ./setup-ls3.sh
 ```
 
-### Sur Datalab ou en local
-Lancer dans un terminal bash : 
+- Sur LS3  
+    ```{bash}
+    mc cp s3/travail/projet-ml-moteur-identification-gaia/open_data/fr_dep_news_trf-3.7.0.zip data/
+    ```
+
+- Sur Datalab  
+    ```{bash}
+    wget -P data/ https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
+    ```
+
+- En local  
+    Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichiers sur votre ordinateur en local.  
+    ```{bash}
+    curl -o data/fr_dep_news_trf-3.7.0.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
+    ```
+
+Puis pour finir :
+
 ```{bash}
-git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
-cd gaia-decoupage/
-source ./setup-datalab.sh
+source ./setup.sh
 ```
 
-Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichiers sur votre ordinateur en local.  
 
 ## Lancer le traitement d'un fichier
 
