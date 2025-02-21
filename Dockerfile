@@ -1,4 +1,4 @@
-FROM inseefrlab/onyxia-python-pytorch:py3.12.6
+FROM ubuntu:latest
 
 ENV TIMEOUT=3600
 
