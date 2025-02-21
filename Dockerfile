@@ -11,12 +11,16 @@ COPY requirements.txt requirements.txt
 COPY src/decoupage_libelles /api/decoupage_libelles
 COPY data /api/dat
 
-# Mise à jour et installation des dépendances systèmes et Python
+# Installer Python et pip
 RUN apt-get update && \
-    apt-get install -y curl unzip python3 python3-pip
+    apt-get install -y python3 python3-pip python3-venv
 
-# Installation des dépendances Python
-RUN pip3 install --no-cache-dir --upgrade -r requirements.txt
+# Créer un environnement virtuel et l'activer
+RUN python3 -m venv /venv
+ENV PATH="/venv/bin:$PATH"
+
+# Installer les dépendances dans l'environnement virtuel
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Téléchargement du fichier avec curl et décompression
 RUN curl -L https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip -o /api/data/fr_dep_news_trf-3.7.0.zip && \
