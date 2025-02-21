@@ -4,7 +4,6 @@ from fastapi.responses import RedirectResponse
 import logging
 from typing import List, Dict
 from decoupage_libelles.config.type_voie_decoupage_launcher import TypeVoieDecoupageLauncher
-from dataclasses import dataclass
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
 from decoupage_libelles.prepare_data.ponctuation.usecase.ponctuation_preprocessor_use_case import PonctuationPreprocessorUseCase
 
