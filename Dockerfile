@@ -9,7 +9,7 @@ USER root
 
 # Mise à jour des listes de paquets et installation de wget et curl
 RUN apt-get update && \
-    apt-get install -y wget curl
+    apt-get install -y wget
 
 # Revenir à l'utilisateur par défaut (si nécessaire)
 USER default_user
