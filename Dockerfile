@@ -11,12 +11,12 @@ COPY requirements.txt requirements.txt
 COPY src/decoupage_libelles /api/decoupage_libelles
 COPY data /api/dat
 
-# Mise à jour et installation des dépendances systèmes
+# Mise à jour et installation des dépendances systèmes et Python
 RUN apt-get update && \
-    apt-get install -y curl unzip
+    apt-get install -y curl unzip python3 python3-pip
 
 # Installation des dépendances Python
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN pip3 install --no-cache-dir --upgrade -r requirements.txt
 
 # Téléchargement du fichier avec curl et décompression
 RUN curl -L https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip -o /api/data/fr_dep_news_trf-3.7.0.zip && \
