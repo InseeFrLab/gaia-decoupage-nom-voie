@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM inseefrlab/onyxia-python-pytorch:py3.12.6
 
 ENV TIMEOUT=3600
 
@@ -9,23 +9,13 @@ WORKDIR /api
 
 COPY requirements.txt requirements.txt
 COPY src/decoupage_libelles /api/decoupage_libelles
-COPY data /api/dat
+COPY data /api/data
 
-# Installer Python et pip
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip python3-venv
-
-# Créer un environnement virtuel et l'activer
-RUN python3 -m venv /venv
-ENV PATH="/venv/bin:$PATH"
-
-# Installer les dépendances dans l'environnement virtuel
-RUN pip install --no-cache-dir --upgrade -r requirements.txt
-
-# Téléchargement du fichier avec curl et décompression
-RUN curl -L https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip -o /api/data/fr_dep_news_trf-3.7.0.zip && \
-    unzip /api/data/fr_dep_news_trf-3.7.0.zip -d /api/data/ && \
-    rm /api/data/fr_dep_news_trf-3.7.0.zip
+RUN mkdir /tmp && \
+    wget -q -O /tmp/fr_dep_news_trf-3.7.0.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip && \
+    unzip /tmp/downloads/fr_dep_news_trf-3.7.0.zip -d /api/data/ && \
+    rm -rf /tmp && \
+    pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Exposer le port 8000 pour FastAPI
 EXPOSE 8000
