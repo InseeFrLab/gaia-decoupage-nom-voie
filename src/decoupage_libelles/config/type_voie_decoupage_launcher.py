@@ -10,17 +10,20 @@ from decoupage_libelles.handle_voies_no_type.usecase.no_type_voies_handler_use_c
 from decoupage_libelles.handle_voies_one_type.usecase.one_type_voies_handler_use_case import OneTypeVoiesHandlerUseCase
 from decoupage_libelles.handle_voies_two_types_and_more.usecase.two_types_and_more_voies_handler_use_case import TwoTypesAndMoreVoiesHandlerUseCase
 from decoupage_libelles.config.settings_configuration import settings
+from decoupage_libelles.decoupe_voie.usecase.dilated_voie_decoupee_use_case import DilatedVoieDecoupeeUseCase
 
 
 class TypeVoieDecoupageLauncher:
     def __init__(
         self,
         voie_lib_preprocessor_use_case: VoieLibPreprocessorUseCase = VoieLibPreprocessorUseCase(),
+        dilated_voie_decoupee_use_case: DilatedVoieDecoupeeUseCase = DilatedVoieDecoupeeUseCase(),
         no_type_voies_handler_use_case: NoTypeVoiesHandlerUseCase = NoTypeVoiesHandlerUseCase(),
         one_type_voies_handler_use_case: OneTypeVoiesHandlerUseCase = OneTypeVoiesHandlerUseCase(),
         two_types_and_more_voies_handler_use_case: TwoTypesAndMoreVoiesHandlerUseCase = TwoTypesAndMoreVoiesHandlerUseCase(),
     ):
         self.voie_lib_preprocessor_use_case: VoieLibPreprocessorUseCase = voie_lib_preprocessor_use_case
+        self.dilated_voie_decoupee_use_case: DilatedVoieDecoupeeUseCase = dilated_voie_decoupee_use_case
         self.no_type_voies_handler_use_case: NoTypeVoiesHandlerUseCase = no_type_voies_handler_use_case
         self.one_type_voies_handler_use_case: OneTypeVoiesHandlerUseCase = one_type_voies_handler_use_case
         self.two_types_and_more_voies_handler_use_case: TwoTypesAndMoreVoiesHandlerUseCase = two_types_and_more_voies_handler_use_case
@@ -39,14 +42,38 @@ class TypeVoieDecoupageLauncher:
         voies_prepared = self.voie_lib_preprocessor_use_case.execute(voies_objects, type_voie_df, code2lib)
         logging.info("Done")
 
-        voies_0 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 0]
-        voies_1 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 1]
-        voies_2_and_more = [voie for voie in voies_prepared if len(voie.types_and_positions) >= 2]
+        voies_processed = []
+        voies_to_process = []
+
+        for voie in voies_prepared:
+            libs_type_voie = list(code2lib.values())
+            print(voie.label_preproc)
+            for lib_type_voie in libs_type_voie:
+                search_string = ' '+lib_type_voie
+                big_string = (' ').join(voie.label_preproc)
+                first_pos_find = big_string.rfind(search_string)
+                if first_pos_find != -1:
+                    print(first_pos_find)
+                    print(lib_type_voie)
+                    print(len(big_string))
+                    print(len(search_string))
+                    if first_pos_find + len(search_string) == len(big_string):
+                        print('oui')
+                        voiedecoupee = VoieDecoupee(label_origin=voie.label_origin, type_assigned=lib_type_voie.lower(), label_assigned=big_string[:first_pos_find].lower(), compl_assigned="", compl2=voie.complement)
+                        voie_treated = self.dilated_voie_decoupee_use_case.execute(voiedecoupee)
+                        voies_processed.append(voie_treated)
+                        print(voie_treated)
+                    else:
+                        voies_to_process.append(voie)
+                else:
+                    voies_to_process.append(voie)
+
+        voies_0 = [voie for voie in voies_to_process if len(voie.types_and_positions) == 0]
+        voies_1 = [voie for voie in voies_to_process if len(voie.types_and_positions) == 1]
+        voies_2_and_more = [voie for voie in voies_to_process if len(voie.types_and_positions) >= 2]
         logging.info("Preprocessing fini")
 
         logging.info("Algorithme de découpage de libellés de voie")
-
-        voies_processed = []
 
         logging.info("Processing des voies sans type détecté")
         if voies_0:

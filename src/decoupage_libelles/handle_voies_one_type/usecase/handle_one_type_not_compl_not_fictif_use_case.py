@@ -1,5 +1,6 @@
 from decoupage_libelles.decoupe_voie.model.voie_decoupee import VoieDecoupee
 from decoupage_libelles.decoupe_voie.usecase.assign_type_lib_use_case import AssignTypeLibUseCase
+from decoupage_libelles.decoupe_voie.usecase.assign_lib_type_use_case import AssignLibTypeUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_lib_use_case import AssignLibUseCase
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
 from decoupage_libelles.informations_on_libelle_voie.usecase.generate_information_on_lib_use_case import GenerateInformationOnLibUseCase
@@ -15,6 +16,7 @@ class HandleOneTypeNotComplNotFictifUseCase:
         generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = GenerateInformationOnLibUseCase(),
         generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = GenerateInformationOnTypeOrderedUseCase(),
         assign_type_lib_use_case: AssignTypeLibUseCase = AssignTypeLibUseCase(),
+        assign_lib_type_use_case: AssignLibTypeUseCase = AssignLibTypeUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
         type_long_not_first_pos_use_case: TypeLongNotFirstPosUseCase = TypeLongNotFirstPosUseCase(),
         type_route_not_first_pos_use_case: TypeRouteNotFirstPosUseCase = TypeRouteNotFirstPosUseCase(),
@@ -23,6 +25,7 @@ class HandleOneTypeNotComplNotFictifUseCase:
         self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
         self.assign_type_lib_use_case: AssignTypeLibUseCase = assign_type_lib_use_case
+        self.assign_lib_type_use_case: AssignLibTypeUseCase = assign_lib_type_use_case
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
         self.type_long_not_first_pos_use_case: TypeLongNotFirstPosUseCase = type_long_not_first_pos_use_case
         self.type_route_not_first_pos_use_case: TypeRouteNotFirstPosUseCase = type_route_not_first_pos_use_case
@@ -46,6 +49,10 @@ class HandleOneTypeNotComplNotFictifUseCase:
             voie_treated = self.type_long_not_first_pos_use_case.execute(voie)
             voie_treated = self.type_route_not_first_pos_use_case.execute(voie) if not voie_treated else voie_treated
             voie_treated = self.type_agglo_not_first_pos_use_case.execute(voie) if not voie_treated else voie_treated
-            voie_treated = self.assign_lib_use_case.execute(voie) if not voie_treated else voie_treated
+            if not voie_treated:
+                if voie.has_type_in_last_pos:
+                    voie_treated = self.assign_lib_type_use_case.execute(voie)
+                else:
+                    voie_treated = self.assign_lib_use_case.execute(voie)
 
         return voie_treated
