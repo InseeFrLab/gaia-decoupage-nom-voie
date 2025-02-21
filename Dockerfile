@@ -1,18 +1,15 @@
-FROM inseefrlab/onyxia-python-pytorch:py3.12.6
+# Utilisation de l'image de base Python officielle
+FROM python:3.12-slim
+
+# Mise à jour des listes de paquets et installation de wget
+RUN apt-get update && \
+    apt-get install -y wget && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 ENV TIMEOUT=3600
 
 ENV PROJ_LIB=/opt/conda/share/proj
-
-# Passage à l'utilisateur root pour installer des paquets système
-USER root
-
-# Mise à jour des listes de paquets et installation de wget et curl
-RUN apt-get update && \
-    apt-get install -y wget
-
-# Revenir à l'utilisateur par défaut (si nécessaire)
-USER default_user
 
 # set api as the current work dir
 WORKDIR /api
