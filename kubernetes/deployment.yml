@@ -1,0 +1,23 @@
+# Creating MLflow deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gaia-decoupage-nom-voie
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gaia-decoupage-nom-voie
+  template:
+    metadata:
+      labels:
+        app: gaia-decoupage-nom-voie
+    spec:
+      containers:
+        - name: api
+          image: inseefrlab/gaia-decoupage-nom-voie:no-logs
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "60Gi"
+              cpu: "16000m"

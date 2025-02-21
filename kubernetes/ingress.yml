@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gaia-decoupage-nom-voie-ingress
+spec:
+  tls:
+    - hosts:
+        -  raya-berova-api.lab.sspcloud.fr
+  rules:
+    - host: raya-berova-api.lab.sspcloud.fr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gaia-decoupage-nom-voie-service
+                port:
+                  number: 80
