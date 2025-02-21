@@ -12,8 +12,7 @@ COPY src/decoupage_libelles /api/decoupage_libelles
 COPY data /api/dat
 
 # Mise à jour et installation des dépendances systèmes
-RUN rm -rf /var/lib/apt/lists/* && \
-    apt-get update && \
+RUN apt-get update && \
     apt-get install -y curl unzip
 
 # Installation des dépendances Python
