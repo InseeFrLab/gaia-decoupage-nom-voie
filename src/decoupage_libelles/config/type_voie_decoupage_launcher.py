@@ -43,23 +43,6 @@ class TypeVoieDecoupageLauncher:
         logging.info("Done")
 
         voies_processed = []
-        # voies_to_process = []
-        # for voie in voies_prepared:
-        #     libs_type_voie = list(code2lib.values())
-        #     for lib_type_voie in libs_type_voie:
-        #         search_string = ' '+lib_type_voie
-        #         big_string = (' ').join(voie.label_preproc)
-        #         first_pos_find = big_string.rfind(search_string)
-        #         if first_pos_find != -1:
-        #             if first_pos_find + len(search_string) == len(big_string):
-        #                 voiedecoupee = VoieDecoupee(label_origin=voie.label_origin, type_assigned=lib_type_voie.lower(), label_assigned=big_string[:first_pos_find].lower(), compl_assigned="", compl2=voie.complement)
-        #                 voie_treated = self.dilated_voie_decoupee_use_case.execute(voiedecoupee)
-        #                 voies_processed.append(voie_treated)
-        #             else:
-        #                 voies_to_process.append(voie)
-        #         else:
-        #             voies_to_process.append(voie)
-
 
         voies_0 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 0]
         voies_1 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 1]
