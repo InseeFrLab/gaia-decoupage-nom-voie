@@ -10,12 +10,6 @@ WORKDIR /api
 COPY requirements.txt requirements.txt
 COPY src/decoupage_libelles /api/decoupage_libelles
 COPY data /api/dat
-# install all the requirements
-RUN wget -P data/ https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip &&\
-    unzip data/fr_dep_news_trf-3.7.0.zip -d data/ &&\
-    rm data/fr_dep_news_trf-3.7.0.zip &&\
-    pip install --no-cache-dir --upgrade -r requirements.txt &&\
-    cd src/
 
 RUN apt-get update && apt-get install -y unzip wget && \
     pip install --no-cache-dir --upgrade -r requirements.txt && \
