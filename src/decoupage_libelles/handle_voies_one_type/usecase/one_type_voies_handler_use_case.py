@@ -11,7 +11,9 @@ from decoupage_libelles.handle_voies_one_type.usecase.handle_one_type_complement
 from decoupage_libelles.handle_voies_one_type.usecase.handle_one_type_not_compl_not_fictif_use_case import HandleOneTypeNotComplNotFictifUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_lib_compl_use_case import AssignLibComplUseCase
 from decoupage_libelles.informations_on_libelle_voie.usecase.generate_information_on_lib_use_case import GenerateInformationOnLibUseCase
+from decoupage_libelles.informations_on_type_in_lib.usecase.generate_information_on_type_ordered_use_case import GenerateInformationOnTypeOrderedUseCase
 from decoupage_libelles.prepare_data.clean_voie_lib_and_find_types.usecase.suppress_article_in_first_place_use_case import SuppressArticleInFirstPlaceUseCase
+from decoupage_libelles.decoupe_voie.usecase.assign_lib_type_use_case import AssignLibTypeUseCase
 
 
 class OneTypeVoiesHandlerUseCase:
@@ -22,7 +24,9 @@ class OneTypeVoiesHandlerUseCase:
         handle_one_type_complement_use_case: HandleOneTypeComplUseCase = HandleOneTypeComplUseCase(),
         handle_one_type_not_compl_not_fictif_use_case: HandleOneTypeNotComplNotFictifUseCase = HandleOneTypeNotComplNotFictifUseCase(),
         assign_lib_compl_use_case: AssignLibComplUseCase = AssignLibComplUseCase(),
+        assign_lib_type_use_case: AssignLibTypeUseCase = AssignLibTypeUseCase(),
         generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = GenerateInformationOnLibUseCase(),
+        generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = GenerateInformationOnTypeOrderedUseCase(),
         suppress_article_in_first_place_use_case: SuppressArticleInFirstPlaceUseCase = SuppressArticleInFirstPlaceUseCase(),
     ):
         self.apply_complement_finder_on_voies_use_case: ApplyComplementFinderOnVoiesUseCase = apply_complement_finder_on_voies_use_case
@@ -30,18 +34,36 @@ class OneTypeVoiesHandlerUseCase:
         self.handle_one_type_complement_use_case: HandleOneTypeComplUseCase = handle_one_type_complement_use_case
         self.handle_one_type_not_compl_not_fictif_use_case: HandleOneTypeNotComplNotFictifUseCase = handle_one_type_not_compl_not_fictif_use_case
         self.assign_lib_compl_use_case: AssignLibComplUseCase = assign_lib_compl_use_case
+        self.assign_lib_type_use_case: AssignLibTypeUseCase = assign_lib_type_use_case
         self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
+        self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
         self.suppress_article_in_first_place_use_case: SuppressArticleInFirstPlaceUseCase = suppress_article_in_first_place_use_case
 
     def execute(self, voies: List[InfoVoie]) -> List[VoieDecoupee]:
         voies = [voie for voie in voies if len(voie.types_and_positions) == 1]
+        voies_treated: List[VoieDecoupee] = []
+        voies_to_treat: List[InfoVoie] = []
+
         for voie in voies:
             self.suppress_article_in_first_place_use_case.execute(voie)
             self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=False)
+            if voie.has_type_in_last_pos:
+                self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
+                last_type = self.generate_information_on_type_ordered_use_case.execute(voie, -1)
+                if (last_type.type_name == (' ').join(voie.label_preproc[last_type.position_start:last_type.position_end+1]) and
+                    not last_type.has_adj_det_before):
+                    voie_treated = self.assign_lib_type_use_case.execute(voie, last_type)
+                    voies_treated.append(voie_treated)
+                else:
+                    voies_to_treat.append(voie)
+            else:
+                voies_to_treat.append(voie)
+
+        voies = voies_to_treat
 
         logging.info("Gestion des voies avec complément")
         voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_1_2)
-        voies_treated = []
+        
         for voie_compl in voies_complement:
             voies_treated.append(self.handle_one_type_complement_use_case.execute(voie_compl))
 
