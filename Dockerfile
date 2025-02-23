@@ -3,7 +3,7 @@ FROM python:3.12-slim
 
 # Mise à jour des listes de paquets et installation de wget
 RUN apt-get update && \
-    apt-get install -y wget && \
+    apt-get install -y wget unzip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
