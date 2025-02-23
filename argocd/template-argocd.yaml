@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gaia-decoupage-nom-voie-api
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/InseeFrLab/gaia-decoupage-nom-voie.git
+    targetRevision: HEAD
+    path: kubernetes
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: projet-gaia
+  syncPolicy:
+    automated:
+      selfHeal: true
