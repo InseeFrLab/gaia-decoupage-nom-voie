@@ -18,11 +18,15 @@ COPY requirements.txt requirements.txt
 COPY src/decoupage_libelles /api/decoupage_libelles
 COPY data /api/data
 
-RUN mkdir /tmp && \
-    wget -q -O /tmp/fr_dep_news_trf-3.7.0.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip && \
-    unzip /tmp/downloads/fr_dep_news_trf-3.7.0.zip -d /api/data/ && \
-    rm -rf /tmp && \
-    pip install --no-cache-dir --upgrade -r requirements.txt
+RUN mkdir /tmp
+
+RUN wget -q -O /tmp/fr_dep_news_trf-3.7.0.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
+
+RUN unzip /tmp/downloads/fr_dep_news_trf-3.7.0.zip -d /api/data/
+
+RUN rm -rf /tmp
+
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Exposer le port 8000 pour FastAPI
 EXPOSE 8000
