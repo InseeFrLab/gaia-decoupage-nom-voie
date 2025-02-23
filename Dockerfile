@@ -22,7 +22,7 @@ RUN rm -rf /tmp/*
 
 RUN wget -q -O /tmp/fr_dep_news_trf-3.7.0.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
 
-RUN unzip /tmp/downloads/fr_dep_news_trf-3.7.0.zip -d /api/data/
+RUN unzip /tmp/fr_dep_news_trf-3.7.0.zip -d /api/data/
 
 RUN rm -rf /tmp
 
