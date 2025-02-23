@@ -15,7 +15,7 @@ ENV PROJ_LIB=/opt/conda/share/proj
 WORKDIR /api
 
 COPY requirements.txt requirements.txt
-COPY src/decoupage_libelles /api/src/decoupage_libelles
+COPY src /api/src
 COPY data /api/data
 
 RUN rm -rf /tmp/*
