@@ -7,3 +7,4 @@ tqdm==4.66.1
 spacy==3.7.0
 transformers==4.39.3
 spacy-curated-transformers==0.2.2
+uvicorn==0.34.0
