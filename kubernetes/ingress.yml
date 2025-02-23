@@ -5,9 +5,9 @@ metadata:
 spec:
   tls:
     - hosts:
-        -  raya-berova-api.lab.sspcloud.fr
+        -  gaia-decoupage-nom-voie-api.lab.sspcloud.fr
   rules:
-    - host: raya-berova-api.lab.sspcloud.fr
+    - host: gaia-decoupage-nom-voie-api.lab.sspcloud.fr
       http:
         paths:
           - path: /
