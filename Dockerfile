@@ -15,21 +15,21 @@ ENV PROJ_LIB=/opt/conda/share/proj
 WORKDIR /api
 
 COPY requirements.txt requirements.txt
-COPY src/decoupage_libelles /api/decoupage_libelles
+COPY src/decoupage_libelles /api/src/decoupage_libelles
 COPY data /api/data
 
 RUN rm -rf /tmp/*
-
 RUN wget -q -O /tmp/fr_dep_news_trf-3.7.0.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
-
 RUN unzip /tmp/fr_dep_news_trf-3.7.0.zip -d /api/data/
-
 RUN rm -rf /tmp
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
 # Exposer le port 8000 pour FastAPI
 EXPOSE 8000
+
+# Besoin d'être dans src pour lancer l'api
+WORKDIR /src
 
 # launch the unicorn server to run the api
 # If you are running your container behind a TLS Termination Proxy (load balancer) like Nginx or Traefik,
