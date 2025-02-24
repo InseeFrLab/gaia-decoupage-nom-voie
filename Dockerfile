@@ -28,8 +28,10 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt
 # Exposer le port 8000 pour FastAPI
 EXPOSE 8000
 
-# Besoin d'être dans src pour lancer l'api
-WORKDIR /src
+# Définition du PYTHONPATH
+ENV PYTHONPATH="/api/src"
+
+CMD export PYTHONPATH="/api/src"
 
 # launch the unicorn server to run the api
 # If you are running your container behind a TLS Termination Proxy (load balancer) like Nginx or Traefik,
