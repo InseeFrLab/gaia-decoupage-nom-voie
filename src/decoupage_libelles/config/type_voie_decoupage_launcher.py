@@ -39,14 +39,14 @@ class TypeVoieDecoupageLauncher:
         voies_prepared = self.voie_lib_preprocessor_use_case.execute(voies_objects, type_voie_df, code2lib)
         logging.info("Done")
 
+        voies_processed = []
+
         voies_0 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 0]
         voies_1 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 1]
         voies_2_and_more = [voie for voie in voies_prepared if len(voie.types_and_positions) >= 2]
         logging.info("Preprocessing fini")
 
         logging.info("Algorithme de découpage de libellés de voie")
-
-        voies_processed = []
 
         logging.info("Processing des voies sans type détecté")
         if voies_0:
