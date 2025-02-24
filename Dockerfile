@@ -31,6 +31,8 @@ EXPOSE 8000
 # Définition du PYTHONPATH
 ENV PYTHONPATH="/api/src"
 
+WORKDIR /api/src
+
 # launch the unicorn server to run the api
 # If you are running your container behind a TLS Termination Proxy (load balancer) like Nginx or Traefik,
 # add the option --proxy-headers, this will tell Uvicorn to trust the headers sent by that proxy telling it
