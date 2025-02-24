@@ -21,10 +21,9 @@ settings = Dynaconf(
     ],
 )
 
-base_dir = os.path.dirname(os.path.abspath(__file__))
-settings.chemin_nlp_modele = os.path.join(base_dir, "../data/fr_dep_news_trf-3.7.0/fr_dep_news_trf/fr_dep_news_trf-3.7.0/")
-settings.chemin_type_voie = os.path.join(base_dir, "../data/type_voie.csv")
-settings.chemin_code2lib = os.path.join(base_dir, "../data/code2lib.json")
+settings.chemin_nlp_modele = "../data/fr_dep_news_trf-3.7.0/fr_dep_news_trf/fr_dep_news_trf-3.7.0/"
+settings.chemin_type_voie = "../data/type_voie.csv"
+settings.chemin_code2lib = "../data/code2lib.json"
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
 # `settings_files` = Load these files in the order.
