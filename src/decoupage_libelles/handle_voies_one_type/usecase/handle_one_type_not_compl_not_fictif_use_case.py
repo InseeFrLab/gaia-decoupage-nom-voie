@@ -36,6 +36,7 @@ class HandleOneTypeNotComplNotFictifUseCase:
 
     def execute(self, voie: InfoVoie) -> VoieDecoupee:
         self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=False)
+        voie_treated = None
 
         if voie.has_type_in_first_pos:
             first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
@@ -55,7 +56,7 @@ class HandleOneTypeNotComplNotFictifUseCase:
                 not last_type.has_adj_det_before):
                 voie_treated = self.assign_type_use_case.execute(voie, last_type)
 
-        else:
+        if not voie_treated:
             voie_treated = self.type_long_not_first_pos_use_case.execute(voie)
             voie_treated = self.type_route_not_first_pos_use_case.execute(voie) if not voie_treated else voie_treated
             voie_treated = self.type_agglo_not_first_pos_use_case.execute(voie) if not voie_treated else voie_treated
