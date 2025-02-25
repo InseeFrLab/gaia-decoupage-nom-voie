@@ -6,6 +6,7 @@ from decoupage_libelles.decoupe_voie.usecase.assign_type_lib_use_case import Ass
 from decoupage_libelles.decoupe_voie.usecase.assign_compl_type_lib_use_case import AssignComplTypeLibUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_type_lib_compl_use_case import AssignTypeLibComplUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_lib_use_case import AssignLibUseCase
+from decoupage_libelles.decoupe_voie.usecase.assign_lib_type_use_case import AssignLibTypeUseCase
 
 
 class HandleHasTypeInFirstPosUseCase:
@@ -76,6 +77,7 @@ class HandleHasTypeInFirstPosUseCase:
         assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = AssignComplTypeLibUseCase(),
         assign_type_lib_compl_use_case: AssignTypeLibComplUseCase = AssignTypeLibComplUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
+        assign_lib_type_use_case: AssignLibTypeUseCase = AssignLibTypeUseCase(),
     ):
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
         self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
@@ -83,15 +85,35 @@ class HandleHasTypeInFirstPosUseCase:
         self.assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = assign_compl_type_lib_use_case
         self.assign_type_lib_compl_use_case: AssignTypeLibComplUseCase = assign_type_lib_compl_use_case
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
+        self.assign_lib_type_use_case: AssignLibTypeUseCase = assign_lib_type_use_case
 
     def execute(self, voie: InfoVoie) -> VoieDecoupee:
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie, 2)
 
         if voie.has_type_in_second_pos or voie.has_type_in_last_pos:
-            # 1er type + lib
-            # "RUE RESIDENCE SOLEIL"
-            return self.assign_type_lib_use_case.execute(voie, first_type)
+            if (voie.has_type_in_last_pos and 
+                second_type.type_name == (' ').join(voie.label_preproc[second_type.position_start:second_type.position_end+1])):
+                two_longs = ("/").join([first_type.type_name, second_type.type_name])
+                last_type_prio = two_longs in HandleHasTypeInFirstPosUseCase.COMBINAISONS_LONG and not HandleHasTypeInFirstPosUseCase.COMBINAISONS_LONG[two_longs]
+                if (first_type.type_name != (' ').join(voie.label_preproc[first_type.position_start:first_type.position_end+1]) or
+                    not first_type.is_longitudinal_or_agglomerant or
+                    last_type_prio):
+                    last_type = self.generate_information_on_type_ordered_use_case.execute(voie, -1)
+                    if not last_type.has_adj_det_before:
+                        # lib + 2ème type
+                        # "AR WELLIN RUE"
+                        return self.assign_lib_type_use_case.execute(voie, last_type)
+                    else:
+                        # 1er type + lib
+                        return self.assign_type_lib_use_case.execute(voie, first_type)
+                else:
+                        # 1er type + lib
+                        return self.assign_type_lib_use_case.execute(voie, first_type)
+            else:
+                # 1er type + lib
+                # "RUE RESIDENCE SOLEIL"
+                return self.assign_type_lib_use_case.execute(voie, first_type)
 
         else:
             if not second_type.is_longitudinal_or_agglomerant:

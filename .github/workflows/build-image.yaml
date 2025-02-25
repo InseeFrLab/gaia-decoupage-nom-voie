@@ -7,7 +7,7 @@ on:
     tags:
       - "*"
     paths:
-      - src/**
+      # - src/**
       - requirements.txt
       - Dockerfile
   # Allows you to run this workflow manually from the Actions tab

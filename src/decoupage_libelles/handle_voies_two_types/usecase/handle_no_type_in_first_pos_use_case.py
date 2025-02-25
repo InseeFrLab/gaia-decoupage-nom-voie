@@ -5,6 +5,7 @@ from decoupage_libelles.informations_on_libelle_voie.usecase.generate_informatio
 from decoupage_libelles.decoupe_voie.usecase.assign_compl_type_lib_use_case import AssignComplTypeLibUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_lib_use_case import AssignLibUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_compl_type_lib_compl_use_case import AssignComplTypeLibComplUseCase
+from decoupage_libelles.decoupe_voie.usecase.assign_lib_type_use_case import AssignLibTypeUseCase
 
 
 class HandleNoTypeInFirstPosUseCase:
@@ -15,12 +16,14 @@ class HandleNoTypeInFirstPosUseCase:
         assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = AssignComplTypeLibUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
         assign_compl_type_lib_compl_use_case: AssignComplTypeLibComplUseCase = AssignComplTypeLibComplUseCase(),
+        assign_lib_type_use_case: AssignLibTypeUseCase = AssignLibTypeUseCase(),
     ):
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
         self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
         self.assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = assign_compl_type_lib_use_case
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
         self.assign_compl_type_lib_compl_use_case: AssignComplTypeLibComplUseCase = assign_compl_type_lib_compl_use_case
+        self.assign_lib_type_use_case: AssignLibTypeUseCase = assign_lib_type_use_case
 
     def execute(self, voie: InfoVoie) -> VoieDecoupee:
         self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
@@ -28,20 +31,12 @@ class HandleNoTypeInFirstPosUseCase:
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie, 2)
 
         if voie.has_type_in_last_pos:
-            if second_type.has_adj_det_before:
-                # lib
-                # "LE CHATEAU LE GRAND HAMEAU"
-                return self.assign_lib_use_case.execute(voie)
-
+            last_type = self.generate_information_on_type_ordered_use_case.execute(voie, -1)
+            if (last_type.type_name == (' ').join(voie.label_preproc[last_type.position_start:last_type.position_end+1]) and
+                not last_type.has_adj_det_before):
+                return self.assign_lib_type_use_case.execute(voie, last_type)
             else:
-                if first_type.is_in_penultimate_position:
-                    # lib
-                    # "LA FONTAINE CHATEAU"
-                    return self.assign_lib_use_case.execute(voie)
-                else:
-                    # compl + 1er type + lib
-                    # "LA FONTAINE JUSSIEU HAMEAU" ??
-                    return self.assign_compl_type_lib_use_case.execute(voie, first_type)
+                return self.assign_lib_use_case.execute(voie)
 
         else:
             if not first_type.is_longitudinal_or_agglomerant and not second_type.is_longitudinal_or_agglomerant:

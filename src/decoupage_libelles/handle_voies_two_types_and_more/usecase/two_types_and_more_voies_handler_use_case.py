@@ -46,25 +46,12 @@ class TwoTypesAndMoreVoiesHandlerUseCase:
         voies_1_long_agglo: List[InfoVoie] = []
         voies_2_long_agglo: List[InfoVoie] = []
 
-        voies_to_treat = []
         for voie in voies:
             voie = self.suppress_article_in_first_place_use_case.execute(voie)
             voie = self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
             voie = self.keep_types_without_article_adj_before_use_case.execute(voie)
             voie = self.generate_information_on_lib_use_case.execute(voie)
 
-            if voie.has_type_in_last_pos:
-                last_type = self.generate_information_on_type_ordered_use_case.execute(voie, -1)
-                if (last_type.type_name == (' ').join(voie.label_preproc[last_type.position_start:last_type.position_end+1]) and
-                    not last_type.has_adj_det_before):
-                    voie_treated = self.assign_lib_type_use_case.execute(voie, last_type)
-                    voies_treated.append(voie_treated)
-                else:
-                    voies_to_treat.append(voie)
-            else:
-                voies_to_treat.append(voie)
-
-        for voie in voies_to_treat:
             if len(voie.types_and_positions) == 0:
                 voies_0_long_agglo.append(voie)
             elif len(voie.types_and_positions) == 1:

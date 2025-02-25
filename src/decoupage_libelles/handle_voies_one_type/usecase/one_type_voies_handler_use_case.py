@@ -42,24 +42,10 @@ class OneTypeVoiesHandlerUseCase:
     def execute(self, voies: List[InfoVoie]) -> List[VoieDecoupee]:
         voies = [voie for voie in voies if len(voie.types_and_positions) == 1]
         voies_treated: List[VoieDecoupee] = []
-        voies_to_treat: List[InfoVoie] = []
 
         for voie in voies:
             self.suppress_article_in_first_place_use_case.execute(voie)
             self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=False)
-            if voie.has_type_in_last_pos:
-                self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
-                last_type = self.generate_information_on_type_ordered_use_case.execute(voie, -1)
-                if (last_type.type_name == (' ').join(voie.label_preproc[last_type.position_start:last_type.position_end+1]) and
-                    not last_type.has_adj_det_before):
-                    voie_treated = self.assign_lib_type_use_case.execute(voie, last_type)
-                    voies_treated.append(voie_treated)
-                else:
-                    voies_to_treat.append(voie)
-            else:
-                voies_to_treat.append(voie)
-
-        voies = voies_to_treat
 
         logging.info("Gestion des voies avec complément")
         voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_1_2)
