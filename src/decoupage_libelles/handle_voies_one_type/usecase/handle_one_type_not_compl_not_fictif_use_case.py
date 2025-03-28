@@ -54,7 +54,7 @@ class HandleOneTypeNotComplNotFictifUseCase:
             last_type = self.generate_information_on_type_ordered_use_case.execute(voie, -1)
             if (last_type.type_name == (' ').join(voie.label_preproc[last_type.position_start:last_type.position_end+1]) and
                 not last_type.has_adj_det_before):
-                voie_treated = self.assign_type_use_case.execute(voie, last_type)
+                voie_treated = self.assign_lib_type_use_case.execute(voie, last_type)
 
         if not voie_treated:
             voie_treated = self.type_long_not_first_pos_use_case.execute(voie)

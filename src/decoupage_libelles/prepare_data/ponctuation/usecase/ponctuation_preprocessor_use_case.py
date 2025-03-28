@@ -7,7 +7,7 @@ from decoupage_libelles.prepare_data.ponctuation.usecase.synonyms_dilatation_use
 
 
 class PonctuationPreprocessorUseCase:
-    PONCTUATIONS = ["-", ".", ",", ";", ":", "!", "?", "(", ")", "[", "]", "{", "}", "'", '"', "«", "»", "*", "/"]
+    PONCTUATIONS = ["-", ".", ",", ";", ":", "!", "?", "(", ")", "[", "]", "{", "}", "'", '"', "«", "»", "*", "/", "\\", "°", "|", "_"]
 
     def __init__(
         self,
