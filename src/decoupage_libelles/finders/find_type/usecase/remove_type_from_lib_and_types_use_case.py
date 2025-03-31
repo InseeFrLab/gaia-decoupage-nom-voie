@@ -11,11 +11,13 @@ class RemoveTypeFromLibAndTypesUseCase:
 
         # Supprimer du dictionnaire le type codifié et décaler les positions
         nb_words_in_type_min = position_end_min - position_start_min + 1
-
+        new_types_and_positions = {}
         for type_lib, positions in list(infovoie.types_and_positions.items()):
             position_start, position_end = positions
             if position_start > position_end_min:
                 position_start -= nb_words_in_type_min
                 position_end -= nb_words_in_type_min
-                infovoie.types_and_positions[type_lib] = (position_start, position_end)
+                new_types_and_positions[type_lib] = (position_start, position_end)
+
+        infovoie.types_and_positions = new_types_and_positions
         return infovoie

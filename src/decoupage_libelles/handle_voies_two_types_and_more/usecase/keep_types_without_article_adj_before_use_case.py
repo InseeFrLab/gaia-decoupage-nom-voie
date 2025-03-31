@@ -16,6 +16,8 @@ class KeepTypesWithoutArticleAdjBeforeUseCase:
 
         types_and_positions = voie.types_and_positions.copy()
 
+        print(voie)
+
         for key, (position_start, __) in voie.types_and_positions.items():
             if position_start > 0:
                 index_word_before = position_start - 1

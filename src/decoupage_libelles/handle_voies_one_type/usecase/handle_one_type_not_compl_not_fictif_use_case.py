@@ -52,7 +52,8 @@ class HandleOneTypeNotComplNotFictifUseCase:
         elif voie.has_type_in_last_pos:
             self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
             last_type = self.generate_information_on_type_ordered_use_case.execute(voie, -1)
-            if (last_type.type_name == (' ').join(voie.label_preproc[last_type.position_start:last_type.position_end+1]) and
+            last_type_name_in_lib = (' ').join(voie.label_preproc[last_type.position_start:last_type.position_end+1])
+            if (last_type.type_name == last_type_name_in_lib and
                 not last_type.has_adj_det_before):
                 voie_treated = self.assign_lib_type_use_case.execute(voie, last_type)
 

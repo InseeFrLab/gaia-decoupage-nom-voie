@@ -49,7 +49,7 @@ class OneTypeVoiesHandlerUseCase:
 
         logging.info("Gestion des voies avec complément")
         voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_1_2)
-        
+
         for voie_compl in voies_complement:
             voies_treated.append(self.handle_one_type_complement_use_case.execute(voie_compl))
 

@@ -92,7 +92,7 @@ class HandleHasTypeInFirstPosUseCase:
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie, 2)
 
         if voie.has_type_in_second_pos or voie.has_type_in_last_pos:
-            if (voie.has_type_in_last_pos and 
+            if (voie.has_type_in_last_pos and
                 second_type.type_name == (' ').join(voie.label_preproc[second_type.position_start:second_type.position_end+1])):
                 two_longs = ("/").join([first_type.type_name, second_type.type_name])
                 last_type_prio = two_longs in HandleHasTypeInFirstPosUseCase.COMBINAISONS_LONG and not HandleHasTypeInFirstPosUseCase.COMBINAISONS_LONG[two_longs]
