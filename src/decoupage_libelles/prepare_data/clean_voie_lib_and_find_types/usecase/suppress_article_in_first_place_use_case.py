@@ -10,7 +10,7 @@ class SuppressArticleInFirstPlaceUseCase:
         first_word = voie.label_preproc[0]
         type_ordered_first = self.order_type_in_lib_use_case.execute(voie, 1)
         first_type_in_second_pos = True if type_ordered_first and type_ordered_first.position_start == 1 else False
-        if first_type_in_second_pos and first_word in ['LE', 'LA', 'L']:
+        if first_type_in_second_pos and first_word in ['LE', 'LA', 'L', 'LES']:
             new_label_preproc = voie.label_preproc[1:]
             voie.label_preproc = new_label_preproc
 

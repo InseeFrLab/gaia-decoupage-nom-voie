@@ -48,7 +48,6 @@ class TwoTypesAndMoreVoiesHandlerUseCase:
 
         for voie in voies:
             voie = self.suppress_article_in_first_place_use_case.execute(voie)
-            voie = self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
             voie = self.keep_types_without_article_adj_before_use_case.execute(voie)
             voie = self.generate_information_on_lib_use_case.execute(voie)
 

@@ -1,5 +1,5 @@
 directory_path: "projet-gaia/decoupage"
-input_path: "fichier_test.csv"
+input_path: "fichier_test2.csv"
 sep: ","
 encodeur: "utf-8"
 vars_names_nom_voie: ["LIBELLE"]

@@ -3,12 +3,11 @@ from decoupage_libelles.decoupe_voie.usecase.assign_type_lib_use_case import Ass
 from decoupage_libelles.decoupe_voie.usecase.assign_lib_type_use_case import AssignLibTypeUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_type_use_case import AssignTypeUseCase
 from decoupage_libelles.decoupe_voie.usecase.assign_lib_use_case import AssignLibUseCase
+from decoupage_libelles.decoupe_voie.usecase.assign_compl_type_lib_use_case import AssignComplTypeLibUseCase
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
 from decoupage_libelles.informations_on_libelle_voie.usecase.generate_information_on_lib_use_case import GenerateInformationOnLibUseCase
 from decoupage_libelles.informations_on_type_in_lib.usecase.generate_information_on_type_ordered_use_case import GenerateInformationOnTypeOrderedUseCase
-from decoupage_libelles.handle_voies_one_type.usecase.type_long_not_first_pos_use_case import TypeLongNotFirstPosUseCase
-from decoupage_libelles.handle_voies_one_type.usecase.type_route_not_first_pos_use_case import TypeRouteNotFirstPosUseCase
-from decoupage_libelles.handle_voies_one_type.usecase.type_agglo_not_first_pos_use_case import TypeAggloNotFirstPosUseCase
+from decoupage_libelles.handle_voies_two_types_and_more.usecase.keep_types_without_article_adj_before_use_case import KeepTypesWithoutArticleAdjBeforeUseCase
 
 
 class HandleOneTypeNotComplNotFictifUseCase:
@@ -20,9 +19,8 @@ class HandleOneTypeNotComplNotFictifUseCase:
         assign_lib_type_use_case: AssignLibTypeUseCase = AssignLibTypeUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
         assign_type_use_case: AssignTypeUseCase = AssignTypeUseCase(),
-        type_long_not_first_pos_use_case: TypeLongNotFirstPosUseCase = TypeLongNotFirstPosUseCase(),
-        type_route_not_first_pos_use_case: TypeRouteNotFirstPosUseCase = TypeRouteNotFirstPosUseCase(),
-        type_agglo_not_first_pos_use_case: TypeAggloNotFirstPosUseCase = TypeAggloNotFirstPosUseCase(),
+        assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = AssignComplTypeLibUseCase(),
+        keep_types_without_article_adj_before_use_case: KeepTypesWithoutArticleAdjBeforeUseCase = KeepTypesWithoutArticleAdjBeforeUseCase(),
     ):
         self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
@@ -30,41 +28,44 @@ class HandleOneTypeNotComplNotFictifUseCase:
         self.assign_lib_type_use_case: AssignLibTypeUseCase = assign_lib_type_use_case
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
         self.assign_type_use_case: AssignTypeUseCase = assign_type_use_case
-        self.type_long_not_first_pos_use_case: TypeLongNotFirstPosUseCase = type_long_not_first_pos_use_case
-        self.type_route_not_first_pos_use_case: TypeRouteNotFirstPosUseCase = type_route_not_first_pos_use_case
-        self.type_agglo_not_first_pos_use_case: TypeAggloNotFirstPosUseCase = type_agglo_not_first_pos_use_case
+        self.keep_types_without_article_adj_before_use_case: KeepTypesWithoutArticleAdjBeforeUseCase = keep_types_without_article_adj_before_use_case
+        self.assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = assign_compl_type_lib_use_case
 
     def execute(self, voie: InfoVoie) -> VoieDecoupee:
         self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=False)
         voie_treated = None
 
         if voie.has_type_in_first_pos:
-            first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
-            if voie.has_type_in_last_pos:
+            unique_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
+            if voie.has_type_in_last_pos:  # il n'y a que le type dans le libelle
                 # 1 er type
                 # "GRAND RUE"
-                voie_treated = self.assign_type_use_case.execute(voie, first_type)
+                voie_treated = self.assign_type_use_case.execute(voie, unique_type)
             else:
                 # 1er type + lib
                 # 'CHE DES SEMAPHORES'
-                voie_treated = self.assign_type_lib_use_case.execute(voie, first_type)
+                voie_treated = self.assign_type_lib_use_case.execute(voie, unique_type)
 
-        elif voie.has_type_in_last_pos:
-            self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=True)
-            last_type = self.generate_information_on_type_ordered_use_case.execute(voie, -1)
-            last_type_name_in_lib = (' ').join(voie.label_preproc[last_type.position_start:last_type.position_end+1])
-            if (last_type.type_name == last_type_name_in_lib and
-                not last_type.has_adj_det_before):
-                voie_treated = self.assign_lib_type_use_case.execute(voie, last_type)
-
-        if not voie_treated:
-            voie_treated = self.type_long_not_first_pos_use_case.execute(voie)
-            voie_treated = self.type_route_not_first_pos_use_case.execute(voie) if not voie_treated else voie_treated
-            voie_treated = self.type_agglo_not_first_pos_use_case.execute(voie) if not voie_treated else voie_treated
-            if not voie_treated:
-                if voie.has_type_in_last_pos:
-                    voie_treated = self.assign_lib_type_use_case.execute(voie)
+        else:
+            voie = self.keep_types_without_article_adj_before_use_case.execute(voie)
+            if len(voie.types_and_positions) == 1:   # il reste un type sans adj/det devant
+                unique_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
+                unique_type_name_in_lib = (' ').join(voie.label_preproc[unique_type.position_start:unique_type.position_end+1])
+                if (unique_type.type_name == unique_type_name_in_lib and
+                        voie.has_type_in_last_pos):
+                    voie_treated = self.assign_lib_type_use_case.execute(voie, unique_type)
                 else:
-                    voie_treated = self.assign_lib_use_case.execute(voie)
+                    if unique_type.is_longitudinal_or_agglomerant:
+                        if not voie.has_type_in_last_pos:
+                            # compl + 1er type + lib
+                            # 'LE BAS FAURE RUE DE TOUL'
+                            return self.assign_compl_type_lib_use_case.execute(voie, unique_type)
+                        else:
+                            # lib + 1er type
+                            # 'HOCHE RUE'
+                            return self.assign_lib_type_use_case.execute(voie)
+
+            if not voie_treated:  # ce qu'il reste
+                voie_treated = self.assign_lib_use_case.execute(voie)
 
         return voie_treated

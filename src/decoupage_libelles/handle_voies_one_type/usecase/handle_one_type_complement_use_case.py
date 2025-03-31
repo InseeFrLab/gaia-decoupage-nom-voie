@@ -32,8 +32,6 @@ class HandleOneTypeComplUseCase:
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
 
     def execute(self, voie_compl: InfoVoie) -> VoieDecoupee:
-        self.suppress_article_in_first_place_use_case.execute(voie_compl)
-        self.generate_information_on_lib_use_case.execute(voie_compl, apply_nlp_model=False)
         last_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, -1)
 
         if voie_compl.has_type_in_first_pos:
@@ -45,12 +43,13 @@ class HandleOneTypeComplUseCase:
 
             else:
                 return self.compl_type_in_first_or_middle_pos_use_case.execute(voie_compl)
-        
+
         elif voie_compl.has_type_in_last_pos and not last_type.is_complement:
             self.generate_information_on_lib_use_case.execute(voie_compl, apply_nlp_model=True)
             last_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, -1)
-            if (last_type.type_name == (' ').join(voie_compl.label_preproc[last_type.position_start:last_type.position_end+1]) and
-                not last_type.has_adj_det_before):
+            last_type_name_in_lib = (' ').join(voie_compl.label_preproc[last_type.position_start:last_type.position_end+1])
+            if (last_type.type_name == last_type_name_in_lib and
+                    not last_type.has_adj_det_before):
                 # 'PO IMM RUE'
                 # lib + 2eme type
                 return self.assign_lib_type_use_case.execute(voie_compl, last_type)

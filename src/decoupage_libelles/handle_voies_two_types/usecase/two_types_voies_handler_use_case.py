@@ -35,8 +35,6 @@ class TwoTypesVoiesHandlerUseCase:
 
     def execute(self, voies: List[InfoVoie]) -> List[VoieDecoupee]:
         voies = [voie for voie in voies if len(voie.types_and_positions) == 2]
-        for voie in voies:
-            self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=False)
 
         logging.info("Gestion des voies avec complément")
         voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_1_2)
