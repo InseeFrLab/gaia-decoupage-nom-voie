@@ -15,15 +15,12 @@ class SuppressArticleInFirstPlaceUseCase:
             voie.label_preproc = new_label_preproc
 
             new_types_and_positions = {}
-            for key, value in voie.types_and_positions.items(): # a tester
+            for key, value in voie.types_and_positions.items():  # a tester
                 deb, fin = value
                 new_types_and_positions[key] = (deb-1, fin-1)
             voie.types_and_positions = new_types_and_positions
 
-            if first_word == 'L':
-                new_label_raw = voie.label_raw[2:]
-                voie.label_raw = new_label_raw
-            else:
-                new_label_raw = voie.label_raw[3:]
-                voie.label_raw = new_label_raw
+            new_label_raw = voie.label_raw[len(first_word)+1:]
+            voie.label_raw = new_label_raw
+
         return voie
