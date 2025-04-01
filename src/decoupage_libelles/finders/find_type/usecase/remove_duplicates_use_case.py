@@ -29,12 +29,12 @@ class RemoveDuplicatesUseCase:
                     position_start_min, position_end_min = dict_two_positions[type_min_distance]
 
                     # Supprimer de la liste preproc le type codifié
-                    type_finder_object.voie_big = self.remove_type_from_lib_and_types_use_case.execute(type_finder_object.voie_big, position_start_min, position_end_min)
                     # Supprimer du dictionnaire le type codifié et décaler les positions
-                    if type_min_distance == "first":
-                        del type_finder_object.voie_big.types_and_positions[(type_duplicate, 1)]
-                        type_finder_object.voie_big.types_and_positions[(type_duplicate, 1)] = type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
-                        del type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
-                    else:
-                        del type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
+                    type_finder_object.voie_big = self.remove_type_from_lib_and_types_use_case.execute(type_finder_object.voie_big, position_start_min, position_end_min)
+                    # if type_min_distance == "first":
+                    #     del type_finder_object.voie_big.types_and_positions[(type_duplicate, 1)]
+                    #     type_finder_object.voie_big.types_and_positions[(type_duplicate, 1)] = type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
+                    #     del type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
+                    # else:
+                    #     del type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
         return type_finder_object

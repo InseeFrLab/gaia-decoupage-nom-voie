@@ -1,6 +1,6 @@
 directory_path: "projet-gaia/decoupage"
-input_path: "fichier_test2.csv"
+input_path: "voies_all.csv"
 sep: ","
 encodeur: "utf-8"
-vars_names_nom_voie: ["LIBELLE"]
+vars_names_nom_voie: ["nom_voie"]
 plateform: "datalab"
