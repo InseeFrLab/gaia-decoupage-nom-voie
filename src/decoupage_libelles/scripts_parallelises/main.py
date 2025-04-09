@@ -99,7 +99,7 @@ def process_file_s3(input_file, chunk_size, file_type, num_threads):
     # Fusionner et sauvegarder les résultats finaux
     final_df = pd.concat(results, ignore_index=True)
     final_df = final_df.rename(columns={"typeVoie": "type_voie_parse", "libelleVoie": "libelle_voie_parse", "complementAdresse": "complement_adresse", "complementAdresse2": "complement_adresse2"})
-    final_df.drop(columns=["numero", "indice_rep"], inplace=True)
+    final_df.drop(columns=["numero", "indice_rep"], inplace=True, errors='ignore')
     save_to_s3(final_df, file_type, output_file)
 
 
