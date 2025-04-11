@@ -20,7 +20,7 @@ class SuppressArticleInFirstPlaceUseCase:
                 new_types_and_positions[key] = (deb-1, fin-1)
             voie.types_and_positions = new_types_and_positions
 
-            new_label_raw = voie.label_raw[len(first_word)+1:]
-            voie.label_raw = new_label_raw
+            # new_label_raw = voie.label_raw[len(first_word)+1:]
+            # voie.label_raw = new_label_raw
 
         return voie

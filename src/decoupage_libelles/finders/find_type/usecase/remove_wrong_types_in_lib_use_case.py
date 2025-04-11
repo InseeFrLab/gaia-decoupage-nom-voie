@@ -20,11 +20,12 @@ class RemoveWrongTypesInLibUseCase:
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
         # Supprime les types écrits à tord
         # ROUTE ANCIENNE ROUTE --> Route et Ancienne route --> Ancienne route et on retire route du libellé
+        voie_big = type_finder_object.voie_big
         types_to_delete_in_lib = []
-        for i in range(1, len(type_finder_object.voie_big.types_and_positions)):
+        for i in range(1, len(voie_big.types_and_positions)):
             dict_two_types = {}
-            type_i = self.generate_information_on_type_ordered_use_case.execute(type_finder_object.voie_big, i)
-            type_i1 = self.generate_information_on_type_ordered_use_case.execute(type_finder_object.voie_big, i + 1)
+            type_i = self.generate_information_on_type_ordered_use_case.execute(voie_big, i)
+            type_i1 = self.generate_information_on_type_ordered_use_case.execute(voie_big, i + 1)
 
             if type_i.type_name != type_i1.type_name:
                 dict_two_types[type_i.type_name] = (type_i.position_start, type_i.position_end, type_i.occurence)
@@ -35,12 +36,15 @@ class RemoveWrongTypesInLibUseCase:
                 position_start_min, position_end_min, occurence_min = dict_two_types[type_min]
                 position_start_max, position_end_max, __ = dict_two_types[type_max]
 
-                if position_start_max - position_end_min == 1 and type_min in type_max or position_start_min - position_end_max == 1 and type_min in type_max:
+                if ((position_start_max - position_end_min == 1
+                     and type_min in type_max)
+                     or (position_start_min - position_end_max == 1
+                     and type_min in type_max)):
                     types_to_delete_in_lib.append((type_min, occurence_min))
 
         if types_to_delete_in_lib:
             for type_to_delete in list(set(types_to_delete_in_lib)):
                 del type_finder_object.voie_big.types_and_positions[type_to_delete]
-                type_finder_object.voie_big = self.remove_type_from_lib_and_types_use_case.execute(type_finder_object.voie_big, position_start_min, position_end_min)
+                type_finder_object.voie_big = self.remove_type_from_lib_and_types_use_case.execute(voie_big, position_start_min, position_end_min)
 
         return type_finder_object

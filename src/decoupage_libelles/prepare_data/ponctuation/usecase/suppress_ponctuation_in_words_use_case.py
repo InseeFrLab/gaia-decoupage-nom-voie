@@ -13,4 +13,3 @@ class SuppressPonctuationInWordsUseCase:
             for sous_mot in new_mot:
                 new_label_preproc.append(sous_mot)
         return new_label_preproc
-
