@@ -45,6 +45,8 @@ def process_chunk(chunk):
 
     # Joindre les résultats au chunk d'origine
     df_response.rename(columns={"origin": var_name_nom_voie}, inplace=True)
+    df_response = df_response.rename(columns={"typeVoie": "type_voie_parse", "libelleVoie": "libelle_voie_parse", "complementAdresse": "complement_adresse", "complementAdresse2": "complement_adresse2"})
+    df_response.drop(columns=["numero", "indice_rep"], inplace=True)
     merged_df = chunk.merge(df_response, on=var_name_nom_voie, how="left")
     return merged_df
 
@@ -98,8 +100,6 @@ def process_file_s3(input_file, chunk_size, file_type, num_threads):
 
     # Fusionner et sauvegarder les résultats finaux
     final_df = pd.concat(results, ignore_index=True)
-    final_df = final_df.rename(columns={"typeVoie": "type_voie_parse", "libelleVoie": "libelle_voie_parse", "complementAdresse": "complement_adresse", "complementAdresse2": "complement_adresse2"})
-    final_df.drop(columns=["numero", "indice_rep"], inplace=True, errors='ignore')
     save_to_s3(final_df, file_type, output_file)
 
 
@@ -126,8 +126,6 @@ def process_file_local(input_file, chunk_size, file_type, num_threads):
 
     # Fusionner et sauvegarder les résultats finaux
     final_df = pd.concat(results, ignore_index=True)
-    final_df = final_df.rename(columns={"typeVoie": "type_voie_parse", "libelleVoie": "libelle_voie_parse", "complementAdresse": "complement_adresse", "complementAdresse2": "complement_adresse2"})
-    final_df.drop(columns=["numero", "indice_rep"], inplace=True)
     local_save(final_df, file_type, output_file)
 
 

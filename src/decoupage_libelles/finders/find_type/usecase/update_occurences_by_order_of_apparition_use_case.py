@@ -10,7 +10,7 @@ class UpdateOccurencesByOrderOfApparitionUseCase:
         occurrences = {}
 
         for key in sorted_keys:
-            type_voie = key[0]
+            type_voie, __ = key
             if type_voie in occurrences:
                 occurrences[type_voie] += 1
             else:
