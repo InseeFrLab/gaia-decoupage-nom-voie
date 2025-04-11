@@ -60,20 +60,29 @@ i = 1
 df = pd.read_json(f"C:/Users/FI7L7T/Documents/gaia/echant_voies/voies_echant_{source}_{i}.json")
 df.drop(columns=['count'], inplace=True)
 
-df_both = df[df['similarity'] == 'Both accepted'][['nom_voie_norm_query', 'id_type_voie_match2', 'nom_voie_norm_match2', 'complement_adresse_match2', 'justification']]
-df_both = df_both.rename(columns={'nom_voie_norm_query': 'nom_voie', 'id_type_voie_match2': 'id_type_voie', 'nom_voie_norm_match2': 'nom_voie_norm', 'complement_adresse_match2': 'complement_adresse'})
+col_names_1 = ['nom_voie_norm_query', 'id_type_voie_match1', 'nom_voie_norm_match1', 'complement_adresse_match1', 'justification']
+new_col_names_1 = {'nom_voie_norm_query': 'nom_voie', 'id_type_voie_match1': 'id_type_voie', 'nom_voie_norm_match1': 'nom_voie_norm', 'complement_adresse_match1': 'complement_adresse'}
 
-df_acc1 = df[df['similarity'] == 'Accepted 1'][['nom_voie_norm_query', 'id_type_voie_match1', 'nom_voie_norm_match1', 'complement_adresse_match1', 'justification']]
-df_acc1 = df_acc1.rename(columns={'nom_voie_norm_query': 'nom_voie', 'id_type_voie_match1': 'id_type_voie', 'nom_voie_norm_match1': 'nom_voie_norm', 'complement_adresse_match1': 'complement_adresse'})
+col_names_2 = ['nom_voie_norm_query', 'id_type_voie_match2', 'nom_voie_norm_match2', 'complement_adresse_match2', 'justification']
+new_col_names_2 = {'nom_voie_norm_query': 'nom_voie', 'id_type_voie_match2': 'id_type_voie', 'nom_voie_norm_match2': 'nom_voie_norm', 'complement_adresse_match2': 'complement_adresse'}
 
-df_acc2 = df[df['similarity'] == 'Accepted 2'][['nom_voie_norm_query', 'id_type_voie_match2', 'nom_voie_norm_match2', 'complement_adresse_match2', 'justification']]
-df_acc2 = df_acc2.rename(columns={'nom_voie_norm_query': 'nom_voie', 'id_type_voie_match2': 'id_type_voie', 'nom_voie_norm_match2': 'nom_voie_norm', 'complement_adresse_match2': 'complement_adresse'})
+if source == 'rca':
+    df['nom_voie_norm_query'] = df['id_type_voie_query'] + ' ' + df['nom_voie_norm_query']
 
-df_rej = df[df['similarity'] == 'Rejected'][['nom_voie_norm_query', 'id_type_voie_match2', 'nom_voie_norm_match2', 'complement_adresse_match2', 'justification']]
-df_rej = df_rej.rename(columns={'nom_voie_norm_query': 'nom_voie', 'id_type_voie_match2': 'id_type_voie', 'nom_voie_norm_match2': 'nom_voie_norm', 'complement_adresse_match2': 'complement_adresse'})
+df_both = df[df['similarity'] == 'Both accepted'][col_names_2]
+df_both = df_both.rename(columns=new_col_names_2)
 
-df_indecis = df[df['similarity'] == 'Undecided'][['nom_voie_norm_query', 'id_type_voie_match2', 'nom_voie_norm_match2', 'complement_adresse_match2', 'justification']]
-df_indecis = df_indecis.rename(columns={'nom_voie_norm_query': 'nom_voie', 'id_type_voie_match2': 'id_type_voie', 'nom_voie_norm_match2': 'nom_voie_norm', 'complement_adresse_match2': 'complement_adresse'})
+df_acc1 = df[df['similarity'] == 'Accepted 1'][col_names_1]
+df_acc1 = df_acc1.rename(columns=new_col_names_1)
+
+df_acc2 = df[df['similarity'] == 'Accepted 2'][col_names_2]
+df_acc2 = df_acc2.rename(columns=new_col_names_2)
+
+df_rej = df[df['similarity'] == 'Rejected'][col_names_2]
+df_rej = df_rej.rename(columns=new_col_names_2)
+
+df_indecis = df[df['similarity'] == 'Undecided'][col_names_2]
+df_indecis = df_indecis.rename(columns=new_col_names_2)
 
 df_final = pd.concat([df_both, df_acc1, df_acc2, df_rej, df_indecis], ignore_index=True)
 
