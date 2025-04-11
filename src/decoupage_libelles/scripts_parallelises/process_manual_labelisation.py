@@ -1,6 +1,28 @@
 import pandas as pd
 import numpy as np
 
+# sortir les tables de DBEAVER
+
+# SELECT h.nom_voie, h.type_voie_parse, h.libelle_voie_parse, h.complement_adresse  
+# FROM public.historique_chargements_ban h
+# WHERE h.id_chargement = 195
+# ORDER BY RANDOM()
+# LIMIT 5000;
+
+
+# SELECT h.dvoilib, h.type_voie_parse, h.libelle_voie_parse, h.complement_adresse  
+# FROM public.historique_chargements_majic h
+# WHERE h.id_chargement = 7
+# ORDER BY RANDOM()
+# LIMIT 5000;
+
+
+# SELECT h.denomination_de_voie_type, h.denomination_de_voie_libelle, h.type_voie_parse, h.libelle_voie_parse, h.complement_adresse  
+# FROM public.historique_chargements_rca h
+# WHERE h.id_chargement = 206
+# ORDER BY RANDOM()
+# LIMIT 5000;
+
 # source = "majic"
 # variables_type_nom_voie = ["dvoilib"]
 
@@ -34,7 +56,8 @@ for i, mini_df in enumerate(df_list):
 
 # mettre en forme le fichier json annoté
 
-df = pd.read_json("data/voies_echant_ban_2.json")
+i = 1
+df = pd.read_json(f"C:/Users/FI7L7T/Documents/gaia/echant_voies/voies_echant_{source}_{i}.json")
 df.drop(columns=['count'], inplace=True)
 
 df_both = df[df['similarity'] == 'Both accepted'][['nom_voie_norm_query', 'id_type_voie_match2', 'nom_voie_norm_match2', 'complement_adresse_match2', 'justification']]
@@ -54,11 +77,11 @@ df_indecis = df_indecis.rename(columns={'nom_voie_norm_query': 'nom_voie', 'id_t
 
 df_final = pd.concat([df_both, df_acc1, df_acc2, df_rej, df_indecis], ignore_index=True)
 
-df_final.to_csv("data/voies_echant_ban_2.csv", index=False)
+df_final.to_csv(f"C:/Users/FI7L7T/Documents/gaia/echant_voies/voies_echant_{source}_{i}_to_remake.csv", index=False)
 
 # retravailler les rejected
 
-df_retravaille = pd.read_csv("data/voies_echant_ban_2.csv")
+df_retravaille = pd.read_csv(f"C:/Users/FI7L7T/Documents/gaia/echant_voies/voies_echant_{source}_{i}_to_remake.csv")
 df_retravaille.drop(columns=['justification'], inplace=True)
-df_retravaille.to_csv("data/voies_echant_ban_2.csv", index=False)
+df_retravaille.to_csv(f"C:/Users/FI7L7T/Documents/gaia/echant_voies/voies_echant_{source}_{i}_done.csv", index=False)
 
