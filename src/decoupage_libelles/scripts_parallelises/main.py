@@ -57,7 +57,7 @@ def save_to_s3(df, file_type, output_file):
 
     with fs.open(output_file, "wb") as f:
         if file_type == "csv":
-            df.to_csv(f, index=False)
+            df.to_csv(f, index=False, sep=sep, encoding=encodeur)
         elif file_type == "parquet":
             df.to_parquet(f, engine="pyarrow", index=False)
 
