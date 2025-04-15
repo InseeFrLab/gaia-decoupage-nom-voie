@@ -2,6 +2,15 @@ import pandas as pd
 import numpy as np
 
 # sortir les tables de DBEAVER
+# faire ca avec duckDB
+
+# SELECT h.nom_voie, h.type_voie_parse, h.libelle_voie_parse, h.complement_adresse  
+# FROM public.historique_chargements_ban h
+# WHERE h.id_chargement = 195
+#   AND h.complement_adresse IS NOT NULL
+#   AND h.complement_adresse != ' '
+# ORDER BY RANDOM()
+# LIMIT 3000;
 
 # SELECT h.nom_voie, h.type_voie_parse, h.libelle_voie_parse, h.complement_adresse  
 # FROM public.historique_chargements_ban h
@@ -56,7 +65,7 @@ for i, mini_df in enumerate(df_list):
 
 # mettre en forme le fichier json annoté
 
-i = 1
+i = 2
 df = pd.read_json(f"C:/Users/FI7L7T/Documents/gaia/echant_voies/voies_echant_{source}_{i}.json")
 df.drop(columns=['count'], inplace=True)
 
@@ -93,4 +102,3 @@ df_final.to_csv(f"C:/Users/FI7L7T/Documents/gaia/echant_voies/voies_echant_{sour
 df_retravaille = pd.read_csv(f"C:/Users/FI7L7T/Documents/gaia/echant_voies/voies_echant_{source}_{i}_to_remake.csv")
 df_retravaille.drop(columns=['justification'], inplace=True)
 df_retravaille.to_csv(f"C:/Users/FI7L7T/Documents/gaia/echant_voies/voies_echant_{source}_{i}_done.csv", index=False)
-
