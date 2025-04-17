@@ -112,8 +112,7 @@ df_indecis = df[df['similarity'] == 'Undecided'][col_names_2]
 df_indecis = df_indecis.rename(columns=new_col_names_2)
 
 df_final = pd.concat([df_both, df_acc1, df_acc2, df_rej, df_indecis], ignore_index=True)
-df_final = df_final.replace(' ', '', regex=True)
-
+df_final = df_final.fillna("").replace(" ", "")
 df_final.to_csv(f"C:/Users/FI7L7T/Documents/gaia/echant_voies/voies_echant_{source}_{i}_to_remake.csv", index=False)
 
 # retravailler les rejected
