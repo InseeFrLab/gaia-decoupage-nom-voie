@@ -81,13 +81,8 @@ class TwoTypesAndMoreVoiesHandlerUseCase:
 
         if voies_0_long_agglo:
             for voie in voies_0_long_agglo:
-                voie = self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=False)
-                if voie.has_type_in_first_pos:
-                    first_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
-                    voies_treated.append(self.assign_type_lib_use_case.execute(voie, first_type))
-                else:
-                    # lib
-                    voies_treated.append(self.assign_lib_use_case.execute(voie))
+                # lib
+                voies_treated.append(self.assign_lib_use_case.execute(voie))
 
         if voies_1_long_agglo:
             voies_proc_1_long_agglo = self.one_type_voies_handler_use_case.execute(voies_1_long_agglo)

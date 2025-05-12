@@ -26,11 +26,8 @@ class ComplThirdTypeComplUseCase:
                 # 1er type + lib + 3e type compl
                 # "RUE DU CHATEAU BAT BLEU"
                 return self.assign_type_lib_compl_use_case.execute(voie_compl, first_type, third_type)
-            elif second_type.is_longitudinal_or_agglomerant and not first_type.is_longitudinal_or_agglomerant:
-                # lib
-                # "LA GRANDE PLAGE DE LA RUE BAT BLEU"
-                return self.assign_lib_use_case.execute(voie_compl)
             else:
                 # lib
                 # "ROND POINT DU CHATEAU BAT BLEU"
+                # "LA GRANDE PLAGE DE LA RUE BAT BLEU"
                 return self.assign_lib_use_case.execute(voie_compl)
