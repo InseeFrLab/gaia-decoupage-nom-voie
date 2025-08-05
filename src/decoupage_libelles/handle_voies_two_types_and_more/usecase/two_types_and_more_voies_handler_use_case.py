@@ -75,9 +75,9 @@ class TwoTypesAndMoreVoiesHandlerUseCase:
                     # lib
                     voies_treated.append(self.assign_lib_use_case.execute(voie))
 
-        # print(f"voies0 : {[voie for voie in voies_0_long_agglo]}")
-        # print(f"voies1 : {[voie for voie in voies_1_long_agglo]}")
-        # print(f"voies2 : {[voie for voie in voies_2_long_agglo]}")
+        # logging.info(f"voies0 : {[voie for voie in voies_0_long_agglo]}")
+        # logging.info(f"voies1 : {[voie for voie in voies_1_long_agglo]}")
+        # logging.info(f"voies2 : {[voie for voie in voies_2_long_agglo]}")
 
         if voies_0_long_agglo:
             for voie in voies_0_long_agglo:

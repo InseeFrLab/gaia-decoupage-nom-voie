@@ -60,15 +60,15 @@ def run():
 
     elif format_data == "label":
         voie = voies_processed[0]
-        print(" ")
+        logging.info(" ")
         logging.info("*** Résultat ***")
-        print(" ")
-        print(f"Nom de voie non traitée: {voie.label_origin}")
-        print(f"Type de voie: {voie.type_assigned}")
-        print(f"Nom de voie: {voie.label_assigned}")
-        print(f"Complément d'adresse: {voie.compl_assigned}")
-        print(" ")
-        print("*********")
+        logging.info(" ")
+        logging.info(f"Nom de voie non traitée: {voie.label_origin}")
+        logging.info(f"Type de voie: {voie.type_assigned}")
+        logging.info(f"Nom de voie: {voie.label_assigned}")
+        logging.info(f"Complément d'adresse: {voie.compl_assigned}")
+        logging.info(" ")
+        logging.info("*********")
 
 
 if __name__ == "__main__":

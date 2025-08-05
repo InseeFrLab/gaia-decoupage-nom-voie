@@ -13,7 +13,7 @@ Dans un terminal bash :
 ```{bash}
 git clone https://gitlab.insee.fr/geographie/gaia/gaia-decoupage-libelles-voies.git
 cd gaia-decoupage-libelles-voies/
-mc cp s3/travail/projet-ml-moteur-identification-gaia/open_data/fr_dep_news_trf-3.7.0.zip data/
+mc cp s3/travail/projet-ml-moteur-identification-gaia/open_data/fr_dep_news_trf-3.8.0-py3-none-any.zip data/
 source ./setup.sh
 ```
 
@@ -21,7 +21,7 @@ source ./setup.sh
 ```{bash}
 git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
 cd gaia-decoupage/
-wget -P data/ https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
+wget -P data/ https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.8.0-py3-none-any.zip
 source ./setup.sh
 ```
 
@@ -30,7 +30,7 @@ Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichier
 ```{bash}
 git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
 cd gaia-decoupage/
-curl -o data/fr_dep_news_trf-3.7.0.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
+curl -o data/fr_dep_news_trf-3.8.0-py3-none-any.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.8.0-py3-none-any.zip
 source ./setup.sh
 ```
 

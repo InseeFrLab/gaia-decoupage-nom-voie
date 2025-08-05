@@ -22,7 +22,7 @@ settings = Dynaconf(
 )
 
 root = os.getcwd()
-settings.chemin_nlp_modele = root + "/../data/fr_dep_news_trf-3.7.0/fr_dep_news_trf/fr_dep_news_trf-3.7.0/"
+settings.chemin_nlp_modele = root + "/../data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/"
 settings.chemin_type_voie = root + "/../data/type_voie.csv"
 settings.chemin_code2lib = root + "/../data/code2lib.json"
 

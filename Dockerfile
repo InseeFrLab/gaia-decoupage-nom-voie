@@ -19,8 +19,8 @@ COPY src /api/src
 COPY data /api/data
 
 RUN rm -rf /tmp/*
-RUN wget -q -O /tmp/fr_dep_news_trf-3.7.0.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.7.0.zip
-RUN unzip /tmp/fr_dep_news_trf-3.7.0.zip -d /api/data/
+RUN wget -q -O /tmp/fr_dep_news_trf-3.8.0-py3-none-any.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.8.0-py3-none-any.zip
+RUN unzip /tmp/fr_dep_news_trf-3.8.0-py3-none-any.zip -d /api/data/fr_dep_news_trf-3.8.0/
 RUN rm -rf /tmp
 
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
