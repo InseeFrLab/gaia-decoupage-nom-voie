@@ -4,6 +4,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')
 import pandas as pd
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from tqdm import tqdm
+import pyarrow.dataset as ds
 import warnings
 import yaml
 from yaml.loader import SafeLoader
@@ -79,24 +80,28 @@ def local_save(df, file_type, output_file):
 def process_file_s3(input_file, chunk_size, file_type, num_threads):
     """Lit un fichier en chunks et les traite en parallèle."""
     results = []
-    with fs.open(input_file, "rb") as f:
-        if file_type == "csv":
-            reader = pd.read_csv(f, chunksize=chunk_size, dtype=str, sep=sep, encoding=encodeur)
-        elif file_type == "parquet":
-            parquet_file = pq.ParquetFile(f)
-            reader = parquet_file.iter_batches(batch_size=chunk_size)
-        else:
-            raise ValueError(f"Type de fichier '{file_type}' non supporté")
+    if file_type == "dossier_parquet":
+        dataset = ds.dataset(input_file, format="parquet")
+        reader = dataset.to_batches(batch_size=chunk_size)
+    else:
+        with fs.open(input_file, "rb") as f:
+            if file_type == "csv":
+                reader = pd.read_csv(f, chunksize=chunk_size, dtype=str, sep=sep, encoding=encodeur)
+            elif file_type == "parquet":
+                parquet_file = pq.ParquetFile(f)
+                reader = parquet_file.iter_batches(batch_size=chunk_size)
+            else:
+                raise ValueError(f"Type de fichier '{file_type}' non supporté")
 
-        # Traitement parallèle des chunks
-        with ThreadPoolExecutor(max_workers=num_threads) as executor:
-            futures = {
-                executor.submit(process_chunk, chunk.to_pandas() if file_type == "parquet" else chunk): chunk_id
-                for chunk_id, chunk in enumerate(reader)
-            }
+    # Traitement parallèle des chunks
+    with ThreadPoolExecutor(max_workers=num_threads) as executor:
+        futures = {
+            executor.submit(process_chunk, chunk.to_pandas() if file_type in ["dossier_parquet", "parquet"] else chunk): chunk_id
+            for chunk_id, chunk in enumerate(reader)
+        }
 
-            for future in tqdm(as_completed(futures), total=len(futures), desc="Traitement des chunks"):
-                results.append(future.result())
+        for future in tqdm(as_completed(futures), total=len(futures), desc="Traitement des chunks"):
+            results.append(future.result())
 
     # Fusionner et sauvegarder les résultats finaux
     final_df = pd.concat(results, ignore_index=True)
@@ -105,24 +110,29 @@ def process_file_s3(input_file, chunk_size, file_type, num_threads):
 
 def process_file_local(input_file, chunk_size, file_type, num_threads):
     results = []
-    with open(input_file, "rb") as f:
-        if file_type == "csv":
-            reader = pd.read_csv(f, chunksize=chunk_size, dtype=str)
-        elif file_type == "parquet":
-            parquet_file = pq.ParquetFile(f)
-            reader = parquet_file.iter_batches(batch_size=chunk_size)
-        else:
-            raise ValueError(f"Type de fichier '{file_type}' non supporté")
+    if file_type == "dossier_parquet":
+        dataset = ds.dataset(input_file, format="parquet")
+        reader = dataset.to_batches(batch_size=chunk_size)
 
-        # Traitement parallèle des chunks
-        with ThreadPoolExecutor(max_workers=num_threads) as executor:
-            futures = {
-                executor.submit(process_chunk, chunk.to_pandas() if file_type == "parquet" else chunk): chunk_id
-                for chunk_id, chunk in enumerate(reader)
-            }
+    else:
+        with open(input_file, "rb") as f:
+            if file_type == "csv":
+                reader = pd.read_csv(f, chunksize=chunk_size, dtype=str)
+            elif file_type == "parquet":
+                parquet_file = pq.ParquetFile(f)
+                reader = parquet_file.iter_batches(batch_size=chunk_size)
+            else:
+                raise ValueError(f"Type de fichier '{file_type}' non supporté")
 
-            for future in tqdm(as_completed(futures), total=len(futures), desc="Traitement des chunks"):
-                results.append(future.result())
+    # Traitement parallèle des chunks
+    with ThreadPoolExecutor(max_workers=num_threads) as executor:
+        futures = {
+            executor.submit(process_chunk, chunk.to_pandas() if file_type in ["dossier_parquet", "parquet"] else chunk): chunk_id
+            for chunk_id, chunk in enumerate(reader)
+        }
+
+        for future in tqdm(as_completed(futures), total=len(futures), desc="Traitement des chunks"):
+            results.append(future.result())
 
     # Fusionner et sauvegarder les résultats finaux
     final_df = pd.concat(results, ignore_index=True)
@@ -152,6 +162,8 @@ if __name__ == "__main__":
     vars_names_nom_voie = config["vars_names_nom_voie"]
     chunk_size = 10_000
     file_type = input_file.split(".")[-1]
+    if len(input_file.split(".")) == 1:
+        file_type = "dossier_parquet"
 
     # Nombre de threads
     num_threads = 20 if plateform == "datalab" else 4

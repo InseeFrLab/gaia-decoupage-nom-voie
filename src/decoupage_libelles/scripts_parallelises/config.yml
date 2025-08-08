@@ -1,6 +1,6 @@
 directory_path: "travail/projet-ml-moteur-identification-gaia/confidentiel/personnel_non_sensible"
-input_path: "2022_06_01_RCA.csv"
+input_path: "majic_2025"
 sep: ";"
 encodeur: "utf-8"
-vars_names_nom_voie: ["denomination_de_voie_type", "denomination_de_voie_libelle"]
+vars_names_nom_voie: ["dvoilib"]
 plateform: "ls3"
