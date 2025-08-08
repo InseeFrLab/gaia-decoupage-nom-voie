@@ -39,7 +39,8 @@ source ./setup.sh
 Placer le fichier dans l'espace de stockage S3, et configurer le fichier src/decoupage_libelles/scripts_parallelises/config.yml :  
 
 - directory_path: Dossier où le fichier à traiter se trouve (Attention, ne pas mettre de "/" à la fin). Ex : "travail/projet-ml-moteur-identification-gaia/confidentiel/personnel_non_sensible".  
-- input_path: Nom du fichier. Ex : "voies_01.csv".  
+- input_path: Nom du fichier. Ex : "voies_01.csv".
+- output_formt: Le format du fichier de sortie. "csv" ou "parquet"
 - sep: Si c'est un fichier csv, préciser le séparateur. Ex : ",". Si c'est un parquet, mettre "".  
 - encodeur: Si c'est un fichier csv, préciser l'encodeur. Ex : "utf-8". Si c'est un parquet, mettre "".  
 - vars_names_nom_voie: Liste de(s) nom(s) de(s) la variable(s) dans laquelle on va extraire le type de voie. Ex : ["nom_voie_complet"] . S'il y a plusieurs à concaténer avec un espace entre chaque, les spécifier dans l'ordre. Ex : ["id_type_voie", "nom_voie_norm"]
@@ -63,7 +64,7 @@ La commande pour lancer le code sur le Datalab est un peu différente car si le 
 
 ## Récupération du résultat 
 
-Le fichier traité sera enregistré dans le même dossier avec le même format et le même nom de fichier suivi de "_parsed".  
+Le fichier traité sera enregistré dans le même dossier avec le format choisi et le même nom de fichier suivi de "_parsed".  
 
 Pour livrer un fichier traité en prod, le placer dans un des dossiers "Livraison" prévu à cet effet sur applishare : "\\pd_as_ge_d1_50\ge_data_pd\gaia_pd". 
 

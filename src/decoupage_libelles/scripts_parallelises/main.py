@@ -52,27 +52,29 @@ def process_chunk(chunk):
     return merged_df
 
 
-def save_to_s3(df, file_type, output_file):
+def save_to_s3(df, output_format, output_file):
     """Sauvegarde le DataFrame final sur S3."""
     fs = cred_s3(plateform)
 
     with fs.open(output_file, "wb") as f:
-        if file_type == "csv":
+        if output_format == "csv":
             df.to_csv(f, index=False, sep=sep, encoding=encodeur)
-        elif file_type in ["parquet", "dossier_parquet"]:
+        elif output_format == "parquet":
             df.to_parquet(f, engine="pyarrow", index=False)
+        else:
+            raise ValueError(f"Type de fichier non reconnu : {output_format}")
 
     print(f"Le résultat est enregistré ici {output_file}")
 
 
-def local_save(df, file_type, output_file):
+def local_save(df, output_format, output_file):
     """Sauvegarde le DataFrame final en local."""
-    if file_type == "csv":
+    if output_format == "csv":
         df.to_csv(output_file, index=False, sep=sep, encoding=encodeur)
-    elif file_type in ["parquet", "dossier_parquet"]:
+    elif output_format == "parquet":
         df.to_parquet(output_file, engine="pyarrow", index=False)
     else:
-        raise ValueError(f"Type de fichier non reconnu : {file_type}")
+        raise ValueError(f"Type de fichier non reconnu : {output_format}")
 
     print(f"Le résultat est enregistré ici : {output_file}")
 
@@ -105,7 +107,7 @@ def process_file_s3(input_file, chunk_size, file_type, num_threads):
 
     # Fusionner et sauvegarder les résultats finaux
     final_df = pd.concat(results, ignore_index=True)
-    save_to_s3(final_df, file_type, output_file)
+    save_to_s3(final_df, output_format, output_file)
 
 
 def process_file_local(input_file, chunk_size, file_type, num_threads):
@@ -136,7 +138,7 @@ def process_file_local(input_file, chunk_size, file_type, num_threads):
 
     # Fusionner et sauvegarder les résultats finaux
     final_df = pd.concat(results, ignore_index=True)
-    local_save(final_df, file_type, output_file)
+    local_save(final_df, output_format, output_file)
 
 
 if __name__ == "__main__":
@@ -145,7 +147,7 @@ if __name__ == "__main__":
         config = yaml.load(f, Loader=SafeLoader)
 
     # Variables globales
-    global vars_names_nom_voie, output_file, plateform, sep, encodeur
+    global vars_names_nom_voie, output_file, plateform, sep, encodeur, output_format
     sep = config["sep"]
     encodeur = config["encodeur"]
     plateform = config['plateform']
@@ -158,13 +160,14 @@ if __name__ == "__main__":
     else:
         raise ValueError(f"La plateforme fournie '{plateform}' n'est pas reconnue.")
 
-    output_file = input_file.replace(".csv", "_parsed.csv").replace(".parquet", "_parsed.parquet")
+    output_format = config['output_format']
+    output_file = input_file.replace(".csv", f"_parsed.{output_format}").replace(".parquet", f"_parsed.{output_format}")
     vars_names_nom_voie = config["vars_names_nom_voie"]
     chunk_size = 10_000
     file_type = input_file.split(".")[-1]
     if len(input_file.split(".")) == 1:
         file_type = "dossier_parquet"
-        output_file = input_file + "_parsed.parquet"
+        output_file = input_file + f"_parsed.{output_format}"
 
     # Nombre de threads
     num_threads = 20 if plateform == "datalab" else 4
