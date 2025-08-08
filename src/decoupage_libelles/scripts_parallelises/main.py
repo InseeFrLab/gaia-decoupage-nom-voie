@@ -59,7 +59,7 @@ def save_to_s3(df, file_type, output_file):
     with fs.open(output_file, "wb") as f:
         if file_type == "csv":
             df.to_csv(f, index=False, sep=sep, encoding=encodeur)
-        elif file_type == "parquet":
+        elif file_type in ["parquet", "dossier_parquet"]:
             df.to_parquet(f, engine="pyarrow", index=False)
 
     print(f"Le résultat est enregistré ici {output_file}")
@@ -69,7 +69,7 @@ def local_save(df, file_type, output_file):
     """Sauvegarde le DataFrame final en local."""
     if file_type == "csv":
         df.to_csv(output_file, index=False, sep=sep, encoding=encodeur)
-    elif file_type == "parquet":
+    elif file_type in ["parquet", "dossier_parquet"]:
         df.to_parquet(output_file, engine="pyarrow", index=False)
     else:
         raise ValueError(f"Type de fichier non reconnu : {file_type}")
@@ -164,6 +164,7 @@ if __name__ == "__main__":
     file_type = input_file.split(".")[-1]
     if len(input_file.split(".")) == 1:
         file_type = "dossier_parquet"
+        output_file = input_file + "_parsed.parquet"
 
     # Nombre de threads
     num_threads = 20 if plateform == "datalab" else 4
