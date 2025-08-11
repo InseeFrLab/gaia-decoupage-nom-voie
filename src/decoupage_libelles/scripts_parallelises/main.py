@@ -83,7 +83,7 @@ def process_file_s3(input_file, chunk_size, file_type, num_threads):
     """Lit un fichier en chunks et les traite en parallèle."""
     results = []
     if file_type == "dossier_parquet":
-        dataset = ds.dataset(input_file, format="parquet")
+        dataset = ds.dataset(input_file, format="parquet", partitioning="hive")
         reader = dataset.to_batches(batch_size=chunk_size)
     else:
         with fs.open(input_file, "rb") as f:
@@ -107,6 +107,9 @@ def process_file_s3(input_file, chunk_size, file_type, num_threads):
 
     # Fusionner et sauvegarder les résultats finaux
     final_df = pd.concat(results, ignore_index=True)
+
+    final_df = treat_majic(final_df)
+
     save_to_s3(final_df, output_format, output_file)
 
 
@@ -138,7 +141,42 @@ def process_file_local(input_file, chunk_size, file_type, num_threads):
 
     # Fusionner et sauvegarder les résultats finaux
     final_df = pd.concat(results, ignore_index=True)
+
+    final_df = treat_majic(final_df)
+
     local_save(final_df, output_format, output_file)
+
+
+def treat_majic(final_df):
+    # Vérifie si ccodep existe et applique le padding
+    if "ccodep" in final_df.columns:
+        colonnes_ordre = [
+            "idl",
+            "dnvoiri",
+            "dindic",
+            "dvoilib",
+            "ccoriv",
+            "ccodep",
+            "ccocom",
+            "parcelle"
+        ]
+
+        final_df["ccodep"] = final_df["ccodep"].astype(str).str.zfill(2)
+
+        # Réorganise les colonnes (garde celles absentes à la fin)
+        colonnes_presentes = [col for col in colonnes_ordre if col in final_df.columns]
+        colonnes_restantes = [col for col in final_df.columns if col not in colonnes_presentes]
+        final_df = final_df[colonnes_presentes + colonnes_restantes]
+
+        # Condition booléenne
+        mask = (
+            ((final_df["ccodep"] == "97") & final_df["ccocom"].astype(str).str[0].isin(["1", "2", "3", "4", "6"]))
+            | (final_df["ccodep"] != "97")
+        )
+
+        final_df = final_df[mask]
+
+    return final_df
 
 
 if __name__ == "__main__":
