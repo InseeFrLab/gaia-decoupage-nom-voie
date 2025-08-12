@@ -82,28 +82,27 @@ def local_save(df, output_format, output_file):
 def process_file_s3(input_file, chunk_size, file_type, num_threads):
     """Lit un fichier en chunks et les traite en parallèle."""
     results = []
-    if file_type == "dossier_parquet":
-        dataset = ds.dataset(input_file, format="parquet", partitioning="hive")
-        reader = dataset.to_batches(batch_size=chunk_size)
-    else:
-        with fs.open(input_file, "rb") as f:
-            if file_type == "csv":
-                reader = pd.read_csv(f, chunksize=chunk_size, dtype=str, sep=sep, encoding=encodeur)
-            elif file_type == "parquet":
-                parquet_file = pq.ParquetFile(f)
-                reader = parquet_file.iter_batches(batch_size=chunk_size)
-            else:
-                raise ValueError(f"Type de fichier '{file_type}' non supporté")
+    with fs.open(input_file, "rb") as f:
+        if file_type == "csv":
+            reader = pd.read_csv(f, chunksize=chunk_size, dtype=str, sep=sep, encoding=encodeur)
+        elif file_type == "parquet":
+            parquet_file = pq.ParquetFile(f)
+            reader = parquet_file.iter_batches(batch_size=chunk_size)
+        elif file_type == "dossier_parquet":
+            dataset = ds.dataset(input_file, format="parquet", partitioning="hive")
+            reader = dataset.to_batches(batch_size=chunk_size)
+        else:
+            raise ValueError(f"Type de fichier '{file_type}' non supporté")
 
-    # Traitement parallèle des chunks
-    with ThreadPoolExecutor(max_workers=num_threads) as executor:
-        futures = {
-            executor.submit(process_chunk, chunk.to_pandas() if file_type in ["dossier_parquet", "parquet"] else chunk): chunk_id
-            for chunk_id, chunk in enumerate(reader)
-        }
+        # Traitement parallèle des chunks
+        with ThreadPoolExecutor(max_workers=num_threads) as executor:
+            futures = {
+                executor.submit(process_chunk, chunk.to_pandas() if file_type in ["dossier_parquet", "parquet"] else chunk): chunk_id
+                for chunk_id, chunk in enumerate(reader)
+            }
 
-        for future in tqdm(as_completed(futures), total=len(futures), desc="Traitement des chunks"):
-            results.append(future.result())
+            for future in tqdm(as_completed(futures), total=len(futures), desc="Traitement des chunks"):
+                results.append(future.result())
 
     # Fusionner et sauvegarder les résultats finaux
     final_df = pd.concat(results, ignore_index=True)
