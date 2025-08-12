@@ -69,7 +69,7 @@ Le fichier traité sera enregistré dans le même dossier avec le format choisi 
 Pour livrer un fichier traité en prod, le placer dans un des dossiers "Livraison" prévu à cet effet sur applishare : "\\pd_as_ge_d1_50\ge_data_pd\gaia_pd". 
 
 
-## En cas de fichier volumineux
+## En cas de fichier volumineux à mettre sur LS3
 
 Sur le s3, vous pouvez stocker votre fichier zippé à l'endroit souhaité. Pour le dézipper, il suffit dans un terminal bash de lancer ces commandes :  
 
@@ -95,6 +95,19 @@ cd src/
 ```
 
 Voilà, votre fichier dézippé est bien sur le s3. Vous pouvez lancer un découpage sur ce fichier dès à présent.
+
+## En cas de fichier volumineux à télécharger depuis LS3
+
+Dans un service VSCode :
+
+```{bash}
+mc cp s3/travail/projet-ml-moteur-identification-gaia/confidentiel/personnel_non_sensible/<fichier_a_zipper> .
+tar -czvf <fichier_a_zipper>.tar.gz <fichier_a_zipper>
+mc cp <fichier_a_zipper>.tar.gz s3/travail/projet-ml-moteur-identification-gaia/confidentiel/personnel_non_sensible/
+```
+
+Télécharger le fichier zippé et le dézipper deux fois d'affilé.
+
 
 ## Arrêter un traitement en cours
 
