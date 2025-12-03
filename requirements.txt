@@ -8,5 +8,5 @@ spacy==3.8.7
 transformers==4.54.1
 spacy-curated-transformers==0.2.2
 uvicorn==0.34.0
-fsspec==2025.5.1
+fsspec==2025.10.0
 torch==2.6.0
