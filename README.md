@@ -7,21 +7,6 @@ Installer le package :
 pip install decoupage_libelles
 ```
 
-Récupération du modèle NLP si utilisation hors intra Insee :
-```{bash}
-wget -P . https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.8.0-py3-none-any.zip
-unzip fr_dep_news_trf-3.8.0-py3-none-any.zip -d fr_dep_news_trf-3.8.0/
-rm fr_dep_news_trf-3.8.0-py3-none-any.zip
-```
-
-Récupération du modèle NLP si utilisation dans intra Insee :
-```{bash}
-curl "https://nexus.insee.fr/repository/huggingface-hosted/spacy/fr_dep_news_trf/model.tar.gz" --output "model.tar.gz"
-mkdir -p fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/
-tar -xzf model.tar.gz -C fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/
-rm model.tar.gz
-```
-
 Exemple d'utilisation du package
 ```{python}
 from decoupage_libelles import decoupe_voies
@@ -55,22 +40,14 @@ source ./setup.sh
 ```{bash}
 git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
 cd gaia-decoupage/
-wget -P . https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.8.0-py3-none-any.zip
-pip install -r requirements.txt
-unzip fr_dep_news_trf-3.8.0-py3-none-any.zip -d fr_dep_news_trf-3.8.0/
-rm fr_dep_news_trf-3.8.0-py3-none-any.zip
 cd src/
 ```
 
 ### En local
 Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichiers sur votre ordinateur en local.  
 ```{bash}
-git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
-cd gaia-decoupage/
-curl -o fr_dep_news_trf-3.8.0-py3-none-any.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.8.0-py3-none-any.zip
-pip install -r requirements.txt
-unzip fr_dep_news_trf-3.8.0-py3-none-any.zip -d fr_dep_news_trf-3.8.0/
-rm fr_dep_news_trf-3.8.0-py3-none-any.zip
+git clone https://github.com/InseeFrLab/gaia-decoupage-nom-voie/
+cd gaia-decoupage-nom-voie/
 cd src/
 ```
 
