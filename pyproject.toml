@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "decoupage_libelles"
-version = "0.0.5"
+version = "0.0.8"
 description = "Algorithme NLP de découpage d'un nom de voie en type de voie + nom de voie + complément adresse"
 authors = [
     { name="Raya Berova", email="raya.berova@insee.fr" }
