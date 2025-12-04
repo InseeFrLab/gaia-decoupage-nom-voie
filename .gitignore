@@ -9,6 +9,7 @@ poetry.lock
 .coverage
 coverage.xml
 requirements-dev.txt
-data/fr_dep_news_trf-3.8.0/
+fr_dep_news_trf-3.8.0/
 */venv
 nohup.txt
+src/decoupage_libelles.egg-info/

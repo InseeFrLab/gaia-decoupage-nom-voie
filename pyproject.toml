@@ -3,14 +3,15 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "decoupage-nom-voie"
-version = "0.1.0"
+name = "decoupage_libelles"
+version = "0.0.5"
 description = "Algorithme NLP de découpage d'un nom de voie en type de voie + nom de voie + complément adresse"
 authors = [
     { name="Raya Berova", email="raya.berova@insee.fr" }
 ]
 readme = "README.md"
 license = { text = "MIT" }
+requires-python = ">=3.13"
 dependencies = [
     "fastapi==0.110.0",
     "httpx==0.27.0",
@@ -25,6 +26,12 @@ dependencies = [
     "fsspec==2025.10.0",
     "torch==2.6.0"
 ]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+decoupage_libelles = ["data/*"]
 
 [project.urls]
 Homepage = "https://github.com/InseeFrLab/gaia-decoupage-nom-voie/"

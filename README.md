@@ -20,10 +20,10 @@ source ./setup.sh
 ```{bash}
 git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
 cd gaia-decoupage/
-wget -P data/ https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.8.0-py3-none-any.zip
+wget -P . https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.8.0-py3-none-any.zip
 pip install -r requirements.txt
-unzip data/fr_dep_news_trf-3.8.0-py3-none-any.zip -d data/fr_dep_news_trf-3.8.0/
-rm data/fr_dep_news_trf-3.8.0-py3-none-any.zip
+unzip fr_dep_news_trf-3.8.0-py3-none-any.zip -d fr_dep_news_trf-3.8.0/
+rm fr_dep_news_trf-3.8.0-py3-none-any.zip
 cd src/
 ```
 
@@ -32,10 +32,10 @@ Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichier
 ```{bash}
 git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
 cd gaia-decoupage/
-curl -o data/fr_dep_news_trf-3.8.0-py3-none-any.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.8.0-py3-none-any.zip
+curl -o fr_dep_news_trf-3.8.0-py3-none-any.zip https://minio.lab.sspcloud.fr/projet-gaia/fr_dep_news_trf-3.8.0-py3-none-any.zip
 pip install -r requirements.txt
-unzip data/fr_dep_news_trf-3.8.0-py3-none-any.zip -d data/fr_dep_news_trf-3.8.0/
-rm data/fr_dep_news_trf-3.8.0-py3-none-any.zip
+unzip fr_dep_news_trf-3.8.0-py3-none-any.zip -d fr_dep_news_trf-3.8.0/
+rm fr_dep_news_trf-3.8.0-py3-none-any.zip
 cd src/
 ```
 

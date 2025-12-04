@@ -1,5 +1,7 @@
 from dynaconf import Dynaconf, Validator
 import os
+from importlib.resources import files
+from pathlib import Path
 
 SETTINGS_FILE_FOR_DYNACONF = os.environ.get(
     "SETTINGS_FILE_FOR_DYNACONF",
@@ -22,9 +24,19 @@ settings = Dynaconf(
 )
 
 root = os.getcwd()
-settings.chemin_nlp_modele = root + "/../data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/"
-settings.chemin_type_voie = root + "/../data/type_voie.csv"
-settings.chemin_code2lib = root + "/../data/code2lib.json"
+
+candidate_paths = [
+    root + "/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/",
+    root + "/../fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/"
+]
+
+for path in candidate_paths:
+    if Path(path).exists():
+        settings.chemin_nlp_modele = path
+
+# package
+settings.chemin_type_voie = files("decoupage_libelles.data").joinpath("type_voie.csv")
+settings.chemin_code2lib = files("decoupage_libelles.data").joinpath("code2lib.json")
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
 # `settings_files` = Load these files in the order.

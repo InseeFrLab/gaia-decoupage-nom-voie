@@ -7,8 +7,8 @@ nom_modele="spacy/fr_dep_news_trf"
 # Téléchargement du modèle
 curl "https://nexus.insee.fr/repository/huggingface-hosted/${nom_modele}/model.tar.gz" --output "model.tar.gz"
 # Dezipp du dossier
-mkdir -p data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/
-tar -xzf model.tar.gz -C data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/
+mkdir -p fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/
+tar -xzf model.tar.gz -C fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/
 # Suppression modele zippé
 rm model.tar.gz
 
