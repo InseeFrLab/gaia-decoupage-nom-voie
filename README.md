@@ -40,7 +40,7 @@ source ./setup.sh
 ```{bash}
 git clone https://git.lab.sspcloud.fr/scrum-team-gaia/gaia-decoupage.git
 cd gaia-decoupage/
-cd src/
+source ./setup.sh
 ```
 
 ### En local
@@ -48,7 +48,7 @@ Attention : ce n'est pas recommandé de lancer ce traitement sur de gros fichier
 ```{bash}
 git clone https://github.com/InseeFrLab/gaia-decoupage-nom-voie/
 cd gaia-decoupage-nom-voie/
-cd src/
+source ./setup.sh
 ```
 
 ## Lancer le traitement d'un fichier
