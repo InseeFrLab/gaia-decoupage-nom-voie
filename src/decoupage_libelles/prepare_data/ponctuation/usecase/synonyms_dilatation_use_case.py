@@ -4,6 +4,7 @@ from typing import List
 
 class SynonymsDilatationUseCase:
     TYPE_VOIE_SYNONYMS = {
+        "ABE ABBAYE": "ABBAYE",
         "ANC CHEM":"ANCIEN CHEMIN",
         "ANCIEN CHEM":"ANCIEN CHEMIN",
         "ANC CHEMIN":"ANCIEN CHEMIN",
@@ -12,6 +13,7 @@ class SynonymsDilatationUseCase:
         "ANC ROUTE":"ANCIENNE ROUTE",
         "ANCIENNE RTE":"ANCIENNE ROUTE",
         "ANC VOIE":"ANCIENNE VOIE",
+        "CCIAL": "CENTRE COMMERCIAL",
         "C R":"CHEMIN RURAL",
         "GDE PCE":"GRAND PLACE",
         "GRANDE PLACE":"GRAND PLACE",
@@ -40,7 +42,7 @@ class SynonymsDilatationUseCase:
     }
 
     # TYPE_VOIE_ACRONYMS = {
-        # "ABE":"ABBAYE",
+        # "ABE ABBAYE":"ABBAYE",
         # "AER":"AERODROME",
         # "AERG":"AEROGARE",
         # "AERP":"AEROPORT",
