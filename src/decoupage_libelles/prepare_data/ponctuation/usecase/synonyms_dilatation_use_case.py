@@ -39,6 +39,16 @@ class SynonymsDilatationUseCase:
         'ZONE AMENAGEMENT DIFFERE': 'ZONE D AMENAGEMENT DIFFERE',
         "ZONE DACTIVITES ECONOMIQUES": "ZONE D ACTIVITES ECONOMIQUES",
         "ZONE ACTIVITES ECONOMIQUES": "ZONE D ACTIVITES ECONOMIQUES",
+        "AVE": "AVENUE",
+        "CALL": "CALLE",
+        "CALLADA": "CALLADA",
+        "FBG": "FAUBOURG",
+        "LIEUDIT": "LIEU DIT",
+        "LDT": "LIEU DIT",
+        "MOUL": "MOULIN",
+        "QRT": "QUARTIER",
+        "VLGE": "VILLAGE",
+        "VLG": "VILLAGE"
     }
 
     # TYPE_VOIE_ACRONYMS = {
