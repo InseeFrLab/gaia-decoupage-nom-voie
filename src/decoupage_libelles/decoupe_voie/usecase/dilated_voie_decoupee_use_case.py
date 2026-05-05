@@ -18,10 +18,37 @@ class DilatedVoieDecoupeeUseCase:
     }
 
     DILATATION_NOM_VOIE = {
-        "GAL": "GENERAL",
-        "PR": "PROFESSEUR",
-        "PT": "PETIT",
-        "PTE": "PETITE",
+        "ST":"SAINT",
+        "STE":"SAINTE",
+        "STS":"SAINTS",
+        "STES":"SAINTES",
+        "GD":"GRAND",
+        "GDE":"GRANDE",
+        "GDS":"GRANDS",
+        "GDES":"GRANDES",
+        "PTS":"PETITS",
+        "PTES":"PETITES",
+        "PAL": "PRINCIPAL",
+        "GEN":"GENERAL",
+        "GAL":"GENERAL",
+        "MAR":"MARECHAL",
+        "LT":"LIEUTENANT",
+        "CDT":"COMMANDANT",
+        "DR":"DOCTEUR",
+        "HT":"HAUT",
+        "HTE":"HAUTE",
+        "HTS":"HAUTS",
+        "HTES":"HAUTES",
+        "PDT":"PRESIDENT",
+        "SGT":"SERGENT",
+        "BTN": "BATAILLON",
+        "CIE": "COMPAGNIE",
+        "DIV": "DIVISION",
+        "DOC": "DOCTEUR",
+        "INFANT": "INFANTERIE",
+        "PROF": "PROFESSEUR",
+        "PROL": "PROLONGE",
+        "RGT": "REGIMENT"
     }
 
     DILATATION_COMPLEMENT = DILATATION_TYPE_VOIE | DILATATION_NOM_VOIE
