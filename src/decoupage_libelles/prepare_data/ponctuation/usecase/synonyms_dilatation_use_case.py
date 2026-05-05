@@ -308,8 +308,10 @@ class SynonymsDilatationUseCase:
         "GDES":"GRANDES",
         "PTS":"PETITS",
         "PTES":"PETITES",
+        "PAL": "PRINCIPAL",
         "GEN":"GENERAL",
-        "MAL":"MARECHAL",
+        "GAL":"GENERAL",
+        "MAR":"MARECHAL",
         "LT":"LIEUTENANT",
         "CDT":"COMMANDANT",
         "DR":"DOCTEUR",
@@ -318,7 +320,15 @@ class SynonymsDilatationUseCase:
         "HTS":"HAUTS",
         "HTES":"HAUTES",
         "PDT":"PRESIDENT",
-        "SGT":"SERGENT"
+        "SGT":"SERGENT",
+        "BTN": "BATAILLON",
+        "CIE": "COMPAGNIE",
+        "DIV": "DIVISION",
+        "DOC": "DOCTEUR",
+        "INFANT": "INFANTERIE",
+        "PROF": "PROFESSEUR",
+        "PROL": "PROLONGE",
+        "RGT": "REGIMENT"
         }
 
     def execute(self, label_preproc: List[str]) -> List[str]:
