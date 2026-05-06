@@ -1,41 +1,51 @@
 from decoupage_libelles.finders.find_type.model.type_finder_object import TypeFinderObject
-from decoupage_libelles.finders.find_type.usecase.remove_type_from_lib_and_types_use_case import RemoveTypeFromLibAndTypesUseCase
+from decoupage_libelles.finders.find_type.usecase.remove_type_from_lib_use_case import RemoveTypeFromLibUseCase
 
 
 class RemoveDuplicatesUseCase:
+    """
+    Gère le cas "ART ANCIENNE ROUTE" où deux types adjacents sont détectés
+    alors que l'un contient l'autre (ex: ROUTE et ANCIENNE ROUTE).
+
+    Quand deux occurrences du même canonique sont détectées à des positions
+    consécutives (distance == 1), on supprime la plus courte.
+    """
+
     def __init__(
         self,
-        remove_type_from_lib_and_types_use_case: RemoveTypeFromLibAndTypesUseCase = RemoveTypeFromLibAndTypesUseCase(),
+        remove_type_from_lib_use_case: RemoveTypeFromLibUseCase = RemoveTypeFromLibUseCase(),
     ):
-        self.remove_type_from_lib_and_types_use_case: RemoveTypeFromLibAndTypesUseCase = remove_type_from_lib_and_types_use_case
+        self.remove_type_from_lib = remove_type_from_lib_use_case
 
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
-        # "ART ANCIENNE ROUTE" --> "ANCIENNE ROUTE"
-        has_duplicated_types = set()
-        for __, occurence in type_finder_object.voie_big.types_and_positions.keys():
-            if occurence > 1:
-                has_duplicated_types.add(True)
+        positions = type_finder_object.voie_big.types_and_positions
+        doublons = {t for t, occ in positions if occ > 1}
 
-        if has_duplicated_types:
-            types_duplicates = [type_lib for type_lib, occurence in type_finder_object.voie_big.types_and_positions if occurence > 1]
+        for canonique in doublons:
+            pos1 = positions.get((canonique, 1))
+            pos2 = positions.get((canonique, 2))
+            if pos1 is None or pos2 is None:
+                continue
 
-            for type_duplicate in types_duplicates:
-                dict_two_positions = {"first": type_finder_object.voie_big.types_and_positions[(type_duplicate, 1)], "second": type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]}
-                dist_positions = dict_two_positions["second"][0] - dict_two_positions["first"][1]
+            # Adjacents ?
+            if pos2[0] - pos1[1] != 1:
+                continue
 
-                if dist_positions == 1:
-                    type_min_distance = min(dict_two_positions, key=lambda k: dict_two_positions[k][1] - dict_two_positions[k][0])
+            # Supprimer le plus court (moins de mots)
+            len1 = pos1[1] - pos1[0]
+            len2 = pos2[1] - pos2[0]
 
-                    position_start_min, position_end_min = dict_two_positions[type_min_distance]
-
-                    # Supprimer de la liste preproc le type codifié
-                    # Supprimer du dictionnaire le type codifié et décaler les positions
-                    type_finder_object.voie_big = self.remove_type_from_lib_and_types_use_case.execute(type_finder_object.voie_big, position_start_min, position_end_min)
-                    if type_min_distance == "first":
-                        del type_finder_object.voie_big.types_and_positions[(type_duplicate, 1)]
-                        type_finder_object.voie_big.types_and_positions[(type_duplicate, 1)] = type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
-                        del type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
-                    else:
-                        del type_finder_object.voie_big.types_and_positions[(type_duplicate, 2)]
+            if len1 <= len2:
+                type_finder_object.voie_big = self.remove_type_from_lib.execute(
+                    type_finder_object.voie_big, pos1[0], pos1[1]
+                )
+                del positions[(canonique, 1)]
+                # Renommer l'occurrence 2 en 1
+                positions[(canonique, 1)] = positions.pop((canonique, 2))
+            else:
+                type_finder_object.voie_big = self.remove_type_from_lib.execute(
+                    type_finder_object.voie_big, pos2[0], pos2[1]
+                )
+                del positions[(canonique, 2)]
 
         return type_finder_object

@@ -1,13 +1,13 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List, Optional
 
 from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
-from decoupage_libelles.finders.find_type.usecase.generate_type_finder_utils_use_case import TypeFinderUtils
+from decoupage_libelles.finders.find_type.model.type_finder_utils import TypeFinderUtils
 
 
 @dataclass
 class TypeFinderObject:
     voie_big: InfoVoie
     type_data: TypeFinderUtils
-    voie_sep: Optional[List[str]] = None
-    voie: Optional[str] = None
+    voie_sep: Optional[List[str]] = field(default_factory=list)
+    voie: Optional[str] = ""
