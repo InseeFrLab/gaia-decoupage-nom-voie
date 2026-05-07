@@ -11,7 +11,9 @@ class GenerateTypeFinderUtilsUseCase:
     Chaque variante (acronyme ou forme développée) est associée à un libellé
     canonique (la forme longue retenue comme référence).
 
-    Plus besoin de CODE intermédiaire : le libellé canonique est la clé pivot.
+    Les lignes CHEMIN/CHEMIN, RUE/RUE etc. (canonique = variante) sont désormais
+    inscrites directement dans le CSV — le code n'a plus besoin de les ajouter
+    lui-même (Option A supprimée).
     """
 
     def __init__(
@@ -34,22 +36,12 @@ class GenerateTypeFinderUtilsUseCase:
             variante_raw = row["VARIANTE"]
             canonique = row["LIBELLE_CANONIQUE"]
 
-            # Prétraitement de la variante
             info = InfoVoie(variante_raw)
             info = self.ponctuation_preprocessor_use_case.execute(info)
             variante_preproc = " ".join(info.label_preproc)
 
             variante2preproc[variante_raw] = variante_preproc
             variante2canonique[variante_preproc] = canonique
-
-        # Option A : le canonique se reconnaît toujours lui-même,
-        # sans avoir à l'inscrire explicitement dans le CSV.
-        for canonique in type_finder_utils.canoniques:
-            info = InfoVoie(canonique)
-            info = self.ponctuation_preprocessor_use_case.execute(info)
-            canonique_preproc = " ".join(info.label_preproc)
-            variante2preproc.setdefault(canonique, canonique_preproc)
-            variante2canonique.setdefault(canonique_preproc, canonique)
 
         type_finder_utils.variante2preproc = variante2preproc
         type_finder_utils.variante2canonique = variante2canonique

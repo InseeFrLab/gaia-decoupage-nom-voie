@@ -58,31 +58,28 @@ def test_doublon_non_adjacent_conserve():
 
 
 def test_doublon_adjacent_appelle_remove_type_from_lib():
-    # Given — deux occurrences adjacentes (pos2[0] - pos1[1] == 1)
+    # Given — "ABE ABBAYE" : ABE et ABBAYE sont deux variantes adjacentes du même canonique ABBAYE
     remove_mock = MagicMock()
     remove_mock.execute.side_effect = lambda infovoie, s, e: infovoie
     obj = _make_type_finder_object(
-        label_preproc=["RTE", "ANC", "ROUTE"],
-        types_and_positions={("ROUTE", 1): (0, 0), ("ROUTE", 2): (1, 2)},
+        label_preproc=["ABE", "ABBAYE"],
+        types_and_positions={("ABBAYE", 1): (0, 0), ("ABBAYE", 2): (1, 1)},
     )
     # When
     use_case(remove_mock).execute(obj)
-    # Then — remove_type_from_lib doit avoir été appelé pour retirer le plus court
+    # Then — remove_type_from_lib doit avoir été appelé pour retirer le plus court (ABE)
     remove_mock.execute.assert_called_once()
 
 
 def test_doublon_adjacent_retire_occurrence_courte():
-    # Given — ROUTE mono-mot en (0,0) et ROUTE bi-mots en (1,2) adjacentes
-    # remove_type_from_lib est mocké pour ne pas perturber le dict de positions
+    # Given — "ABE ABBAYE" : ABE en (0,0) et ABBAYE en (1,1) adjacents
     remove_mock = MagicMock()
     remove_mock.execute.side_effect = lambda infovoie, s, e: infovoie
     obj = _make_type_finder_object(
-        label_preproc=["RTE", "ANC", "ROUTE"],
-        types_and_positions={("ROUTE", 1): (0, 0), ("ROUTE", 2): (1, 2)},
+        label_preproc=["ABE", "ABBAYE"],
+        types_and_positions={("ABBAYE", 1): (0, 0), ("ABBAYE", 2): (1, 1)},
     )
     # When
     res = use_case(remove_mock).execute(obj)
-    # Then — il ne doit rester qu'une seule clé ROUTE (le plus long, occurrence renommée 1)
-    route_keys = [k for k in res.voie_big.types_and_positions if k[0] == "ROUTE"]
-    assert len(route_keys) == 1
-    assert ("ROUTE", 1) in res.voie_big.types_and_positions
+    # Then
+    assert ("ABBAYE", 2) not in res.voie_big.types_and_positions

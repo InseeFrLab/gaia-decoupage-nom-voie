@@ -14,19 +14,29 @@ def use_case(
 
 
 def _mock_preprocessor(mapping: dict) -> MagicMock:
-    """Crée un mock du preprocesseur qui retourne label_preproc selon le mapping fourni."""
+    """
+    Mock du preprocesseur : lit label_origin (1er arg positionnel de InfoVoie)
+    pour retourner la valeur correspondante dans le mapping.
+    """
     def side_effect(infovoie):
-        infovoie.label_preproc = mapping.get(infovoie.label_origin, infovoie.label_origin.upper().split())
+        key = infovoie.label_origin
+        infovoie.label_preproc = mapping.get(key, key.upper().split() if key else [])
         return infovoie
     mock = MagicMock()
     mock.execute.side_effect = side_effect
     return mock
 
 
+def _df(*rows) -> pd.DataFrame:
+    """Crée un DataFrame LIBELLE_CANONIQUE/VARIANTE à partir de tuples (canonique, variante)."""
+    return pd.DataFrame(rows, columns=["LIBELLE_CANONIQUE", "VARIANTE"])
+
+
 def test_canoniques_extraits():
-    # Given
-    preprocessor = _mock_preprocessor({"AV": ["AV"], "RUE": ["RUE"], "AVENUE": ["AVENUE"], "R": ["R"]})
-    type_finder_utils = TypeFinderUtils()
+    # Given — le CSV contient AVENUE et RUE
+    df = _df(("AVENUE", "AV"), ("AVENUE", "AVENUE"), ("RUE", "R"), ("RUE", "RUE"))
+    preprocessor = _mock_preprocessor({"AV": ["AV"], "AVENUE": ["AVENUE"], "R": ["R"], "RUE": ["RUE"]})
+    type_finder_utils = TypeFinderUtils(type_voie_df=df)
     # When
     res = use_case(preprocessor).execute(type_finder_utils)
     # Then
@@ -36,8 +46,9 @@ def test_canoniques_extraits():
 
 def test_variante2canonique_depuis_csv():
     # Given
+    df = _df(("AVENUE", "AV"), ("AVENUE", "AVE"), ("AVENUE", "AVENUE"))
     preprocessor = _mock_preprocessor({"AV": ["AV"], "AVE": ["AVE"], "AVENUE": ["AVENUE"]})
-    type_finder_utils = TypeFinderUtils()
+    type_finder_utils = TypeFinderUtils(type_voie_df=df)
     # When
     res = use_case(preprocessor).execute(type_finder_utils)
     # Then
@@ -45,23 +56,39 @@ def test_variante2canonique_depuis_csv():
     assert res.variante2canonique["AVE"] == "AVENUE"
 
 
-def test_option_a_canonique_se_reconnait_lui_meme():
-    # Given
+def test_canonique_se_reconnait_lui_meme_via_csv():
+    # Given — la ligne AVENUE/AVENUE est dans le CSV (plus dans le code)
+    df = _df(("AVENUE", "AV"), ("AVENUE", "AVENUE"))
     preprocessor = _mock_preprocessor({"AV": ["AV"], "AVENUE": ["AVENUE"]})
-    type_finder_utils = TypeFinderUtils()
+    type_finder_utils = TypeFinderUtils(type_voie_df=df)
     # When
     res = use_case(preprocessor).execute(type_finder_utils)
     # Then
     assert res.variante2canonique["AVENUE"] == "AVENUE"
 
 
+def test_canonique_absent_du_csv_non_ajoute():
+    # Given — la ligne AVENUE/AVENUE est absente du CSV (Option A supprimée)
+    df = _df(("AVENUE", "AV"))
+    preprocessor = _mock_preprocessor({"AV": ["AV"], "AVENUE": ["AVENUE"]})
+    type_finder_utils = TypeFinderUtils(type_voie_df=df)
+    # When
+    res = use_case(preprocessor).execute(type_finder_utils)
+    # Then — AVENUE n'est pas une variante connue car absent du CSV
+    assert "AVENUE" not in res.variante2canonique
+
+
 def test_variantes_mono_et_multi_separes():
     # Given
+    df = _df(
+        ("AVENUE", "AV"), ("AVENUE", "AVENUE"),
+        ("ANCIEN CHEMIN", "ANC CHEM"), ("ANCIEN CHEMIN", "ANCIEN CHEMIN"),
+    )
     preprocessor = _mock_preprocessor({
-        "AV": ["AV"], "ANC CHEM": ["ANC", "CHEM"],
-        "AVENUE": ["AVENUE"], "ANCIEN CHEMIN": ["ANCIEN", "CHEMIN"],
+        "AV": ["AV"], "AVENUE": ["AVENUE"],
+        "ANC CHEM": ["ANC", "CHEM"], "ANCIEN CHEMIN": ["ANCIEN", "CHEMIN"],
     })
-    type_finder_utils = TypeFinderUtils()
+    type_finder_utils = TypeFinderUtils(type_voie_df=df)
     # When
     res = use_case(preprocessor).execute(type_finder_utils)
     # Then
@@ -71,11 +98,12 @@ def test_variantes_mono_et_multi_separes():
     assert "ANCIEN CHEMIN" in res.variantes_multi
 
 
-def test_preprocesseur_appele_pour_chaque_variante_et_canonique():
-    # Given
+def test_preprocesseur_appele_pour_chaque_variante():
+    # Given — 2 variantes dans le CSV
+    df = _df(("AVENUE", "AV"), ("AVENUE", "AVENUE"))
     preprocessor = _mock_preprocessor({"AV": ["AV"], "AVENUE": ["AVENUE"]})
-    type_finder_utils = TypeFinderUtils()
+    type_finder_utils = TypeFinderUtils(type_voie_df=df)
     # When
     use_case(preprocessor).execute(type_finder_utils)
-    # Then — appelé au moins une fois par variante + une fois par canonique
-    assert preprocessor.execute.call_count >= 2
+    # Then — appelé exactement une fois par ligne du CSV
+    assert preprocessor.execute.call_count == 2
