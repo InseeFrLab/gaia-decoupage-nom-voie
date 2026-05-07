@@ -2,9 +2,9 @@ from unittest.mock import MagicMock
 
 import pandas as pd
 
-from decoupage_libelles.finders.find_type.model.type_finder_utils import TypeFinderUtils
-from decoupage_libelles.prepare_data.ponctuation.usecase.ponctuation_preprocessor_use_case import PonctuationPreprocessorUseCase
-from decoupage_libelles.finders.find_type.usecase.generate_type_finder_utils_use_case import GenerateTypeFinderUtilsUseCase
+from decoupage_libelles.finders.type.model.type_finder_utils import TypeFinderUtils
+from decoupage_libelles.preprocessing.text_normalization.usecase.ponctuation_preprocessor_use_case import PonctuationPreprocessorUseCase
+from decoupage_libelles.finders.type.usecase.generate_type_finder_utils_use_case import GenerateTypeFinderUtilsUseCase
 
 
 def use_case(

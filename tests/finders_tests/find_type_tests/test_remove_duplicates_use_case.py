@@ -1,10 +1,10 @@
 from unittest.mock import MagicMock
 
-from decoupage_libelles.finders.find_type.model.type_finder_object import TypeFinderObject
-from decoupage_libelles.finders.find_type.model.type_finder_utils import TypeFinderUtils
-from decoupage_libelles.finders.find_type.usecase.remove_type_from_lib_use_case import RemoveTypeFromLibUseCase
-from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
-from decoupage_libelles.finders.find_type.usecase.remove_duplicates_use_case import RemoveDuplicatesUseCase
+from decoupage_libelles.finders.type.model.type_finder_object import TypeFinderObject
+from decoupage_libelles.finders.type.model.type_finder_utils import TypeFinderUtils
+from decoupage_libelles.finders.type.usecase.remove_type_from_lib_use_case import RemoveTypeFromLibUseCase
+from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
+from decoupage_libelles.finders.type.usecase.remove_duplicates_use_case import RemoveDuplicatesUseCase
 
 
 def use_case(

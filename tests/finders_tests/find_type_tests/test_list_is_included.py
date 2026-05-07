@@ -1,4 +1,4 @@
-from decoupage_libelles.finders.find_type.usecase.list_is_included import list_is_included
+from decoupage_libelles.finders.type.usecase.list_is_included import list_is_included
 
 
 def test_inclus_au_debut():

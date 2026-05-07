@@ -1,0 +1,37 @@
+# Configuration du découpage de libellés de voies
+# Modifier ce fichier avant de lancer le traitement.
+
+# Plateforme d'exécution : "ls3", "datalab" ou "local"
+platform: local
+
+input:
+  # Dossier contenant le fichier à traiter
+  # - Sur LS3/Datalab : chemin S3 sans slash final, ex: "projet-gaia/decoupage"
+  # - En local        : chemin relatif ou absolu,   ex: "data"
+  directory: data
+
+  # Nom du fichier à traiter (csv, parquet, ou dossier parquet)
+  filename: voies.csv
+
+  # Séparateur CSV (ignoré si parquet)
+  sep: ","
+
+  # Encodage CSV (ignoré si parquet)
+  encoding: utf-8
+
+output:
+  # Format de sortie : "csv" ou "parquet"
+  format: parquet
+
+# Colonne(s) contenant le libellé de voie à découper.
+# - Une seule colonne  : ["nom_voie_complet"]
+# - Plusieurs à concat : ["id_type_voie", "nom_voie_norm"]
+voie_columns:
+  - nom_voie_complet
+
+# Taille des chunks traités en parallèle
+chunk_size: 10000
+
+# Nombre de threads parallèles
+# Recommandé : 20 sur Datalab/LS3, 4 en local
+num_threads: 4

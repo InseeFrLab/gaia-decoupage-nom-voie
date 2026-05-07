@@ -1,7 +1,7 @@
-from decoupage_libelles.finders.find_type.model.type_finder_object import TypeFinderObject
-from decoupage_libelles.finders.find_type.model.type_finder_utils import TypeFinderUtils
-from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
-from decoupage_libelles.finders.find_type.usecase.update_occurrences_by_order_use_case import UpdateOccurrencesByOrderUseCase
+from decoupage_libelles.finders.type.model.type_finder_object import TypeFinderObject
+from decoupage_libelles.finders.type.model.type_finder_utils import TypeFinderUtils
+from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
+from decoupage_libelles.finders.type.usecase.update_occurrences_by_order_use_case import UpdateOccurrencesByOrderUseCase
 
 
 def _make_type_finder_object(types_and_positions: dict) -> TypeFinderObject:

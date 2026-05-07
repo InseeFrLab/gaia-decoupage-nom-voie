@@ -1,13 +1,13 @@
 from unittest.mock import MagicMock
 
-from decoupage_libelles.finders.find_type.model.type_finder_object import TypeFinderObject
-from decoupage_libelles.finders.find_type.model.type_finder_utils import TypeFinderUtils
-from decoupage_libelles.finders.find_type.usecase.detect_types_use_case import DetectTypesUseCase
-from decoupage_libelles.finders.find_type.usecase.update_occurrences_by_order_use_case import UpdateOccurrencesByOrderUseCase
-from decoupage_libelles.finders.find_type.usecase.remove_duplicates_use_case import RemoveDuplicatesUseCase
-from decoupage_libelles.finders.find_type.usecase.remove_wrong_detections_use_case import RemoveWrongDetectionsUseCase
-from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
-from decoupage_libelles.finders.find_type.usecase.type_finder_use_case import TypeFinderUseCase
+from decoupage_libelles.finders.type.model.type_finder_object import TypeFinderObject
+from decoupage_libelles.finders.type.model.type_finder_utils import TypeFinderUtils
+from decoupage_libelles.finders.type.usecase.detect_types_use_case import DetectTypesUseCase
+from decoupage_libelles.finders.type.usecase.update_occurrences_by_order_use_case import UpdateOccurrencesByOrderUseCase
+from decoupage_libelles.finders.type.usecase.remove_duplicates_use_case import RemoveDuplicatesUseCase
+from decoupage_libelles.finders.type.usecase.remove_wrong_detections_use_case import RemoveWrongDetectionsUseCase
+from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
+from decoupage_libelles.finders.type.usecase.type_finder_use_case import TypeFinderUseCase
 
 
 def use_case(

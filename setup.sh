@@ -1,14 +1,14 @@
 pip install -r requirements.txt
 # pip install spacy-curated-transformers==2.0.0 --no-deps # utile si une dépendance a un conflit et qu'on installe en amont une version qui fonctionne
-python -m unittest
+python -m pytest tests/ -v
 
 # Nom du modèle dans dépôt Nexus
 nom_modele="spacy/fr_dep_news_trf"
 # Téléchargement du modèle
 curl "https://nexus.insee.fr/repository/huggingface-hosted/${nom_modele}/model.tar.gz" --output "model.tar.gz"
 # Dezipp du dossier
-mkdir -p data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/
-tar -xzf model.tar.gz -C data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/
+mkdir -p src/decoupage_libelles/synonym_data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/
+tar -xzf model.tar.gz -C src/decoupage_libelles/synonym_data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/
 # Suppression modele zippé
 rm model.tar.gz
 

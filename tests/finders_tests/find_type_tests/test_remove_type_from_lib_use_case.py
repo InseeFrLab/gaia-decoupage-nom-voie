@@ -1,5 +1,5 @@
-from decoupage_libelles.informations_on_libelle_voie.model.infovoie import InfoVoie
-from decoupage_libelles.finders.find_type.usecase.remove_type_from_lib_use_case import RemoveTypeFromLibUseCase
+from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
+from decoupage_libelles.finders.type.usecase.remove_type_from_lib_use_case import RemoveTypeFromLibUseCase
 
 
 def _make_infovoie(label_preproc: list, types_and_positions: dict) -> InfoVoie:
