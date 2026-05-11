@@ -2,7 +2,6 @@ from unittest.mock import MagicMock
 
 from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
 from decoupage_libelles.config.type_voie_decoupage_launcher import TypeVoieDecoupageLauncher
-from decoupage_libelles.finders.type.model.type_finder_utils import TypeFinderUtils
 
 
 def _make_voie(nb_types: int) -> InfoVoie:
@@ -18,8 +17,7 @@ def launcher(
     one_type=MagicMock(),
     two_plus=MagicMock(),
 ) -> TypeVoieDecoupageLauncher:
-    tfu = TypeFinderUtils(type_voie_df=None)
-    return TypeVoieDecoupageLauncher(preprocessor, no_type, one_type, two_plus, tfu)
+    return TypeVoieDecoupageLauncher(preprocessor, no_type, one_type, two_plus)
 
 
 def test_routage_0_type():
@@ -97,38 +95,3 @@ def test_liste_vide():
     one_mock.execute.assert_not_called()
     two_mock.execute.assert_not_called()
     assert res == []
-
-
-def test_preprocessing_appele_avec_type_finder_utils():
-    # Given — vérifier que le TypeFinderUtils est bien passé au preprocesseur
-    voie = _make_voie(1)
-    prep_mock = MagicMock(); prep_mock.execute.return_value = [voie]
-    one_mock = MagicMock(); one_mock.execute.return_value = []
-    tfu_mock = MagicMock()
-    lnch = TypeVoieDecoupageLauncher(prep_mock, MagicMock(), one_mock, MagicMock(), tfu_mock)
-    # When
-    lnch.execute(["CHE DES SEMAPHORES"])
-    # Then — le preprocesseur reçoit bien le TypeFinderUtils
-    call_args = prep_mock.execute.call_args
-    assert call_args[0][1] is tfu_mock
-
-
-def test_infos_voie_creees_pour_chaque_libelle():
-    # Given
-    prep_mock = MagicMock()
-    captured_voies = []
-    def capture(voies, tfu):
-        captured_voies.extend(voies)
-        for v in voies:
-            v.types_and_positions = {}
-        return voies
-    prep_mock.execute.side_effect = capture
-    no_mock = MagicMock(); no_mock.execute.return_value = []
-    tfu = TypeFinderUtils(type_voie_df=None)
-    lnch = TypeVoieDecoupageLauncher(prep_mock, no_mock, MagicMock(), MagicMock(), tfu)
-    # When
-    lnch.execute(["RUE HOCHE", "AVENUE VERDIER", "CHEMIN DES PINS"])
-    # Then — 3 InfoVoie créées avec le bon label_origin
-    assert len(captured_voies) == 3
-    assert captured_voies[0].label_origin == "RUE HOCHE"
-    assert captured_voies[2].label_origin == "CHEMIN DES PINS"
