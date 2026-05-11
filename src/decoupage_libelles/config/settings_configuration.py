@@ -21,10 +21,11 @@ settings = Dynaconf(
     ],
 )
 
-root = os.getcwd()
-settings.chemin_nlp_modele = root + "/decoupage_libelles/synonym_data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/"
-settings.chemin_type_voie = root + "/decoupage_libelles/synonym_data/type_voie_synonyms.csv"
-settings.chemin_synonymes_extra = root + "/decoupage_libelles/synonym_data/extra_synonyms.csv"
+here = os.path.dirname(os.path.abspath(__file__))
+root = os.path.dirname(here)
+settings.chemin_nlp_modele = root + "/synonym_data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/"
+settings.chemin_type_voie = root + "/synonym_data/type_voie_synonyms.csv"
+settings.chemin_synonymes_extra = root + "/synonym_data/extra_synonyms.csv"
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
 # `settings_files` = Load these files in the order.
