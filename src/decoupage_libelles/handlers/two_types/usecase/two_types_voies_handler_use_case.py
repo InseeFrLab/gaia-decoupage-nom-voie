@@ -11,6 +11,7 @@ from decoupage_libelles.handlers.two_types.usecase.handle_two_types_complement_u
 from decoupage_libelles.handlers.two_types.usecase.handle_two_types_voie_fictive_use_case import HandleTwoTypesVoieFictiveUseCase
 from decoupage_libelles.handlers.two_types.usecase.handle_has_type_in_first_pos_use_case import HandleHasTypeInFirstPosUseCase
 from decoupage_libelles.handlers.two_types.usecase.handle_no_type_in_first_pos_use_case import HandleNoTypeInFirstPosUseCase
+from decoupage_libelles.information_generators.libelle.usecase.generate_information_on_lib_use_case import GenerateInformationOnLibUseCase
 
 
 class TwoTypesVoiesHandlerUseCase:
@@ -22,22 +23,22 @@ class TwoTypesVoiesHandlerUseCase:
         handle_two_types_voie_fictive_use_case: HandleTwoTypesVoieFictiveUseCase = HandleTwoTypesVoieFictiveUseCase(),
         handle_has_type_in_first_pos_use_case: HandleHasTypeInFirstPosUseCase = HandleHasTypeInFirstPosUseCase(),
         handle_no_type_in_first_pos_use_case: HandleNoTypeInFirstPosUseCase = HandleNoTypeInFirstPosUseCase(),
+        generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = GenerateInformationOnLibUseCase(),
     ):
-        self.apply_complement_finder_on_voies_use_case = apply_complement_finder_on_voies_use_case
-        self.apply_voie_fictive_finder_on_voies_use_case = apply_voie_fictive_finder_on_voies_use_case
-        self.handle_two_types_complement_use_case = handle_two_types_complement_use_case
-        self.handle_two_types_voie_fictive_use_case = handle_two_types_voie_fictive_use_case
-        self.handle_has_type_in_first_pos_use_case = handle_has_type_in_first_pos_use_case
-        self.handle_no_type_in_first_pos_use_case = handle_no_type_in_first_pos_use_case
+        self.apply_complement_finder_on_voies_use_case: ApplyComplementFinderOnVoiesUseCase = apply_complement_finder_on_voies_use_case
+        self.apply_voie_fictive_finder_on_voies_use_case: ApplyVoieFictiveFinderOnVoiesUseCase = apply_voie_fictive_finder_on_voies_use_case
+        self.handle_two_types_complement_use_case: HandleTwoTypesComplUseCase = handle_two_types_complement_use_case
+        self.handle_two_types_voie_fictive_use_case: HandleTwoTypesVoieFictiveUseCase = handle_two_types_voie_fictive_use_case
+        self.handle_has_type_in_first_pos_use_case: HandleHasTypeInFirstPosUseCase = handle_has_type_in_first_pos_use_case
+        self.handle_no_type_in_first_pos_use_case: HandleNoTypeInFirstPosUseCase = handle_no_type_in_first_pos_use_case
+        self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
 
     def execute(self, voies: List[InfoVoie]) -> List[VoieDecoupee]:
         voies = [voie for voie in voies if len(voie.types_and_positions) == 2]
-        voies_treated: List[VoieDecoupee] = []
 
-        logging.info("2 types — recherche d'un complément")
-        voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(
-            voies, ComplementFinderUseCase.TYPES_COMPLEMENT_1_2
-        )
+        logging.info("Gestion des voies avec complément")
+        voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_1_2)
+        voies_treated = []
         for voie_compl in voies_complement:
             voie_treated, voie_to_treat_two_types = self.handle_two_types_complement_use_case.execute(voie_compl)
             if voie_treated:
@@ -45,20 +46,22 @@ class TwoTypesVoiesHandlerUseCase:
             else:
                 voies.append(voie_to_treat_two_types)
 
-        logging.info("2 types — recherche de voie fictive")
-        voies_fictives, voies = self.apply_voie_fictive_finder_on_voies_use_case.execute(
-            voies, VoieFictiveFinderUseCase.VOIES_FICTIVES_2
-        )
+        logging.info("Gestion des voies fictives")
+        voies_fictives, voies = self.apply_voie_fictive_finder_on_voies_use_case.execute(voies, VoieFictiveFinderUseCase.VOIES_FICTIVES_2)
         for voie_fictive in voies_fictives:
             voies_treated.append(self.handle_two_types_voie_fictive_use_case.execute(voie_fictive))
 
-        logging.info("2 types — cas général")
         for voie in voies:
-            # CORRECTION faille : branchement clair et déterministe, sans condition redondante
+            voie_treated = None
             if voie.has_type_in_first_pos:
+                logging.info("Gestion des voies avec un type en première position")
+                logging.info("Étape longue")
                 voie_treated = self.handle_has_type_in_first_pos_use_case.execute(voie)
             else:
-                voie_treated = self.handle_no_type_in_first_pos_use_case.execute(voie)
+                logging.info("Gestion des voies sans type en première position")
+                voie_treated = self.handle_no_type_in_first_pos_use_case.execute(voie) if not voie_treated else voie_treated
+
             voies_treated.append(voie_treated)
 
         return voies_treated
+

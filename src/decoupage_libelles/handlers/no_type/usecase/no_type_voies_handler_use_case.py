@@ -16,23 +16,21 @@ class NoTypeVoiesHandlerUseCase:
         handle_no_type_complement_use_case: HandleNoTypeComplUseCase = HandleNoTypeComplUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
     ):
-        self.apply_complement_finder_on_voies_use_case = apply_complement_finder_on_voies_use_case
-        self.handle_no_type_complement_use_case = handle_no_type_complement_use_case
-        self.assign_lib_use_case = assign_lib_use_case
+        self.apply_complement_finder_on_voies_use_case: ApplyComplementFinderOnVoiesUseCase = apply_complement_finder_on_voies_use_case
+        self.handle_no_type_complement_use_case: HandleNoTypeComplUseCase = handle_no_type_complement_use_case
+        self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
 
     def execute(self, voies: List[InfoVoie]) -> List[VoieDecoupee]:
+        logging.info("Gestion des voies avec complément")
+        voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_0)
         voies_treated = []
-
-        logging.info("Gestion des voies sans type — recherche d'un complément")
-        voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(
-            voies, ComplementFinderUseCase.TYPES_COMPLEMENT_0
-        )
         for voie_compl in voies_complement:
             voies_treated.append(self.handle_no_type_complement_use_case.execute(voie_compl))
 
-        logging.info("Gestion des voies sans type ni complément → lib")
+        logging.info("Gestion du reste des voies")
         for voie in voies:
-            # 'LES HARDONNIERES' → lib
+            # 'LES HARDONNIERES'
+            # lib
             voies_treated.append(self.assign_lib_use_case.execute(voie))
 
         return voies_treated

@@ -9,44 +9,42 @@ from decoupage_libelles.handlers.two_types.usecase.compl_two_types_long_or_agglo
 from decoupage_libelles.handlers.two_types.usecase.compl_first_type_compl_use_case import ComplFirstTypeComplUseCase
 from decoupage_libelles.handlers.two_types.usecase.compl_second_type_compl_use_case import ComplSecondTypeComplUseCase
 from decoupage_libelles.handlers.two_types.usecase.compl_third_type_compl_use_case import ComplThirdTypeComplUseCase
+from decoupage_libelles.handlers.two_types.usecase.compl_immeuble_before_type_use_case import ComplImmeubleBeforeTypeUseCase
 
 
 class HandleTwoTypesComplUseCase:
-    """
-    Gère les voies à 2 types détectés qui contiennent un type complément.
-
-    Note : ComplImmeubleBeforeTypeUseCase a été retiré — il était commenté dans
-    l'ancienne version et donc non exécuté. La logique reste inchangée.
-    """
-
     def __init__(
         self,
         generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = GenerateInformationOnLibUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
+        compl_immeuble_before_type_use_case: ComplImmeubleBeforeTypeUseCase = ComplImmeubleBeforeTypeUseCase(),
         compl_two_types_long_or_agglo_use_case: ComplTwoTypesLongOrAggloUseCase = ComplTwoTypesLongOrAggloUseCase(),
         compl_first_type_compl_use_case: ComplFirstTypeComplUseCase = ComplFirstTypeComplUseCase(),
         compl_second_type_compl_use_case: ComplSecondTypeComplUseCase = ComplSecondTypeComplUseCase(),
         compl_third_type_compl_use_case: ComplThirdTypeComplUseCase = ComplThirdTypeComplUseCase(),
     ):
-        self.generate_information_on_lib_use_case = generate_information_on_lib_use_case
-        self.assign_lib_use_case = assign_lib_use_case
-        self.compl_two_types_long_or_agglo_use_case = compl_two_types_long_or_agglo_use_case
-        self.compl_first_type_compl_use_case = compl_first_type_compl_use_case
-        self.compl_second_type_compl_use_case = compl_second_type_compl_use_case
-        self.compl_third_type_compl_use_case = compl_third_type_compl_use_case
+        self.generate_information_on_lib_use_case: GenerateInformationOnLibUseCase = generate_information_on_lib_use_case
+        self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
+        self.compl_immeuble_before_type_use_case: ComplImmeubleBeforeTypeUseCase = compl_immeuble_before_type_use_case
+        self.compl_two_types_long_or_agglo_use_case: ComplTwoTypesLongOrAggloUseCase = compl_two_types_long_or_agglo_use_case
+        self.compl_first_type_compl_use_case: ComplFirstTypeComplUseCase = compl_first_type_compl_use_case
+        self.compl_second_type_compl_use_case: ComplSecondTypeComplUseCase = compl_second_type_compl_use_case
+        self.compl_third_type_compl_use_case: ComplThirdTypeComplUseCase = compl_third_type_compl_use_case
 
-    def execute(self, voie_compl: InfoVoie) -> Tuple[Optional[VoieDecoupee], Optional[InfoVoie]]:
+    def execute(self, voie_compl: InfoVoie) -> VoieDecoupee:
         self.generate_information_on_lib_use_case.execute(voie_compl, apply_nlp_model=False)
 
-        # Cascade de 4 use cases spécialisés — le premier qui retourne un résultat gagne.
-        # En fallback : assign_lib (tout en libellé).
-        voie_treated = (
-            self.compl_two_types_long_or_agglo_use_case.execute(voie_compl)
-            or self.compl_first_type_compl_use_case.execute(voie_compl)
-            or self.compl_second_type_compl_use_case.execute(voie_compl)
-            or self.compl_third_type_compl_use_case.execute(voie_compl)
-            or self.assign_lib_use_case.execute(voie_compl)
-        )
+        # voie_to_treat_by_compl, voie_to_treat_two_types = self.compl_immeuble_before_type_use_case.execute(voie_compl)
 
-        # Deuxième valeur de retour : voie à repasser en handler 2 types (None = pas nécessaire)
-        return voie_treated, None
+        voie_to_treat_by_compl = voie_compl
+        voie_to_treat_two_types = None
+
+        voie_treated = None
+        if voie_to_treat_by_compl:
+            voie_treated = self.compl_two_types_long_or_agglo_use_case.execute(voie_to_treat_by_compl)
+            voie_treated = self.compl_first_type_compl_use_case.execute(voie_to_treat_by_compl) if not voie_treated else voie_treated
+            voie_treated = self.compl_second_type_compl_use_case.execute(voie_to_treat_by_compl) if not voie_treated else voie_treated
+            voie_treated = self.compl_third_type_compl_use_case.execute(voie_to_treat_by_compl) if not voie_treated else voie_treated
+            voie_treated = self.assign_lib_use_case.execute(voie_to_treat_by_compl) if not voie_treated else voie_treated
+
+        return voie_treated, voie_to_treat_two_types

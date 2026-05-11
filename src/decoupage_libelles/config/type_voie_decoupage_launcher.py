@@ -10,15 +10,6 @@ from decoupage_libelles.handlers.two_types_and_more.usecase.two_types_and_more_v
 
 
 class TypeVoieDecoupageLauncher:
-    """
-    Orchestrateur principal du découpage.
-
-    Simplifications vs version précédente :
-    - TypeFinderUtils chargé une seule fois dans __init__ (plus de lecture CSV
-      à chaque appel à execute()).
-    - Routage exprimé en une compréhension de liste par branche, sans if/else.
-    """
-
     def __init__(
         self,
         voie_lib_preprocessor_use_case: VoieLibPreprocessorUseCase = VoieLibPreprocessorUseCase(),
@@ -26,34 +17,42 @@ class TypeVoieDecoupageLauncher:
         one_type_voies_handler_use_case: OneTypeVoiesHandlerUseCase = OneTypeVoiesHandlerUseCase(),
         two_types_and_more_voies_handler_use_case: TwoTypesAndMoreVoiesHandlerUseCase = TwoTypesAndMoreVoiesHandlerUseCase(),
     ):
-        self.voie_lib_preprocessor_use_case = voie_lib_preprocessor_use_case
-        self.no_type_voies_handler_use_case = no_type_voies_handler_use_case
-        self.one_type_voies_handler_use_case = one_type_voies_handler_use_case
-        self.two_types_and_more_voies_handler_use_case = two_types_and_more_voies_handler_use_case
+        self.voie_lib_preprocessor_use_case: VoieLibPreprocessorUseCase = voie_lib_preprocessor_use_case
+        self.no_type_voies_handler_use_case: NoTypeVoiesHandlerUseCase = no_type_voies_handler_use_case
+        self.one_type_voies_handler_use_case: OneTypeVoiesHandlerUseCase = one_type_voies_handler_use_case
+        self.two_types_and_more_voies_handler_use_case: TwoTypesAndMoreVoiesHandlerUseCase = two_types_and_more_voies_handler_use_case
 
     def execute(self, voies_data: List[str]) -> List[VoieDecoupee]:
-        logging.info("Preprocessing des libellés")
+        logging.info("Preprocessing des libellés de voie donnés en entrée")
         voies_objects = [InfoVoie(label_origin=voie) for voie in voies_data]
-        voies_prepared = self.voie_lib_preprocessor_use_case.execute(
-            voies_objects
-        )
+        voies_prepared = self.voie_lib_preprocessor_use_case.execute(voies_objects)
+        logging.info("Done")
 
-        voies_0        = [v for v in voies_prepared if len(v.types_and_positions) == 0]
-        voies_1        = [v for v in voies_prepared if len(v.types_and_positions) == 1]
-        voies_2_plus   = [v for v in voies_prepared if len(v.types_and_positions) >= 2]
+        voies_processed = []
 
-        voies_processed: List[VoieDecoupee] = []
+        voies_0 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 0]
+        voies_1 = [voie for voie in voies_prepared if len(voie.types_and_positions) == 1]
+        voies_2_and_more = [voie for voie in voies_prepared if len(voie.types_and_positions) >= 2]
+        logging.info("Preprocessing fini")
 
-        logging.info(f"Voies sans type   : {len(voies_0)}")
+        logging.info("Algorithme de découpage de libellés de voie")
+
+        logging.info("Processing des voies sans type détecté")
         if voies_0:
-            voies_processed += self.no_type_voies_handler_use_case.execute(voies_0)
+            voies_proc_0 = self.no_type_voies_handler_use_case.execute(voies_0)
+            voies_processed += voies_proc_0
+        logging.info("Done")
 
-        logging.info(f"Voies avec 1 type : {len(voies_1)}")
+        logging.info("Processing des voies avec un seul type détecté")
         if voies_1:
-            voies_processed += self.one_type_voies_handler_use_case.execute(voies_1)
+            voies_proc_1 = self.one_type_voies_handler_use_case.execute(voies_1)
+            voies_processed += voies_proc_1
+        logging.info("Done")
 
-        logging.info(f"Voies avec 2+ types : {len(voies_2_plus)}")
-        if voies_2_plus:
-            voies_processed += self.two_types_and_more_voies_handler_use_case.execute(voies_2_plus)
+        logging.info("Processing des voies avec deux types détectés ou plus")
+        if voies_2_and_more:
+            voies_proc_2_and_more = self.two_types_and_more_voies_handler_use_case.execute(voies_2_and_more)
+            voies_processed += voies_proc_2_and_more
+        logging.info("Done")
 
         return voies_processed
