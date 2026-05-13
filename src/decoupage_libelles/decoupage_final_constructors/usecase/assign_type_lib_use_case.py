@@ -15,9 +15,6 @@ class AssignTypeLibUseCase:
 
         voiedecoupee = VoieDecoupee(label_origin=infovoie.label_origin, type_assigned=type_principal.type_name, label_assigned=label_assigned, compl_assigned="", compl2=infovoie.complement)
 
-        try:
-            voiedecoupee = self.dilated_voie_decoupee_use_case.execute(voiedecoupee)
-        except:
-            voiedecoupee = voiedecoupee
+        voiedecoupee = self.dilated_voie_decoupee_use_case.execute(voiedecoupee)
 
         return voiedecoupee

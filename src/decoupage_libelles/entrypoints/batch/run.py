@@ -1,17 +1,3 @@
-"""
-Point d'entrée du traitement batch.
-
-Utilisation :
-    python -m decoupage_libelles.entrypoints.batch.run
-    # ou depuis la racine du projet :
-    python src/decoupage_libelles/entrypoints/batch/run.py
-
-Configuration : modifier config.yml à la racine du projet avant de lancer.
-"""
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../../../")))
-
 import yaml
 from yaml.loader import SafeLoader
 from pathlib import Path
@@ -22,40 +8,40 @@ from decoupage_libelles.entrypoints.batch.storage import (
     connect_s3, detect_file_type, iter_chunks, save, output_path
 )
 from decoupage_libelles.entrypoints.batch.parallel_processor import run_parallel
+from decoupage_libelles.config.settings_configuration import settings
 
 
 # ---------------------------------------------------------------------------
 # Lecture de la configuration
 # ---------------------------------------------------------------------------
 
-CONFIG_PATH = Path(__file__).parents[6] / "config.yml"
 
-with open(CONFIG_PATH) as f:
+with open(settings.chemin_config) as f:
     config = yaml.load(f, Loader=SafeLoader)
 
-platform      = config["platform"]
-directory     = config["input"]["directory"]
-filename      = config["input"]["filename"]
-sep           = config["input"]["sep"]
-encoding      = config["input"]["encoding"]
+platform = config["platform"]
+directory = config["input"]["directory"]
+filename = config["input"]["filename"]
+sep = config["input"]["sep"]
+encoding = config["input"]["encoding"]
 output_format = config["output"]["format"]
-voie_columns  = config["voie_columns"]
-chunk_size    = config["chunk_size"]
-num_threads   = config["num_threads"]
+voie_columns = config["voie_columns"]
+chunk_size = config["chunk_size"]
+num_threads = config["num_threads"]
 
 # ---------------------------------------------------------------------------
 # Construction des chemins
 # ---------------------------------------------------------------------------
 
 if platform in ("ls3", "datalab"):
-    fs         = connect_s3(platform)
+    fs = connect_s3(platform)
     input_file = f"s3://{directory}/{filename}"
 else:
-    fs         = None
+    fs = None
     input_file = str(Path(directory) / filename)
 
-file_type   = detect_file_type(input_file)
-out_path    = output_path(input_file, output_format)
+file_type = detect_file_type(input_file)
+out_path = output_path(input_file, output_format)
 
 # ---------------------------------------------------------------------------
 # Initialisation de l'API
@@ -72,6 +58,7 @@ def call_api(libelles: list) -> list | None:
         print(f"Erreur API : {response.status_code}")
         return None
     return response.json()["reponse"]
+
 
 # ---------------------------------------------------------------------------
 # Traitement

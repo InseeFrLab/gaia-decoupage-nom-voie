@@ -1,5 +1,7 @@
 from dynaconf import Dynaconf, Validator
 import os
+from pathlib import Path
+
 
 SETTINGS_FILE_FOR_DYNACONF = os.environ.get(
     "SETTINGS_FILE_FOR_DYNACONF",
@@ -21,11 +23,13 @@ settings = Dynaconf(
     ],
 )
 
-here = os.path.dirname(os.path.abspath(__file__))
-root = os.path.dirname(here)
-settings.chemin_nlp_modele = root + "/synonym_data/fr_dep_news_trf-3.8.0/fr_dep_news_trf/fr_dep_news_trf-3.8.0/"
-settings.chemin_type_voie = root + "/synonym_data/type_voie_synonyms.csv"
-settings.chemin_synonymes_extra = root + "/synonym_data/extra_synonyms.csv"
+here = Path(__file__).resolve().parent
+root = here.parent
+
+settings.chemin_nlp_modele = root / "synonym_data" / "fr_dep_news_trf-3.8.0" / "fr_dep_news_trf" / "fr_dep_news_trf-3.8.0"
+settings.chemin_type_voie = root / "synonym_data" / "type_voie_synonyms.csv"
+settings.chemin_synonymes_extra = root / "synonym_data" / "extra_synonyms.csv"
+settings.chemin_config = (here / ".." / ".." / ".." / "config.yml").resolve()
 
 # `envvar_prefix` = export envvars with `export DYNACONF_FOO=bar`.
 # `settings_files` = Load these files in the order.

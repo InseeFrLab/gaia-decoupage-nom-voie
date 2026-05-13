@@ -10,10 +10,17 @@ cd gaia-decoupage-libelles-voies/
 source ./setup.sh
 ```
 
+### Découpage de voie unitaire
+
+```bash
+python -m decoupage_libelles.main "rue hoche"
+```
+
+### Un fichier stocké sur LS3
 Modifier `config.yml` à la racine, puis lancer :
 
 ```bash
-python src/decoupage_libelles/entrypoints/batch/run.py
+python -m decoupage_libelles.entrypoints.batch.run
 ```
 
 ## Documentation
