@@ -8,7 +8,7 @@ input:
   # Dossier contenant le fichier à traiter
   # - Sur LS3/Datalab : chemin S3 sans slash final, ex: "projet-gaia/decoupage"
   # - En local        : chemin relatif ou absolu,   ex: "data"
-  directory: projet-ml-moteur-identification-gaia/confidentiel/personnel_non_sensible/
+  directory: travail/projet-ml-moteur-identification-gaia/confidentiel/personnel_non_sensible
 
   # Nom du fichier à traiter (csv, parquet, ou dossier parquet)
   filename: test_decoupage_majic.csv

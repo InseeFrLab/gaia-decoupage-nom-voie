@@ -12,3 +12,4 @@ requirements-dev.txt
 fr_dep_news_trf-3.8.0/
 */venv
 nohup.txt
+data/
