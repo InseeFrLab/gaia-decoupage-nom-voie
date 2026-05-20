@@ -1,4 +1,5 @@
 import spacy
+from threading import Lock
 from decoupage_libelles.config.settings_configuration import settings
 import logging
 
@@ -11,15 +12,17 @@ class NLPModelExecution:
 
 class NLPModelSingleton:
     _instance = None
+    _lock = Lock()
 
     @classmethod
     def getInstance(cls):
         if cls._instance is None:
-            cls._instance = cls._load_model()
+            with cls._lock:
+                if cls._instance is None:  # double check après acquisition du lock
+                    cls._instance = cls._load_model()
         return cls._instance
 
     @staticmethod
     def _load_model():
         logging.info("Chargement du modèle SpaCy pour le postagging")
-        # Code pour charger le modèle NLP
         return spacy.load(settings.chemin_nlp_modele)

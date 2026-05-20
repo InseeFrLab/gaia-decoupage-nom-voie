@@ -18,10 +18,10 @@ class VoiesData(BaseModel):
     )
 
 
-def process(voies_data) -> List[Dict[str, Dict[str, str]]]:
+def process(voies_data, launcher: TypeVoieDecoupageLauncher) -> List[Dict[str, Dict[str, str]]]:
     list_labels_voies = list(set(voies_data.list_labels_voies))
-    voies_processed = TypeVoieDecoupageLauncher().execute(voies_data=list_labels_voies)
-    voies_processed_dict = [
+    voies_processed = launcher.execute(voies_data=list_labels_voies)
+    return [
         {
             voie.label_origin if voie.label_origin else "": {
                 "numero": voie.num_assigned if voie.num_assigned is not None else "",
@@ -34,44 +34,33 @@ def process(voies_data) -> List[Dict[str, Dict[str, str]]]:
         }
         for voie in voies_processed
     ]
-    return voies_processed_dict
 
 
 def process_preproc(voies_data) -> List[Dict[str, Dict[str, str]]]:
-    ponctuation_preprocessor_use_case: PonctuationPreprocessorUseCase = PonctuationPreprocessorUseCase()
+    ponctuation_preprocessor_use_case = PonctuationPreprocessorUseCase()
     list_labels_voies = list(set(voies_data.list_labels_voies))
     voies_preproc = []
     for libelle in list_labels_voies:
         lib_without_preprocessed_ponctuation = InfoVoie(label_origin=libelle)
         lib_with_preprocessed_ponctuation = ponctuation_preprocessor_use_case.execute(lib_without_preprocessed_ponctuation)
-        libelle_preproc = (" ").join(lib_with_preprocessed_ponctuation.label_preproc)
-        libelle_preproc = libelle_preproc.lower()
+        libelle_preproc = " ".join(lib_with_preprocessed_ponctuation.label_preproc).lower()
         if lib_with_preprocessed_ponctuation.complement:
-            libelle_preproc += (" ") + lib_with_preprocessed_ponctuation.complement.lower()
+            libelle_preproc += " " + lib_with_preprocessed_ponctuation.complement.lower()
         voies_preproc.append({libelle: libelle_preproc})
     return voies_preproc
 
 
 app = FastAPI()
+launcher = TypeVoieDecoupageLauncher()
 
-
-def initialize_api():
-    logging.info("Démarrage de l'API")
-    logging.info("API de découpage des libellés de voies")
-
-
-initialize_api()
+logging.info("Démarrage de l'API")
+logging.info("API de découpage des libellés de voies")
 
 
 @app.get("/", include_in_schema=False)
 async def root():
     return RedirectResponse(url="/docs")
 
-@app.get("/clear-cache")
-async def clear_cache():
-    global type_voie_decoupage_launcher
-    type_voie_decoupage_launcher = TypeVoieDecoupageLauncher()  # Réinstanciation
-    return {"message": "Cache vidé"}
 
 @app.post(
     "/analyse-libelles-voies",
@@ -79,7 +68,7 @@ async def clear_cache():
     description="Cette route permet de découper les libellés de voies pour en extraire des types",
 )
 async def analyse_libelles_voies(voies_data: VoiesData):
-    return {"reponse": process(voies_data)}
+    return {"reponse": process(voies_data, launcher)}
 
 
 @app.post(

@@ -1,20 +1,17 @@
 import yaml
 from yaml.loader import SafeLoader
 from pathlib import Path
-from fastapi.testclient import TestClient
 
-from decoupage_libelles.entrypoints.web.main_api import app, initialize_api
+from decoupage_libelles.entrypoints.web.main_api import launcher, process, VoiesData
 from decoupage_libelles.entrypoints.batch.storage import (
     connect_s3, detect_file_type, iter_chunks, save, output_path
 )
 from decoupage_libelles.entrypoints.batch.parallel_processor import run_parallel
 from decoupage_libelles.config.settings_configuration import settings
 
-
 # ---------------------------------------------------------------------------
 # Lecture de la configuration
 # ---------------------------------------------------------------------------
-
 
 with open(settings.chemin_config) as f:
     config = yaml.load(f, Loader=SafeLoader)
@@ -44,20 +41,12 @@ file_type = detect_file_type(input_file)
 out_path = output_path(input_file, output_format)
 
 # ---------------------------------------------------------------------------
-# Initialisation de l'API
+# Appel direct sans HTTP
 # ---------------------------------------------------------------------------
-
-initialize_api()
-client = TestClient(app)
 
 
 def call_api(libelles: list) -> list | None:
-    """Appelle l'endpoint de découpage et retourne la liste de résultats."""
-    response = client.post("/analyse-libelles-voies", json={"list_labels_voies": libelles})
-    if response.status_code != 200:
-        print(f"Erreur API : {response.status_code}")
-        return None
-    return response.json()["reponse"]
+    return process(VoiesData(list_labels_voies=libelles), launcher)
 
 
 # ---------------------------------------------------------------------------
