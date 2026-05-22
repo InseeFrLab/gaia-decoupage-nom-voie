@@ -1,5 +1,6 @@
 from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
 
+
 class SeparateComplementaryPartUseCase:
 
     def execute(self, voie: InfoVoie) -> InfoVoie:
