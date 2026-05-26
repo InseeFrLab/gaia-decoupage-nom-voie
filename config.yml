@@ -24,8 +24,9 @@ output:
   format: csv
 
 # Colonne(s) contenant le libellé de voie à découper.
-# - Une seule colonne  : ["nom_voie_complet"]
-# - Plusieurs à concat : ["id_type_voie", "nom_voie_norm"]
+# - Une seule colonne  : - nom_voie_complet
+# - Plusieurs à concat : - id_type_voie 
+#                        - nom_voie_norm
 voie_columns:
   - dvoilib
 
