@@ -16,3 +16,4 @@ class AssignLibUseCase:
         voiedecoupee = self.dilated_voie_decoupee_use_case.execute(voiedecoupee)
 
         return voiedecoupee
+

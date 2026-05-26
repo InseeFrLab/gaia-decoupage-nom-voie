@@ -10,6 +10,10 @@ class AssignTypeUseCase:
 
     def execute(self, infovoie: InfoVoie, type_principal: InformationOnTypeOrdered) -> VoieDecoupee:
         voiedecoupee = VoieDecoupee(label_origin=infovoie.label_origin, type_assigned=type_principal.type_name, label_assigned="", compl_assigned="", compl2=infovoie.complement)
-        voiedecoupee = self.dilated_voie_decoupee_use_case.execute(voiedecoupee)
+
+        try:
+            voiedecoupee = self.dilated_voie_decoupee_use_case.execute(voiedecoupee)
+        except:
+            voiedecoupee = voiedecoupee
 
         return voiedecoupee

@@ -1,5 +1,4 @@
 from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
-from decoupage_libelles.decoupage_final_constructors.model.voie_decoupee import VoieDecoupee
 from decoupage_libelles.information_generators.libelle.usecase.generate_information_on_lib_use_case import GenerateInformationOnLibUseCase
 from decoupage_libelles.information_generators.type_in_lib.usecase.postag_before_type_use_case import PostagBeforeTypeUseCase
 

@@ -1,6 +1,3 @@
-from typing import Optional, Tuple
-import logging
-
 from decoupage_libelles.decoupage_final_constructors.model.voie_decoupee import VoieDecoupee
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_use_case import AssignLibUseCase
 from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie

@@ -64,4 +64,3 @@ class TwoTypesVoiesHandlerUseCase:
             voies_treated.append(voie_treated)
 
         return voies_treated
-
