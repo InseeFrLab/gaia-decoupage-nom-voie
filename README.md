@@ -26,13 +26,13 @@ python -m decoupage_libelles.entrypoints.batch.run
 ### Détection de type de voie unitaire
 
 ```bash
-python -m decoupage_libelles.main_detect_type.py "rue hoche"
+python -m decoupage_libelles.main_detect_type "rue hoche"
 ```
 
 ### Application du modèle NLP unitaire
 
 ```bash
-python -m decoupage_libelles.main_nlp.py "rue hoche"
+python -m decoupage_libelles.main_nlp "rue hoche"
 ```
 
 ## Documentation
