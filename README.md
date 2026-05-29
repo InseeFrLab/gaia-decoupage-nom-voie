@@ -35,6 +35,8 @@ python -m decoupage_libelles.main_detect_type "rue hoche"
 python -m decoupage_libelles.main_nlp "rue hoche"
 ```
 
+Ce [site](https://universaldependencies.org/fr/pos/) recense et explique les accronymes des étiquettes synthaxiques retournées par le modèle NLP.  
+
 ## Documentation
 
 | Document | Description |

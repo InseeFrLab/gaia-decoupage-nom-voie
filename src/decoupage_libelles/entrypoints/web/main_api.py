@@ -18,6 +18,13 @@ class VoiesData(BaseModel):
     )
 
 
+class VoieData(BaseModel):
+    label_voie: str = Field(
+        ...,
+        example="rue hoche"
+    )
+
+
 def process(voies_data, launcher: TypeVoieDecoupageLauncher) -> List[Dict[str, Dict[str, str]]]:
     list_labels_voies = list(set(voies_data.list_labels_voies))
     voies_processed = launcher.execute(voies_data=list_labels_voies)
@@ -50,6 +57,14 @@ def process_preproc(voies_data) -> List[Dict[str, Dict[str, str]]]:
     return voies_preproc
 
 
+def process_detect_types_voies(voie_data):
+    return None
+
+
+def process_postag(voie_data):
+    return None
+
+
 app = FastAPI()
 launcher = TypeVoieDecoupageLauncher()
 
@@ -78,3 +93,21 @@ async def analyse_libelles_voies(voies_data: VoiesData):
 )
 async def preproc_libelles_voies(voies_data: VoiesData):
     return {"reponse": process_preproc(voies_data)}
+
+
+@app.post(
+    "/detect-types-voies",
+    summary="Détection des types de voie au sein du libellé de voie",
+    description="Cette route permet de détecter les types de voie potentiels au sein du libellé de voie",
+)
+async def detect_types_voies(voie_data: VoieData):
+    return {"reponse": process_detect_types_voies(voie_data)}
+
+
+@app.post(
+    "/postag",
+    summary="Applique le modèle NLP sur le libellé de voie",
+    description="Cette route retourne les étiquetages synthaxiques générés par le modèle NLP sur le libellé de voie",
+)
+async def postag(voie_data: VoieData):
+    return {"reponse": process_postag(voie_data)}
