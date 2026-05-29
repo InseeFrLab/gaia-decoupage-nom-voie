@@ -5,7 +5,9 @@ import logging
 from typing import List, Dict
 from decoupage_libelles.config.type_voie_decoupage_launcher import TypeVoieDecoupageLauncher
 from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
+from decoupage_libelles.preprocessing.pipeline.usecase.voie_lib_preprocessor_use_case import VoieLibPreprocessorUseCase
 from decoupage_libelles.preprocessing.text_normalization.usecase.ponctuation_preprocessor_use_case import PonctuationPreprocessorUseCase
+from decoupage_libelles.information_generators.libelle.usecase.apply_postagging_use_case import ApplyPostaggingUseCase
 
 
 class VoiesData(BaseModel):
@@ -57,12 +59,26 @@ def process_preproc(voies_data) -> List[Dict[str, Dict[str, str]]]:
     return voies_preproc
 
 
-def process_detect_types_voies(voie_data):
-    return None
+def process_detect_types_voies(voie_data) -> Dict[str, str]:
+    voie_lib_preprocessor_use_case = VoieLibPreprocessorUseCase()
+
+    infovoie = InfoVoie(label_origin=voie_data)
+    r = voie_lib_preprocessor_use_case.execute([infovoie])
+
+    return {voie_data: r[0].types_and_positions}
 
 
-def process_postag(voie_data):
-    return None
+def process_postag(voie_data) -> Dict[str, str]:
+    voie_lib_preprocessor_use_case = VoieLibPreprocessorUseCase()
+
+    infovoie = InfoVoie(label_origin=voie_data)
+    voie_preprocessed = voie_lib_preprocessor_use_case.execute([infovoie])[0]
+
+    apply_postagging_use_case: ApplyPostaggingUseCase = ApplyPostaggingUseCase()
+
+    r = apply_postagging_use_case.execute(voie_preprocessed)
+
+    return {voie_data: r.label_postag}
 
 
 app = FastAPI()
