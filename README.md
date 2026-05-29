@@ -23,6 +23,18 @@ Modifier `config.yml` à la racine, puis lancer :
 python -m decoupage_libelles.entrypoints.batch.run
 ```
 
+### Détection de type de voie unitaire
+
+```bash
+python -m decoupage_libelles.main_detect_type.py "rue hoche"
+```
+
+### Application du modèle NLP unitaire
+
+```bash
+python -m decoupage_libelles.main_detect_type.py "rue hoche"
+```
+
 ## Documentation
 
 | Document | Description |
