@@ -32,7 +32,7 @@ python -m decoupage_libelles.main_detect_type.py "rue hoche"
 ### Application du modèle NLP unitaire
 
 ```bash
-python -m decoupage_libelles.main_detect_type.py "rue hoche"
+python -m decoupage_libelles.main_nlp.py "rue hoche"
 ```
 
 ## Documentation
