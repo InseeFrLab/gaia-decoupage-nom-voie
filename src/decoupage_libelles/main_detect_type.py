@@ -22,4 +22,7 @@ if __name__ == "__main__":
     infovoie = InfoVoie(label_origin=args.voie_ou_detecter)
     r = voie_lib_preprocessor_use_case.execute([infovoie])
 
-    print(r[0].types_and_positions)
+    print(
+        f"Libellé de voie preprocessé : {r[0].label_preproc}\n"
+        f"Types de voie détectés: {r[0].types_and_positions}"
+    )

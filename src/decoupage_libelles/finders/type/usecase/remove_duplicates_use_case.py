@@ -19,7 +19,7 @@ class RemoveDuplicatesUseCase:
 
     def execute(self, type_finder_object: TypeFinderObject) -> TypeFinderObject:
         positions = type_finder_object.voie_big.types_and_positions
-        doublons = {t for t, occ in positions if occ > 1}
+        doublons = [t for t, occ in positions if occ > 1]
 
         for canonique in doublons:
             pos1 = positions.get((canonique, 1))
@@ -39,13 +39,14 @@ class RemoveDuplicatesUseCase:
                 type_finder_object.voie_big = self.remove_type_from_lib.execute(
                     type_finder_object.voie_big, pos1[0], pos1[1]
                 )
-                del positions[(canonique, 1)]
+
+                del type_finder_object.voie_big.types_and_positions[(canonique, 1)]
                 # Renommer l'occurrence 2 en 1
-                positions[(canonique, 1)] = positions.pop((canonique, 2))
+                type_finder_object.voie_big.types_and_positions[(canonique, 1)] = type_finder_object.voie_big.types_and_positions.pop((canonique, 2))
             else:
                 type_finder_object.voie_big = self.remove_type_from_lib.execute(
                     type_finder_object.voie_big, pos2[0], pos2[1]
                 )
-                del positions[(canonique, 2)]
+                del type_finder_object.voie_big.types_and_positions[(canonique, 2)]
 
         return type_finder_object
