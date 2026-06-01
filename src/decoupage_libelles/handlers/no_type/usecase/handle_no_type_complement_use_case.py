@@ -5,6 +5,7 @@ from decoupage_libelles.information_generators.type_in_lib.usecase.generate_info
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_compl_use_case import AssignLibComplUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_compl_type_lib_use_case import AssignComplTypeLibUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_type_lib_use_case import AssignTypeLibUseCase
+from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_type_use_case import AssignLibTypeUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_use_case import AssignLibUseCase
 from decoupage_libelles.finders.voie_fictive.usecase.voie_fictive_finder_use_case import VoieFictiveFinderUseCase
 from decoupage_libelles.preprocessing.pipeline.usecase.suppress_article_in_first_place_use_case import SuppressArticleInFirstPlaceUseCase
@@ -17,6 +18,7 @@ class HandleNoTypeComplUseCase:
         generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = GenerateInformationOnTypeOrderedUseCase(),
         assign_lib_compl_use_case: AssignLibComplUseCase = AssignLibComplUseCase(),
         assign_type_lib_use_case: AssignTypeLibUseCase = AssignTypeLibUseCase(),
+        assign_lib_type_use_case: AssignLibTypeUseCase = AssignLibTypeUseCase(),
         assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = AssignComplTypeLibUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
         suppress_article_in_first_place_use_case: SuppressArticleInFirstPlaceUseCase = SuppressArticleInFirstPlaceUseCase(),
@@ -25,6 +27,7 @@ class HandleNoTypeComplUseCase:
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
         self.assign_lib_compl_use_case: AssignLibComplUseCase = assign_lib_compl_use_case
         self.assign_type_lib_use_case: AssignTypeLibUseCase = assign_type_lib_use_case
+        self.assign_lib_type_use_case: AssignLibTypeUseCase = assign_lib_type_use_case
         self.assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = assign_compl_type_lib_use_case
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
         self.suppress_article_in_first_place_use_case: SuppressArticleInFirstPlaceUseCase = suppress_article_in_first_place_use_case
@@ -44,11 +47,21 @@ class HandleNoTypeComplUseCase:
                 return self.assign_compl_type_lib_use_case.execute(voie_compl, first_type)
 
         else:
-            if first_type.is_escalier_or_appartement:
-                # 'APPARTEMENT JEAN LAMOUR'
-                # lib
-                return self.assign_lib_use_case.execute(voie_compl)
+            if voie_compl.has_type_in_first_pos:
+                if first_type.is_escalier_or_appartement:
+                    # 'APPARTEMENT JEAN LAMOUR'
+                    # lib
+                    return self.assign_lib_use_case.execute(voie_compl)
+                else:
+                    # 'BAT JEAN LAMOUR'
+                    # type + lib
+                    return self.assign_type_lib_use_case.execute(voie_compl, first_type)
             else:
-                # 'BAT JEAN LAMOUR'
-                # type + lib
-                return self.assign_type_lib_use_case.execute(voie_compl, first_type)
+                if first_type.is_escalier_or_appartement:
+                    # 'JEAN LAMOUR APPARTEMENT'
+                    # lib
+                    return self.assign_lib_use_case.execute(voie_compl)
+                else:
+                    # 'JEAN LAMOUR BAT'
+                    # lib + type
+                    return self.assign_lib_type_use_case.execute(voie_compl, first_type)
