@@ -37,31 +37,12 @@ class HandleNoTypeComplUseCase:
         self.generate_information_on_lib_use_case.execute(voie_compl, apply_nlp_model=True)
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 1)
         if first_type.is_in_middle_position and not first_type.has_adj_det_before:
-            if first_type.word_after in VoieFictiveFinderUseCase.LISTE_FICTIVE or first_type.is_escalier_or_appartement:
-                # 'LE TILLET BAT A'
-                # lib + compl
-                return self.assign_lib_compl_use_case.execute(voie_compl)
-            else:
-                # 'LE TILLET BAT ERNEST RENAN'
-                # compl + type + lib
-                return self.assign_compl_type_lib_use_case.execute(voie_compl, first_type)
+            # 'LE TILLET BAT A'
+            # lib + compl
+            return self.assign_lib_compl_use_case.execute(voie_compl)
 
         else:
-            if voie_compl.has_type_in_first_pos:
-                if first_type.is_escalier_or_appartement:
-                    # 'APPARTEMENT JEAN LAMOUR'
-                    # lib
-                    return self.assign_lib_use_case.execute(voie_compl)
-                else:
-                    # 'BAT JEAN LAMOUR'
-                    # type + lib
-                    return self.assign_type_lib_use_case.execute(voie_compl, first_type)
-            else:
-                if first_type.is_escalier_or_appartement:
-                    # 'JEAN LAMOUR APPARTEMENT'
-                    # lib
-                    return self.assign_lib_use_case.execute(voie_compl)
-                else:
-                    # 'JEAN LAMOUR BAT'
-                    # lib + type
-                    return self.assign_lib_type_use_case.execute(voie_compl, first_type)
+            # 'APPARTEMENT JEAN LAMOUR'
+            # 'JEAN LAMOUR BAT'
+            # lib
+            return self.assign_lib_use_case.execute(voie_compl)
