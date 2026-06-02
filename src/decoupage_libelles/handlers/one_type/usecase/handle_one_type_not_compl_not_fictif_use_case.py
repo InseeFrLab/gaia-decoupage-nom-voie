@@ -50,9 +50,10 @@ class HandleOneTypeNotComplNotFictifUseCase:
             voie = self.keep_types_without_article_adj_before_use_case.execute(voie)
             if len(voie.types_and_positions) == 1:   # il reste un type sans adj/det devant
                 unique_type = self.generate_information_on_type_ordered_use_case.execute(voie, 1)
-                unique_type_name_in_lib = (' ').join(voie.label_preproc[unique_type.position_start:unique_type.position_end+1])
-                if (unique_type.type_name == unique_type_name_in_lib and
+                if (unique_type.type_name == unique_type.type_name_in_lib and
                         voie.has_type_in_last_pos):
+                    # lib + 1er type
+                    # 'HOCHE RUE'
                     voie_treated = self.assign_lib_type_use_case.execute(voie, unique_type)
                 else:
                     if unique_type.is_longitudinal_or_agglomerant:
@@ -62,7 +63,7 @@ class HandleOneTypeNotComplNotFictifUseCase:
                             return self.assign_compl_type_lib_use_case.execute(voie, unique_type)
                         else:
                             # lib + 1er type
-                            # 'HOCHE RUE'
+                            # 'HOCHE AV'
                             return self.assign_lib_type_use_case.execute(voie)
 
             if not voie_treated:  # ce qu'il reste
