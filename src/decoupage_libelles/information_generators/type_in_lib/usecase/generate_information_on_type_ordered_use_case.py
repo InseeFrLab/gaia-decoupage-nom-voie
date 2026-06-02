@@ -10,6 +10,7 @@ from decoupage_libelles.information_generators.type_in_lib.usecase.type_after_ty
 from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
 from decoupage_libelles.information_generators.type_in_lib.model.information_on_type_ordered import InformationOnTypeOrdered
 from decoupage_libelles.information_generators.type_in_lib.usecase.find_order_of_apparition_in_lib_use_case import FindOrderOfApparitionInLibUseCase
+from decoupage_libelles.information_generators.type_in_lib.usecase.type_voie_in_lib_use_case import TypeVoieInLibUseCase
 
 
 class GenerateInformationOnTypeOrderedUseCase:
@@ -25,6 +26,7 @@ class GenerateInformationOnTypeOrderedUseCase:
         type_is_complementaire_use_case: TypeIsComplementaireUseCase = TypeIsComplementaireUseCase(),
         type_after_type_use_case: TypeAfterTypeUseCase = TypeAfterTypeUseCase(),
         find_order_of_apparition_in_lib_use_case: FindOrderOfApparitionInLibUseCase = FindOrderOfApparitionInLibUseCase(),
+        type_voie_in_lib_use_case: TypeVoieInLibUseCase = TypeVoieInLibUseCase(),
     ):
         self.postag_before_type_use_case: PostagBeforeTypeUseCase = postag_before_type_use_case
         self.word_after_type_use_case: WordAfterTypeUseCase = word_after_type_use_case
@@ -36,6 +38,7 @@ class GenerateInformationOnTypeOrderedUseCase:
         self.type_is_complementaire_use_case: TypeIsComplementaireUseCase = type_is_complementaire_use_case
         self.type_after_type_use_case: TypeAfterTypeUseCase = type_after_type_use_case
         self.find_order_of_apparition_in_lib_use_case: FindOrderOfApparitionInLibUseCase = find_order_of_apparition_in_lib_use_case
+        self.type_voie_in_lib_use_case: TypeVoieInLibUseCase = type_voie_in_lib_use_case
 
     def execute(self, infovoie: InfoVoie, type_order: int, type_name: str = None, occurence: int = None) -> InformationOnTypeOrdered:
         if type_order:
@@ -45,6 +48,7 @@ class GenerateInformationOnTypeOrderedUseCase:
         else:
             type_ordered = None
         if type_ordered:
+            self.type_voie_in_lib_use_case.execute(infovoie, type_ordered)
             self.word_after_type_use_case.execute(infovoie, type_ordered)
             self.word_before_type_use_case.execute(infovoie, type_ordered)
             self.is_in_middle_pos_use_case.execute(infovoie, type_ordered)

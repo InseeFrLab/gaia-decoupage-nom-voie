@@ -13,7 +13,7 @@ class DetectTypeFictifForOneTypeUseCase:
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
 
     def execute(self, voie: InfoVoie, liste_voie_commun: List[str], liste_fictive: List[str]) -> Optional[InfoVoie]:
-        # si RUE A on garde type 'RUE' et libellé 'A'. Si il y a qlq chose avant 'RUE',
+        # si RUE B on garde type 'RUE' et libellé 'B'. Si il y a qlq chose avant 'RUE',
         # alors ca passe en voie fictive
 
         for type_voie in liste_voie_commun:

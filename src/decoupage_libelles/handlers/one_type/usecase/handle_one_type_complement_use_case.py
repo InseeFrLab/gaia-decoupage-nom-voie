@@ -47,15 +47,17 @@ class HandleOneTypeComplUseCase:
         elif voie_compl.has_type_in_last_pos and not last_type.is_complement:
             self.generate_information_on_lib_use_case.execute(voie_compl, apply_nlp_model=True)
             last_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, -1)
-            last_type_name_in_lib = (' ').join(voie_compl.label_preproc[last_type.position_start:last_type.position_end+1])
-            if (last_type.type_name == last_type_name_in_lib and
+            # Vérifier si le type de voie dans le libellé est écrit sous sa forme canonique
+            if (last_type.type_name_in_lib == last_type.type_name and
                     not last_type.has_adj_det_before):
                 # 'PO IMM RUE'
                 # lib + 2eme type
                 return self.assign_lib_type_use_case.execute(voie_compl, last_type)
             else:
+                # 'BEAU PAVILLON DE LA FORET'
+                # lib
                 return self.assign_lib_use_case.execute(voie_compl)
         else:
-            # 'BEAU PAVILLON DE LA FORET'
+            # 'BEAU PAVILLON DE LA FORET VERTE'
             # lib
             return self.assign_lib_use_case.execute(voie_compl)

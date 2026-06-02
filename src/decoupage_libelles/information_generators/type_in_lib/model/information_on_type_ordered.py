@@ -9,6 +9,7 @@ class InformationOnTypeOrdered:
     position_start: int
     position_end: int
     occurence: int
+    type_name_in_lib: Optional[str] = None
     postag_before: Optional[str] = None
     word_before: Optional[str] = None
     word_after: Optional[str] = None

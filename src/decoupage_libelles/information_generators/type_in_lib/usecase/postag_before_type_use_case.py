@@ -1,16 +1,9 @@
-from decoupage_libelles.information_generators.type_in_lib.usecase.order_type_in_lib_use_case import OrderTypeInLib
 from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
 from decoupage_libelles.information_generators.type_in_lib.model.information_on_type_ordered import InformationOnTypeOrdered
 
 
 class PostagBeforeTypeUseCase:
     POSTAG = ["DET", "ADJ", "ADP", "CCONJ"]
-
-    def __init__(
-        self,
-        order_type_in_lib_use_case: OrderTypeInLib = OrderTypeInLib(),
-    ):
-        self.order_type_in_lib_use_case: OrderTypeInLib = order_type_in_lib_use_case
 
     def execute(self, infovoie: InfoVoie, information_on_type_ordered: InformationOnTypeOrdered) -> InformationOnTypeOrdered:
         """
