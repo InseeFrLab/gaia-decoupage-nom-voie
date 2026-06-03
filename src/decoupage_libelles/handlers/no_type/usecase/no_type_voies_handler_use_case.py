@@ -4,9 +4,9 @@ import logging
 from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
 from decoupage_libelles.decoupage_final_constructors.model.voie_decoupee import VoieDecoupee
 from decoupage_libelles.finders.complement.usecase.apply_complement_finder_on_voies_use_case import ApplyComplementFinderOnVoiesUseCase
-from decoupage_libelles.finders.complement.usecase.complement_finder_use_case import ComplementFinderUseCase
 from decoupage_libelles.handlers.no_type.usecase.handle_no_type_complement_use_case import HandleNoTypeComplUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_use_case import AssignLibUseCase
+from decoupage_libelles.synonym_data.complement_types import TYPES_COMPLEMENT
 
 
 class NoTypeVoiesHandlerUseCase:
@@ -22,7 +22,7 @@ class NoTypeVoiesHandlerUseCase:
 
     def execute(self, voies: List[InfoVoie]) -> List[VoieDecoupee]:
         logging.info("Gestion des voies avec complément")
-        voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_0)
+        voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, TYPES_COMPLEMENT)
         voies_treated = []
         for voie_compl in voies_complement:
             voies_treated.append(self.handle_no_type_complement_use_case.execute(voie_compl))

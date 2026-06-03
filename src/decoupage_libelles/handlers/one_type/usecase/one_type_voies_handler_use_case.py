@@ -6,14 +6,14 @@ from decoupage_libelles.decoupage_final_constructors.model.voie_decoupee import 
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_type_use_case import AssignLibTypeUseCase
 from decoupage_libelles.finders.complement.usecase.apply_complement_finder_on_voies_use_case import ApplyComplementFinderOnVoiesUseCase
 from decoupage_libelles.finders.voie_fictive.usecase.apply_voie_fictive_finder_on_voies_use_case import ApplyVoieFictiveFinderOnVoiesUseCase
-from decoupage_libelles.finders.voie_fictive.usecase.voie_fictive_finder_use_case import VoieFictiveFinderUseCase
-from decoupage_libelles.finders.complement.usecase.complement_finder_use_case import ComplementFinderUseCase
+from decoupage_libelles.synonym_data.voies_fictives import VOIES_FICTIVES_1
 from decoupage_libelles.handlers.one_type.usecase.handle_one_type_complement_use_case import HandleOneTypeComplUseCase
 from decoupage_libelles.handlers.one_type.usecase.handle_one_type_not_compl_not_fictif_use_case import HandleOneTypeNotComplNotFictifUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_compl_use_case import AssignLibComplUseCase
 from decoupage_libelles.information_generators.libelle.usecase.generate_information_on_lib_use_case import GenerateInformationOnLibUseCase
-from decoupage_libelles.preprocessing.pipeline.usecase.suppress_article_in_first_place_use_case import SuppressArticleInFirstPlaceUseCase
+from decoupage_libelles.preprocessing.text_normalization.usecase.suppress_article_in_first_place_use_case import SuppressArticleInFirstPlaceUseCase
 from decoupage_libelles.information_generators.type_in_lib.usecase.generate_information_on_type_ordered_use_case import GenerateInformationOnTypeOrderedUseCase
+from decoupage_libelles.synonym_data.complement_types import TYPES_COMPLEMENT
 
 
 class OneTypeVoiesHandlerUseCase:
@@ -48,13 +48,13 @@ class OneTypeVoiesHandlerUseCase:
             self.generate_information_on_lib_use_case.execute(voie, apply_nlp_model=False)
 
         logging.info("Gestion des voies avec complément")
-        voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_1_2)
+        voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, TYPES_COMPLEMENT)
 
         for voie_compl in voies_complement:
             voies_treated.append(self.handle_one_type_complement_use_case.execute(voie_compl))
 
         logging.info("Gestion des voies fictives")
-        voies_fictives, voies = self.apply_voie_fictive_finder_on_voies_use_case.execute(voies, VoieFictiveFinderUseCase.VOIES_FICTIVES_1)
+        voies_fictives, voies = self.apply_voie_fictive_finder_on_voies_use_case.execute(voies, VOIES_FICTIVES_1)
         for voie_fictive in voies_fictives:
             # 'LES VERNONS RUE B'
             # lib + compl

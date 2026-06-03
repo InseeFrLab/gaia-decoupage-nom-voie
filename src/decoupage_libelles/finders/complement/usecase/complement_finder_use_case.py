@@ -4,34 +4,7 @@ from decoupage_libelles.information_generators.libelle.model.infovoie import Inf
 
 
 class ComplementFinderUseCase:
-    TYPES_COMPLEMENT_0 = ["PAVILLON", "IMMEUBLE", "BATIMENT", "BAT", "BLOC", "APPARTEMENT", "LOGEMENT", "ENTREE"]
-
-    TYPES_APPART_ESC = ["BLOC", "APPARTEMENT"]
-
-    TYPES_COMPLEMENT_1_2 = ["PAVILLON", "IM", "IMMEUBLE", "BATIMENT", "BAT", "BLOC", "APPARTEMENT", "LOGEMENT", "ENTREE"]
-
-    TYPES_COMPLEMENT_IMMEUBLE = [
-        "HLM",
-        "CROIX",
-        "RUE",
-        "GALERIE",
-        "COTE",
-        "CENTRE",
-        "HAMEAU",
-        "DOMAINE",
-        "MAISON",
-        "CHALET",
-        "LOTISSEMENT",
-        "VILLA",
-        "PARKING",
-        "PARC",
-        "RESIDENCE",
-        "PLACE",
-        "QUARTIER",
-        "ESPACE",
-    ]
-
-    ORTHOGRAPHES_IMMEUBLE = ["IM", "IMMEUBLE"]
+    TYPES_COMPLEMENT = ["PAVILLON", "IMMEUBLE", "BATIMENT", "BAT", "BLOC", "APPARTEMENT", "LOGEMENT", "ENTREE"]
 
     def execute(self, infovoie: InfoVoie, types_complement: List[str]) -> InfoVoie:
         for type_compl in types_complement:  # parcours de la liste de types "complément"

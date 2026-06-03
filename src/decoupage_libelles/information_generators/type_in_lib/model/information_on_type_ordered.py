@@ -21,4 +21,3 @@ class InformationOnTypeOrdered:
     is_agglomerant: Optional[bool] = None
     is_longitudinal_or_agglomerant: Optional[bool] = None
     is_complement: Optional[bool] = None
-    is_escalier_or_appartement: Optional[bool] = None

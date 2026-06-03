@@ -4,6 +4,8 @@ from decoupage_libelles.information_generators.type_in_lib.usecase.generate_info
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_compl_type_lib_compl_use_case import AssignComplTypeLibComplUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_compl_type_lib_use_case import AssignComplTypeLibUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_type_lib_compl_use_case import AssignTypeLibComplUseCase
+from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_type_use_case import AssignLibTypeUseCase
+from decoupage_libelles.synonym_data.priorites_types import COMBINAISONS_LONG
 
 
 class ComplTwoTypesLongOrAggloUseCase:
@@ -13,11 +15,13 @@ class ComplTwoTypesLongOrAggloUseCase:
         assign_compl_type_lib_compl_use_case: AssignComplTypeLibComplUseCase = AssignComplTypeLibComplUseCase(),
         assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = AssignComplTypeLibUseCase(),
         assign_type_lib_compl_use_case: AssignTypeLibComplUseCase = AssignTypeLibComplUseCase(),
+        assign_lib_type_use_case: AssignLibTypeUseCase = AssignLibTypeUseCase(),
     ):
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
         self.assign_compl_type_lib_compl_use_case: AssignComplTypeLibComplUseCase = assign_compl_type_lib_compl_use_case
         self.assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = assign_compl_type_lib_use_case
         self.assign_type_lib_compl_use_case: AssignTypeLibComplUseCase = assign_type_lib_compl_use_case
+        self.assign_lib_type_use_case: AssignLibTypeUseCase = assign_lib_type_use_case
 
     def execute(self, voie_compl: InfoVoie) -> VoieDecoupee:
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 1)
@@ -39,7 +43,7 @@ class ComplTwoTypesLongOrAggloUseCase:
             # "RUE HOCHE HLM BAT DESCARTES"
             return self.assign_type_lib_compl_use_case.execute(voie_compl)
 
-        elif second_type.is_agglomerant and third_type.is_agglomerant or second_type.is_longitudinal and third_type.is_longitudinal or second_type.is_longitudinal and third_type.is_agglomerant:
-            # "IMM BLEU RUE DES LYS RESIDENCE ERNEST RENAN"
+        elif second_type.is_longitudinal and third_type.is_longitudinal:
+            # "IMM BLEU RUE DES LYS AVENUE ERNEST RENAN"
             # compl + 2e type + lib + 3e compl
             return self.assign_compl_type_lib_compl_use_case.execute(voie_compl, second_type, third_type)

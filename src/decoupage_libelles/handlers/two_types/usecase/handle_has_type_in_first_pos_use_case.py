@@ -7,66 +7,10 @@ from decoupage_libelles.decoupage_final_constructors.usecase.assign_compl_type_l
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_type_lib_compl_use_case import AssignTypeLibComplUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_use_case import AssignLibUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_type_use_case import AssignLibTypeUseCase
+from decoupage_libelles.synonym_data.priorites_types import COMBINAISONS_LONG
 
 
 class HandleHasTypeInFirstPosUseCase:
-    COMBINAISONS_LONG = {
-        "CHEMIN/VOIE COMMUNALE": True,
-        "VOIE/RUE": False,
-        "IMPASSE/VOIE": True,
-        "IMPASSE/PLACE": False,
-        "CHEMIN/ALLEE": True,
-        "VOIE COMMUNALE/ROUTE": False,
-        "VOIE/VOIE COMMUNALE": True,
-        "VOIE COMMUNALE/CHEMIN": False,
-        "CHEMINEMENT/CHEMIN": False,
-        "CHEMIN/CHEMINEMENT": True,
-        "VOIE COMMUNALE/AVENUE": False,
-        "IMPASSE/ROUTE": False,
-        "VOIE COMMUNALE/BOULEVARD": False,
-        "IMPASSE/CHEMIN": False,
-        "RUE/ROUTE": True,
-        "ALLEE/VOIE COMMUNALE": True,
-        "ROUTE/VOIE COMMUNALE": True,
-        "PLACE/RUE": False,
-        "RUE/IMPASSE": True,
-        "RUE/VOIE COMMUNALE": True,
-        "RUE/CHEMIN": True,
-        "RUE/VOIE": True,
-        "ROUTE/RUE": False,
-        "IMPASSE/RUE": False,
-        "CHEMIN/ROUTE": False,
-        "IMPASSE/CHEMINEMENT": True,
-        "IMPASSE/BOULEVARD": False,
-        "AVENUE/VOIE COMMUNALE": True,
-        "RUE/AVENUE": False,
-        "VOIE COMMUNALE/IMPASSE": False,
-        "ALLEE/RUE": False,
-        "ROUTE/VOIE": True,
-        "AVENUE/IMPASSE": True,
-        "ROUTE/CHEMINEMENT": True,
-        "ROUTE/CHEMIN": True,
-        "PLACE/ROUTE": True,
-        "IMPASSE/AVENUE": False,
-        "CHEMINEMENT/VOIE COMMUNALE": True,
-        "RUE/ALLEE": True,
-        "RUE/CHEMINEMENT": True,
-        "CHEMIN/RUE": False,
-        "BOULEVARD/VOIE COMMUNALE": True,
-        "CHEMINEMENT/RUE": False,
-        "IMPASSE/VOIE COMMUNALE": True,
-        "RUE/PLACE": True,
-        "VOIE COMMUNALE/RUE": False,
-        "VOIE COMMUNALE/VOIE": False,
-        "VOIE COMMUNALE/CHEMINEMENT": False,
-        "VOIE COMMUNALE/ALLEE": False,
-        "CHEMINEMENT/VOIE": True,
-        "CHEMINEMENT/ROUTE": False,
-        "CHEMIN/AVENUE": False,
-        "CHEMIN/VOIE": True,
-        "AVENUE/PLACE": True,
-        "AVENUE/CHEMINEMENT": True,
-    }
 
     def __init__(
         self,
@@ -91,7 +35,7 @@ class HandleHasTypeInFirstPosUseCase:
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie, 2)
 
         two_longs = ("/").join([first_type.type_name, second_type.type_name])
-        second_prio = two_longs in HandleHasTypeInFirstPosUseCase.COMBINAISONS_LONG and not HandleHasTypeInFirstPosUseCase.COMBINAISONS_LONG[two_longs]
+        second_prio = two_longs in COMBINAISONS_LONG and not COMBINAISONS_LONG[two_longs]
 
         if (voie.has_type_in_last_pos
                 and second_type.type_name_in_lib == second_type.type_name

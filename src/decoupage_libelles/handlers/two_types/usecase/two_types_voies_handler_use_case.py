@@ -5,13 +5,13 @@ from decoupage_libelles.information_generators.libelle.model.infovoie import Inf
 from decoupage_libelles.decoupage_final_constructors.model.voie_decoupee import VoieDecoupee
 from decoupage_libelles.finders.complement.usecase.apply_complement_finder_on_voies_use_case import ApplyComplementFinderOnVoiesUseCase
 from decoupage_libelles.finders.voie_fictive.usecase.apply_voie_fictive_finder_on_voies_use_case import ApplyVoieFictiveFinderOnVoiesUseCase
-from decoupage_libelles.finders.voie_fictive.usecase.voie_fictive_finder_use_case import VoieFictiveFinderUseCase
-from decoupage_libelles.finders.complement.usecase.complement_finder_use_case import ComplementFinderUseCase
+from decoupage_libelles.synonym_data.voies_fictives import VOIES_FICTIVES_2
 from decoupage_libelles.handlers.two_types.usecase.handle_two_types_complement_use_case import HandleTwoTypesComplUseCase
 from decoupage_libelles.handlers.two_types.usecase.handle_two_types_voie_fictive_use_case import HandleTwoTypesVoieFictiveUseCase
 from decoupage_libelles.handlers.two_types.usecase.handle_has_type_in_first_pos_use_case import HandleHasTypeInFirstPosUseCase
 from decoupage_libelles.handlers.two_types.usecase.handle_no_type_in_first_pos_use_case import HandleNoTypeInFirstPosUseCase
 from decoupage_libelles.information_generators.libelle.usecase.generate_information_on_lib_use_case import GenerateInformationOnLibUseCase
+from decoupage_libelles.synonym_data.complement_types import TYPES_COMPLEMENT
 
 
 class TwoTypesVoiesHandlerUseCase:
@@ -37,7 +37,7 @@ class TwoTypesVoiesHandlerUseCase:
         voies = [voie for voie in voies if len(voie.types_and_positions) == 2]
 
         logging.info("Gestion des voies avec complément")
-        voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, ComplementFinderUseCase.TYPES_COMPLEMENT_1_2)
+        voies_complement, voies = self.apply_complement_finder_on_voies_use_case.execute(voies, TYPES_COMPLEMENT)
         voies_treated = []
         for voie_compl in voies_complement:
             voie_treated, voie_to_treat_two_types = self.handle_two_types_complement_use_case.execute(voie_compl)
@@ -47,7 +47,7 @@ class TwoTypesVoiesHandlerUseCase:
                 voies.append(voie_to_treat_two_types)
 
         logging.info("Gestion des voies fictives")
-        voies_fictives, voies = self.apply_voie_fictive_finder_on_voies_use_case.execute(voies, VoieFictiveFinderUseCase.VOIES_FICTIVES_2)
+        voies_fictives, voies = self.apply_voie_fictive_finder_on_voies_use_case.execute(voies, VOIES_FICTIVES_2)
         for voie_fictive in voies_fictives:
             voies_treated.append(self.handle_two_types_voie_fictive_use_case.execute(voie_fictive))
 

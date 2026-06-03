@@ -5,7 +5,7 @@ from decoupage_libelles.information_generators.type_in_lib.usecase.order_type_in
 from decoupage_libelles.information_generators.type_in_lib.usecase.is_in_middle_pos_use_case import IsInMiddlePositionUseCase
 from decoupage_libelles.information_generators.type_in_lib.usecase.is_in_penultimate_position_use_case import IsInPenultimatePositionUseCase
 from decoupage_libelles.information_generators.type_in_lib.usecase.type_is_longitudinal_or_agglomerant_use_case import TypeIsLongitudinalOrAgglomerantUseCase
-from decoupage_libelles.information_generators.type_in_lib.usecase.type_is_complementaire_use_case import TypeIsComplementaireUseCase
+from decoupage_libelles.synonym_data.complement_types import TYPES_COMPLEMENT
 from decoupage_libelles.information_generators.type_in_lib.usecase.type_after_type_use_case import TypeAfterTypeUseCase
 from decoupage_libelles.information_generators.libelle.model.infovoie import InfoVoie
 from decoupage_libelles.information_generators.type_in_lib.model.information_on_type_ordered import InformationOnTypeOrdered
@@ -23,7 +23,6 @@ class GenerateInformationOnTypeOrderedUseCase:
         is_in_middle_pos_use_case: IsInMiddlePositionUseCase = IsInMiddlePositionUseCase(),
         is_in_penultimate_position_use_case: IsInPenultimatePositionUseCase = IsInPenultimatePositionUseCase(),
         type_is_longitudinal_or_agglomerant_use_case: TypeIsLongitudinalOrAgglomerantUseCase = TypeIsLongitudinalOrAgglomerantUseCase(),
-        type_is_complementaire_use_case: TypeIsComplementaireUseCase = TypeIsComplementaireUseCase(),
         type_after_type_use_case: TypeAfterTypeUseCase = TypeAfterTypeUseCase(),
         find_order_of_apparition_in_lib_use_case: FindOrderOfApparitionInLibUseCase = FindOrderOfApparitionInLibUseCase(),
         type_voie_in_lib_use_case: TypeVoieInLibUseCase = TypeVoieInLibUseCase(),
@@ -35,7 +34,6 @@ class GenerateInformationOnTypeOrderedUseCase:
         self.is_in_middle_pos_use_case: IsInMiddlePositionUseCase = is_in_middle_pos_use_case
         self.is_in_penultimate_position_use_case: IsInPenultimatePositionUseCase = is_in_penultimate_position_use_case
         self.type_is_longitudinal_or_agglomerant_use_case: TypeIsLongitudinalOrAgglomerantUseCase = type_is_longitudinal_or_agglomerant_use_case
-        self.type_is_complementaire_use_case: TypeIsComplementaireUseCase = type_is_complementaire_use_case
         self.type_after_type_use_case: TypeAfterTypeUseCase = type_after_type_use_case
         self.find_order_of_apparition_in_lib_use_case: FindOrderOfApparitionInLibUseCase = find_order_of_apparition_in_lib_use_case
         self.type_voie_in_lib_use_case: TypeVoieInLibUseCase = type_voie_in_lib_use_case
@@ -54,7 +52,7 @@ class GenerateInformationOnTypeOrderedUseCase:
             self.is_in_middle_pos_use_case.execute(infovoie, type_ordered)
             self.is_in_penultimate_position_use_case.execute(infovoie, type_ordered)
             self.type_is_longitudinal_or_agglomerant_use_case.execute(infovoie, type_ordered)
-            self.type_is_complementaire_use_case.execute(infovoie, type_ordered)
+            type_ordered.is_complement = True if type_ordered.type_name in TYPES_COMPLEMENT else False
             self.postag_before_type_use_case.execute(infovoie, type_ordered)
             self.type_after_type_use_case.execute(infovoie, type_ordered)
 
