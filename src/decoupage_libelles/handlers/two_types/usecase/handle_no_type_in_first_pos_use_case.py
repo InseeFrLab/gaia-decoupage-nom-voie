@@ -36,9 +36,10 @@ class HandleNoTypeInFirstPosUseCase:
                 return self.assign_lib_use_case.execute(voie)
 
         else:
-            if not first_type.is_longitudinal_or_agglomerant and not second_type.is_longitudinal_or_agglomerant:
+            if not first_type.is_longitudinal_or_agglomerant:
                 # lib
                 # "LA FONTAINE DU CHATEAU VERDIN"
+                # "VERDIER FONTAINE DE LA RESIDENCE VERTE"
                 return self.assign_lib_use_case.execute(voie)
 
             elif first_type.is_longitudinal_or_agglomerant and not second_type.is_longitudinal_or_agglomerant:
@@ -46,10 +47,6 @@ class HandleNoTypeInFirstPosUseCase:
                 # "VERDIER RESIDENCE DE LA FONTAINE VERTE"
                 return self.assign_compl_type_lib_use_case.execute(voie, first_type)
 
-            elif not first_type.is_longitudinal_or_agglomerant and second_type.is_longitudinal_or_agglomerant:
-                # lib
-                # "VERDIER FONTAINE DE LA RESIDENCE VERTE"
-                return self.assign_lib_use_case.execute(voie)
             else:
                 if first_type.is_longitudinal:
                     # compl + 1er type + lib + compl
