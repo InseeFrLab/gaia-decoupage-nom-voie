@@ -20,7 +20,7 @@ Les cas les plus complexes : le libellé contient deux types reconnus et il faut
 ```
 TwoTypesVoiesHandlerUseCase
         │
-        ▼ Chercher un complément (TYPES_COMPLEMENT_1_2)
+        ▼ Chercher un complément (TYPES_COMPLEMENT)
         │
         ├── Complément trouvé → HandleTwoTypesComplUseCase
         │       │  (cascade, premier use case qui retourne un résultat gagne)

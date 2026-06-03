@@ -25,7 +25,7 @@ Le NLP n'est activé que dans certains sous-cas, là où `has_adj_det_before` es
 ```
 OneTypeVoiesHandlerUseCase
         │
-        ▼ Chercher un complément (TYPES_COMPLEMENT_1_2)
+        ▼ Chercher un complément (TYPES_COMPLEMENT)
         │
         ├── Complément trouvé → HandleOneTypeComplUseCase
         │       │

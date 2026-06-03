@@ -16,7 +16,10 @@ def connect_s3(platform: str) -> s3fs.S3FileSystem:
     }
     if platform not in endpoints:
         raise ValueError(f"Plateforme inconnue : '{platform}'. Valeurs attendues : ls3, datalab.")
-
+    os.environ["AWS_ACCESS_KEY_ID"] = 'HVMHXRH8SXNHDYMMN9J3'
+    os.environ["AWS_SECRET_ACCESS_KEY"] = 'mii9Q+bju8hOn3qBY1qMuCHFgyJ+3CtBlVFaQarn'
+    os.environ["AWS_SESSION_TOKEN"] = 'eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJIVk1IWFJIOFNYTkhEWU1NTjlKMyIsImFjciI6IjAiLCJhdWQiOiJtaW5pby1rdWJlLWxzMyxtaW5pby1rdWJlLWRhdGFzY2llbmNlIiwiYXV0aF90aW1lIjoxNzgwNDc5Nzk0LCJhenAiOiJvbnl4aWEtbWluaW8ta3ViZS1sczMiLCJjbmYiOnsiamt0IjoiYWlKem51Y3JIZzRBNVlOb3VWbWRKM1FoSW1JRXZ2ZGlZRUpDN05Bd0c1byJ9LCJlbWFpbCI6InJheWEuYmVyb3ZhQGluc2VlLmZyIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJleHAiOjE3ODA5MTE3OTYsImZhbWlseV9uYW1lIjoiQmVyb3ZhIiwiZ2l2ZW5fbmFtZSI6IlJheWEiLCJncm91cHMiOlsiY29uZnBzLWRzZHMtbGl2cmFibGVzLXJlc2lsLXJ3IiwiY29uZnBucy1kbWdjLWdlb2dyYXBoaWUtcnciXSwiaWF0IjoxNzgwNDc5Nzk2LCJpc3MiOiJodHRwczovL2F1dGguaW5zZWUuZnIvYXV0aC9yZWFsbXMvaW5zZWUtZGF0YXNjaWVuY2UiLCJqdGkiOiJvbnJ0cnQ6YTQ0ZDVmZGQtYTgxYS05MmM3LTA0NWMtMmRmMGJiZDRkMWM4IiwibmFtZSI6IlJheWEgQmVyb3ZhIiwicG9saWN5IjoiY29uZnBucy1kbWdjLWdlb2dyYXBoaWUsY29uZnBzLWRzZHMtbGl2cmFibGVzLXJlc2lsLHByb2pldC1kYi1nZW9sb2MtZmlkZWxpLHByb2pldC1tbC1tb3RldXItaWRlbnRpZmljYXRpb24tZ2FpYSxwcm9qZXQtbW90ZXVyLXJlc2lsLHByb2pldC1wb2MtbWFkLXR1aWxlcy1jYXJ0byxwdWJsaWMsdHJhdmFpbCIsInByZWZlcnJlZF91c2VybmFtZSI6ImZpN2w3dCIsInNjb3BlIjoib3BlbmlkIGVtYWlsIHByb2ZpbGUiLCJzaWQiOiJrNEhIeHhPdzhuNWVDYS02SkxDRXNHQnMiLCJzdWIiOiJmOjE4YzFlOGQ5LTJjYTQtNDRkZi04YmU4LTY1OWZmZjQ2NDhkYjpGSTdMN1QiLCJ0eXAiOiJEUG9QIn0.29KhqrcAps5zt5LRZ5bHo0V9FumUxUTHrCVDbr0SjIzH3sEenw_ImcMJXlnHn04VVbKIj-5lWCkFI-nOnXy7gQ'
+    os.environ["AWS_DEFAULT_REGION"] = 'us-east-1'
     return s3fs.S3FileSystem(
         client_kwargs={"endpoint_url": "https://" + endpoints[platform]},
         key=os.environ["AWS_ACCESS_KEY_ID"],

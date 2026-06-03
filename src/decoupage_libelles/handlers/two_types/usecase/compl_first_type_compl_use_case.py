@@ -3,7 +3,6 @@ from decoupage_libelles.decoupage_final_constructors.model.voie_decoupee import 
 from decoupage_libelles.information_generators.type_in_lib.usecase.generate_information_on_type_ordered_use_case import GenerateInformationOnTypeOrderedUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_compl_type_lib_use_case import AssignComplTypeLibUseCase
 from decoupage_libelles.decoupage_final_constructors.usecase.assign_lib_use_case import AssignLibUseCase
-from decoupage_libelles.decoupage_final_constructors.usecase.assign_type_lib_use_case import AssignTypeLibUseCase
 
 
 class ComplFirstTypeComplUseCase:
@@ -12,12 +11,10 @@ class ComplFirstTypeComplUseCase:
         generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = GenerateInformationOnTypeOrderedUseCase(),
         assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = AssignComplTypeLibUseCase(),
         assign_lib_use_case: AssignLibUseCase = AssignLibUseCase(),
-        assign_type_lib_use_case: AssignTypeLibUseCase = AssignTypeLibUseCase(),
     ):
         self.generate_information_on_type_ordered_use_case: GenerateInformationOnTypeOrderedUseCase = generate_information_on_type_ordered_use_case
         self.assign_compl_type_lib_use_case: AssignComplTypeLibUseCase = assign_compl_type_lib_use_case
         self.assign_lib_use_case: AssignLibUseCase = assign_lib_use_case
-        self.assign_type_lib_use_case: AssignTypeLibUseCase = assign_type_lib_use_case
 
     def execute(self, voie_compl: InfoVoie) -> VoieDecoupee:
         first_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 1)
@@ -26,9 +23,9 @@ class ComplFirstTypeComplUseCase:
 
         if first_type.is_complement:
             if voie_compl.has_type_in_first_pos and voie_compl.has_type_in_second_pos:
-                # 'LDT VAL DES PINS'
-                # 1er type + lib
-                return self.assign_type_lib_use_case.execute(voie_compl, first_type)
+                # 'BAT VAL DES PINS'
+                # lib
+                return self.assign_lib_use_case.execute(voie_compl)
 
             elif second_type.is_longitudinal_or_agglomerant:
                 # compl + 2e type + lib

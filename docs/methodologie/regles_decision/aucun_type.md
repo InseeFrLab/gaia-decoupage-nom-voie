@@ -16,7 +16,7 @@ Ces voies n'ont aucun type de voie reconnu dans leur libellé. Exemples typiques
 ```
 NoTypeVoiesHandlerUseCase
         │
-        ▼ Chercher un complément (TYPES_COMPLEMENT_0)
+        ▼ Chercher un complément (TYPES_COMPLEMENT)
         │  PAVILLON, IMMEUBLE, BATIMENT, BLOC, APPARTEMENT, ESCALIER, LOGEMENT, ENTREE
         │
         ├── Pas de complément
@@ -56,7 +56,7 @@ NoTypeVoiesHandlerUseCase
 
 **NLP toujours activé** dans `HandleNoTypeComplUseCase`. C'est le seul handler no_type qui utilise le NLP, car `has_adj_det_before` est indispensable pour distinguer `"LE TILLET BAT ERNEST RENAN"` (complément devant) de `"BAT DE LA FONTAINE"` (article avant BAT → pas un vrai complément).
 
-**`TYPES_COMPLEMENT_0` vs `TYPES_COMPLEMENT_1_2`** : ce handler utilise `TYPES_COMPLEMENT_0`, qui est plus restrictif que la liste utilisée par les handlers 1 et 2 types (ne contient pas `IM`).
+**`TYPES_COMPLEMENT` vs `TYPES_COMPLEMENT`** : ce handler utilise `TYPES_COMPLEMENT`, qui est plus restrictif que la liste utilisée par les handlers 1 et 2 types (ne contient pas `IM`).
 
 ## Sorties possibles
 

@@ -40,10 +40,11 @@ class HandleHasTypeInFirstPosUseCase:
         if (voie.has_type_in_last_pos
                 and second_type.type_name_in_lib == second_type.type_name
                 and (first_type.type_name_in_lib != first_type.type_name
-                     or not first_type.is_longitudinal_or_agglomerant
+                     or (second_type.is_longitudinal_or_agglomerant
+                         and not first_type.is_longitudinal_or_agglomerant)
                      or second_prio)):
             # Type de voie en dernière position ecrit en toutes lettres
-            # Premier type de voie en accronyme ou pas long/agglo ou pas prio
+            # Premier type de voie en accronyme ou pas long/agglo alors que 2e si ou pas prio
             # lib + 2nd type
             # "SQUARE DE LA VILLETTE RUE"
             return self.assign_lib_type_use_case.execute(voie, second_type)
@@ -51,7 +52,7 @@ class HandleHasTypeInFirstPosUseCase:
         elif voie.has_type_in_second_pos or voie.has_type_in_last_pos:
             # 1er type + lib
             # "RUE RESIDENCE SOLEIL"
-            # "RUE SOLEIL RESIDENCE"
+            # "TRAVERSE JEAN MOULIN"
             return self.assign_type_lib_use_case.execute(voie, first_type)
 
         elif not second_type.is_longitudinal_or_agglomerant:
