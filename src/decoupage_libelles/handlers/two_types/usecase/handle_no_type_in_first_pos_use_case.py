@@ -30,10 +30,8 @@ class HandleNoTypeInFirstPosUseCase:
         second_type = self.generate_information_on_type_ordered_use_case.execute(voie, 2)
 
         if voie.has_type_in_last_pos:
-            last_type = self.generate_information_on_type_ordered_use_case.execute(voie, -1)
-            last_type_name_in_lib = (' ').join(voie.label_preproc[last_type.position_start:last_type.position_end+1])
-            if last_type.type_name == last_type_name_in_lib:
-                return self.assign_lib_type_use_case.execute(voie, last_type)
+            if second_type.type_name_in_lib == second_type.type_name:
+                return self.assign_lib_type_use_case.execute(voie, second_type)
             else:
                 return self.assign_lib_use_case.execute(voie)
 

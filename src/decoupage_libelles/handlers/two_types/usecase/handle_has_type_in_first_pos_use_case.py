@@ -96,22 +96,23 @@ class HandleHasTypeInFirstPosUseCase:
         if (voie.has_type_in_last_pos
                 and second_type.type_name_in_lib == second_type.type_name
                 and (first_type.type_name_in_lib != first_type.type_name
-                    or not first_type.is_longitudinal_or_agglomerant
-                    or second_prio)):
+                     or not first_type.is_longitudinal_or_agglomerant
+                     or second_prio)):
             # Type de voie en dernière position ecrit en toutes lettres
             # Premier type de voie en accronyme ou pas long/agglo ou pas prio
             # lib + 2nd type
             # "SQUARE DE LA VILLETTE RUE"
             return self.assign_lib_type_use_case.execute(voie, second_type)
 
-        elif voie.has_type_in_second_pos:
+        elif voie.has_type_in_second_pos or voie.has_type_in_last_pos:
             # 1er type + lib
             # "RUE RESIDENCE SOLEIL"
+            # "RUE SOLEIL RESIDENCE"
             return self.assign_type_lib_use_case.execute(voie, first_type)
 
         elif not second_type.is_longitudinal_or_agglomerant:
             # 1er type + lib
-            # "FONTAINE DU CHATEAU"
+            # "FONTAINE VICTOR HUGO CHATEAU BONTEMPS"
             return self.assign_type_lib_use_case.execute(voie, first_type)
 
         elif not first_type.is_longitudinal_or_agglomerant:
@@ -125,9 +126,19 @@ class HandleHasTypeInFirstPosUseCase:
             return self.assign_compl_type_lib_use_case.execute(voie, second_type)
 
         elif first_type.type_name == second_type.type_name:
-            # lib
-            # "RUE HOCHE RUE VERDIER"
-            return self.assign_lib_use_case.execute(voie)
+            if second_type.type_name_in_lib != second_type.type_name:
+                # 2ème non canonique → 1er type + lib
+                # "RUE MR R BOTIGNY"
+                # "R MR R BOTIGNY"
+                return self.assign_type_lib_use_case.execute(voie, first_type)
+            elif first_type.type_name_in_lib != first_type.type_name:
+                # 2ème canonique + 1er non canonique → compl + 2ème type + lib
+                # "R MR RUE BOTIGNY"
+                return self.assign_compl_type_lib_use_case.execute(voie, second_type)
+            else:
+                # les deux canoniques → lib
+                # "RUE HOCHE RUE VERDIER"
+                return self.assign_lib_use_case.execute(voie)
 
         elif second_prio:
             # compl + 2e type + lib
