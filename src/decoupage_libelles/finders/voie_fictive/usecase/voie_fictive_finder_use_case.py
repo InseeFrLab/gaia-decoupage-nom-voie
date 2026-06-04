@@ -7,11 +7,6 @@ from decoupage_libelles.synonym_data.voies_fictives import LISTE_FICTIVE
 
 
 class VoieFictiveFinderUseCase:
-
-    VOIES_FICTIVES_1 = ["BOULEVARD", "ALLEE", "RUE", "AVENUE", "IMPASSE", "CHEMIN", "VOIE", "PLACE", "CHEMINEMENT", "VOIE COMMUNALE", "BATIMENT"]
-
-    VOIES_FICTIVES_2 = ["ROUTE", "BOULEVARD", "ALLEE", "RUE", "AVENUE", "IMPASSE", "CHEMIN", "VOIE", "PLACE", "CHEMINEMENT", "VOIE COMMUNALE", "BATIMENT"]
-
     def __init__(
         self,
         detect_type_fictif_for_one_type_use_case: DetectTypeFictifForOneTypeUseCase = DetectTypeFictifForOneTypeUseCase(),
