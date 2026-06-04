@@ -4,10 +4,15 @@ from decoupage_libelles.information_generators.libelle.model.infovoie import Inf
 
 
 class GetWordsBetweenUseCase:
-    def execute(self, infovoie: InfoVoie, position_start: int, position_end: Optional[int] = None) -> Optional[str]:
+    def execute(
+        self,
+        infovoie: InfoVoie,
+        position_start: int,
+        position_end: Optional[int] = None
+    ) -> Optional[str]:
         if position_end and len(infovoie.label_preproc) >= position_end:
             return (" ").join(infovoie.label_preproc[position_start:position_end])
-        elif not position_end and len(infovoie.label_preproc) > position_start:
+        elif position_end is None and len(infovoie.label_preproc) > position_start:
             return (" ").join(infovoie.label_preproc[position_start:])
         else:
             return ""
