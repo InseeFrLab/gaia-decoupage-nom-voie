@@ -22,7 +22,11 @@ class ComplThirdTypeComplUseCase:
         third_type = self.generate_information_on_type_ordered_use_case.execute(voie_compl, 3)
 
         if third_type.is_complement:
-            if first_type.is_longitudinal_or_agglomerant and not second_type.is_longitudinal_or_agglomerant:
+            if voie_compl.has_type_in_first_pos and voie_compl.has_type_in_second_pos:
+                # 1er type + lib + 3e type compl
+                # "hlm ilot thonier bat d"
+                return self.assign_type_lib_compl_use_case.execute(voie_compl, first_type, third_type)
+            elif first_type.is_longitudinal_or_agglomerant and not second_type.is_longitudinal_or_agglomerant:
                 # 1er type + lib + 3e type compl
                 # "RUE DU CHATEAU BAT BLEU"
                 return self.assign_type_lib_compl_use_case.execute(voie_compl, first_type, third_type)
